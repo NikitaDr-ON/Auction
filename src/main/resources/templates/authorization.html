@@ -5,13 +5,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div>
+<form  method="post">
+    <input type="text" name="name" placeholder="Введите логин"/>
+    <input type="text" name="surname" placeholder="Введите фамилию"/>
+    <input type="text" name="mail" placeholder="Введите почту"/>
+    <input type="text" name="password" placeholder="Введите пароль"/>
+
+    <button type="submit">добавить</button>
+</form>
+</div>
 <div th:each="el : ${data}">
     <h3>
         <p th:text="${el.getName()}"></p>
         <p th:text="${el.getSurname()}"></p>
         <p th:text="${el.getMail()}"></p>
         <p th:text="${el.getRole()}"></p>
-        <p th:text="${el.getPassword()}"></p>
     </h3>
 </div>
 </body>

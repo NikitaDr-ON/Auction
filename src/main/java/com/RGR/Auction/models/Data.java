@@ -7,18 +7,29 @@ import javax.persistence.*;
 public class Data {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name="Name")
+    //@Column(name="Name")
     private String Name;
-    @Column(name="Surname")
+   // @Column(name="Surname")
     private String Surname;
-    @Column(name="Mail")
+   // @Column(name="Mail")
     private String Mail;
-    @Column(name="Password")
+   // @Column(name="Password")
     private String Password;
-    @Column(name="Role")
+  //  @Column(name="Role")
     private String Role;
+
+    public Data() {
+    }
+
+    public Data(String name, String surname, String mail, String password) {
+        this.Name = name;
+        this.Surname = surname;
+        this.Mail = mail;
+        this.Password = password;
+        this.Role="user";
+    }
 
     public long getId() {
         return id;
@@ -33,7 +44,7 @@ public class Data {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.Name = name;
     }
 
     public String getSurname() {
@@ -41,7 +52,7 @@ public class Data {
     }
 
     public void setSurname(String surname) {
-        Surname = surname;
+        this.Surname = surname;
     }
 
     public String getMail() {
@@ -49,7 +60,7 @@ public class Data {
     }
 
     public void setMail(String mail) {
-        Mail = mail;
+        this.Mail = mail;
     }
 
     public String getPassword() {
@@ -57,7 +68,7 @@ public class Data {
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.Password = password;
     }
 
     public String getRole() {
@@ -65,6 +76,6 @@ public class Data {
     }
 
     public void setRole(String role) {
-        Role = role;
+        this.Role = role;
     }
 }
