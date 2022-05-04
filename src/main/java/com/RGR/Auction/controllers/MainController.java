@@ -13,5 +13,10 @@ public class MainController {
         model.addAttribute("name", name);
         return "hello";
     }
+    @GetMapping("/index")
+    public String showIndex()
+    {
+        return "index";
+    }
 
 }

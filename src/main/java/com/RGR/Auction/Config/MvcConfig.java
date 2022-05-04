@@ -1,4 +1,4 @@
-/*package com.RGR.Auction.Config;
+package com.RGR.Auction.Config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,4 +10,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/authorization").setViewName("authorization");
     }
 
-}*/
+}
