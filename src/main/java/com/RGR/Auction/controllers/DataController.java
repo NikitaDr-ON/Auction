@@ -1,15 +1,12 @@
 package com.RGR.Auction.controllers;
 
+import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
 import com.RGR.Auction.repositories.Repositories;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -26,6 +23,12 @@ public class DataController {
             return "authorization";
         }
 
+    @GetMapping("/privateOffice") public String privateOffice(Model model)
+    {
+
+        return "privateOffice";
+    }
+
 
     @PostMapping("/authorization")
     public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
@@ -35,5 +38,11 @@ public class DataController {
         Iterable<Data> data =  Repositories.findAll();
         model.addAttribute("data",data);
         return "authorization";
+    }
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code)
+    {
+        boolean isActivated = DataService.activateUser(code);
+        return "hello";
     }
     }

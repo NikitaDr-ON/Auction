@@ -36,10 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests()
+        http.csrf()
+            .disable().authorizeRequests()
                 .antMatchers("/index").hasRole("admin")
-                .antMatchers("/privateOffice").hasAnyRole("admin","user")
-                .antMatchers("/authorization","/hello").permitAll()
+                .antMatchers("/privateOffice").fullyAuthenticated()
+                .antMatchers("/authorization","/hello","/registration","/index").permitAll()
                 .and().formLogin();
 
     }
@@ -52,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(userService).passwordEncoder(bcryptPasswordEncoder());
     }
 
 }

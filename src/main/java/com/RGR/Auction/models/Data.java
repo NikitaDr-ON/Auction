@@ -25,6 +25,15 @@ public class Data implements UserDetails {
     private String role;
     @Column(name="balanse")
     private int balanse;
+    private String activationCode;
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 
     public Data() {
     }
