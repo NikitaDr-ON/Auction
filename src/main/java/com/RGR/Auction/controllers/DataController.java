@@ -41,7 +41,7 @@ public class DataController {
         model.addAttribute("data",data);
         return "authorization";
     }
-    @GetMapping("/hello/{code}")
+    @GetMapping("/hello")
     public String activate(Model model, @PathVariable String code)
     {
         boolean isActivated = dataService.activateUser(code);

@@ -54,7 +54,7 @@ public class DataService implements UserDetailsService {
          Repository.save(newUser);
          if(!StringUtils.isEmpty(newUser.getMail()))
          {
-            String message=String.format("Visit this link: http://localhost:8080/hello/");
+            String message=String.format("Hello world");
             newUser.getUsername();
             newUser.getActivationCode();
             mailSender.send(newUser.getMail(),"Activation code", message);
