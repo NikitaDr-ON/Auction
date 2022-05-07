@@ -25,7 +25,7 @@ public class RegistrationController {
 
 
     @PostMapping("/registration")
-    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
+    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password)
     {
        dataService.saveUser(name,surname,mail,password);
         return "authorization";

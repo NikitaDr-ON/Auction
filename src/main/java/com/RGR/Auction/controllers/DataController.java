@@ -15,6 +15,8 @@ public class DataController {
 
     @Autowired
     private  Repositories Repositories;
+    @Autowired
+    DataService dataService;
     
     @GetMapping("/authorization") public String authorization(Model model)
         {
@@ -39,10 +41,14 @@ public class DataController {
         model.addAttribute("data",data);
         return "authorization";
     }
-    @GetMapping("/activate/{code}")
+    @GetMapping("/hello/{code}")
     public String activate(Model model, @PathVariable String code)
     {
-        boolean isActivated = DataService.activateUser(code);
+        boolean isActivated = dataService.activateUser(code);
+        if(isActivated)
+        {
+            model.addAttribute("message","Регистрация завершена");
+        }
         return "hello";
     }
     }

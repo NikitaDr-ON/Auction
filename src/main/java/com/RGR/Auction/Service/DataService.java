@@ -24,10 +24,6 @@ public class DataService implements UserDetailsService {
    @Autowired
    MailSender mailSender;
 
-   public static boolean activateUser(String code) {
-      return false;
-   }
-
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -53,15 +49,30 @@ public class DataService implements UserDetailsService {
       {
          Data newUser = new Data(name,surname,mail,password);
          newUser.setPassword( new BCryptPasswordEncoder().encode(password));
+         newUser.setActivation("true");
          newUser.setActivationCode(UUID.randomUUID().toString());
          Repository.save(newUser);
          if(!StringUtils.isEmpty(newUser.getMail()))
          {
-            String message=String.format("Visit this link: http://localhost:8080/activate/%s");
+            String message=String.format("Visit this link: http://localhost:8080/hello/");
             newUser.getUsername();
             newUser.getActivationCode();
             mailSender.send(newUser.getMail(),"Activation code", message);
          }
+      }
+   }
+
+   public boolean activateUser(String code)
+   {
+      Data user = Repository.findByActivationCode(code);
+      if(user==null) {
+         return false;
+      }
+      else
+      {
+         user.setActivationCode(null);
+         Repository.save(user);
+         return  true;
       }
    }
 

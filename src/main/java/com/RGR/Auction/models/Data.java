@@ -23,17 +23,12 @@ public class Data implements UserDetails {
     private String password;
     @Column(name="Role")
     private String role;
-    @Column(name="balanse")
+    @Column(name="Balance")
     private int balanse;
+    @Column(name="Activation_code")
     private String activationCode;
-
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-    }
+    @Column(name="Activation")
+    private String activation;
 
     public Data() {
     }
@@ -120,12 +115,27 @@ public class Data implements UserDetails {
         this.role = role;
     }
 
-    public int getbalanse() {
+    public int getBalanse() {
         return balanse;
     }
 
-    public void setbalanse(int money) {
+    public void setBalanse(int money) {
         this.balanse = money;
+    }
+
+    public String getActivation() {
+        return activation;
+    }
+
+    public void setActivation(String activation) {
+        this.activation = activation;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
 
