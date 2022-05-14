@@ -42,13 +42,13 @@ public class DataController {
         return "authorization";
     }
     @GetMapping("/hello")
-    public String activate(Model model, @PathVariable String code)
+    public String activate(Model model)
     {
-        boolean isActivated = dataService.activateUser(code);
+       /* boolean isActivated = dataService.activateUser(code);
         if(isActivated)
         {
             model.addAttribute("message","Регистрация завершена");
-        }
+        }*/
         return "hello";
     }
     }

@@ -1,8 +1,10 @@
 package com.RGR.Auction.controllers;
 
+import com.RGR.Auction.models.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -17,6 +19,13 @@ public class MainController {
     public String showIndex()
     {
         return "index";
+    }
+    @PostMapping("/index")
+    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
+    {
+
+
+        return "authorization";
     }
 
 }

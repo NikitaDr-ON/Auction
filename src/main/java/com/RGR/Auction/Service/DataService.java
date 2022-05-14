@@ -25,9 +25,9 @@ public class DataService implements UserDetailsService {
    MailSender mailSender;
 
    @Override
-   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+   public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-      Data user = Repository.findByName(username);
+      Data user = Repository.findByMail(mail);
 
       if (user == null) {
          throw new UsernameNotFoundException("User not found");

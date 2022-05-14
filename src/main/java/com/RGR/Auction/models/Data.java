@@ -12,6 +12,7 @@ public class Data implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ManyToOne(fetch = FetchType.LAZY)
     private long id;
     @Column(name="Name")
     private String name;

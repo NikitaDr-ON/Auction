@@ -20,28 +20,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataService userService;
-    /*@Override
-   protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
-        auth.inMemoryAuthentication()
-                .withUser("Nikita")
-                .password("password")
-                .roles("admin")
-                .and()
-                .withUser("user")
-                .password("userPassword")
-                .roles("user");
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http.csrf()
             .disable().authorizeRequests()
-                .antMatchers("/index").hasRole("admin")
+               // .antMatchers("/index").hasRole("admin")
                 .antMatchers("/privateOffice").fullyAuthenticated()
                 .antMatchers("/authorization","/hello","/registration","/index").permitAll()
-                .and().formLogin();
+                .and().formLogin()//.loginPage("/index")
+                .defaultSuccessUrl("/privateOffice")
+                .permitAll()
+                .and()
+                .logout();
 
     }
     @Bean
