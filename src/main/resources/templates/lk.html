@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/font-awesome.css" >
+    <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>HAMMER</title>
+  </head>
+  <body style="background: url(img/bg-body.jpg);"> 
+    <div id="index"></div>
+     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+    <div class="container">
+     <a href="index.html" class="navbar-brand" >
+        <img src="img/logo.png" width="120px" height="120px" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto nav-icon">
+        <li class="nav-item active">
+          <a href="index.html" class="nav-link "><i class="fa fa-home"></i>Главная</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>  
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="antikiick.html">Антиквариат и искусство</a>
+            <a class="dropdown-item" href="vintag.html">Винтаж</a>
+            <a class="dropdown-item" href="collec.html">Коллекционное</a>
+            <a class="dropdown-item" href="sdelsruk.html">Сделанное своими руками</a>
+            <a class="dropdown-item" href="dragiukr.html">Драгоценности и украшения</a>
+        </div> 
+        </li>
+        <li class="nav-item">
+          <a href="services.html" id="madia-request2" data-toggle="modal" data-target="#exampleModal" class="nav-link"><i class="fa fa-user"></i>Личный кабинет</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input type="text" class="form-control mr-sm 2" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
+      </form>
+     </div> 
+    </div>
+    </nav> 
+
+
+    <div class="container-fluid" style="background: url(img/bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-12">
+            <h1 style="color: #fff; font-size: 50px;">Личный кабинет</h1>
+          </div>
+          <div class="col-lg-2 col-md-12" style="padding-top: 15px;">
+            <button class="btn btn-outline-success my-2 my-sm-0" >Пополнить</button>
+          </div>
+          <div class="col-lg-1 col-md-6">
+            <p style="color: white; margin-top: 20px;">Баланс: </p>
+          </div>
+          <div class="col-lg-1 col-md-6">
+            <p style="color: white; margin-top: 20px;">0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid" style="padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+            <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Добавленные лоты</a>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+            <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Добавить лот</a>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+            <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">"Мои ставки"</a>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+            <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Избранное</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" style="margin: 30px auto 50px auto;">
+      <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample1" >
+            <div class="card card-body" style="border: 1px solid white;">
+              <p style="margin-bottom: 35px;">Мои лоты</p>
+              </div>
+            </div>
+        </div>
+
+  
+    <div class="container-fluid" style="margin: 30px auto 50px auto;">
+      <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample2" >
+            <div class="card card-body" style="border: 1px solid white;">
+              <div style="text-align: left;">
+                <p>Введите название товара: </p>
+                <input type="text" value="Название">
+               </div>
+               <div style="text-align: left;">
+                <p>Введите описание товара: </p>
+                <input type="text" value="Описание">
+               </div>
+               <div style="text-align: left;">
+                <p>Начальная ставка: </p>
+                <input type="text" value="0"> 
+                <button > Ставка</button>
+               </div>
+               <div style="text-align: left;"> 
+                <label for = "file">Файл:</label>
+                <input type = "file" id = "file" value>
+               </div>
+               <div style="text-align: left;"> 
+                <label for = "categories">Выберите категорию товара:</label>
+                <select name =  "categories">
+                  <option value="AII"  selected = "selected">Антиквариат и искусство</option>
+                  <option value="VIN">Винтаж</option>
+                  <option value="KOL">Коллекционное</option>
+                  <option value="SSR">Сделанное своими руками</option>
+                  <option value="DIU">Драгоценности и украшения</option>
+                </select>
+                <div style="text-align: left;"> 
+                  <label for = "date">Время начала аукциона:</label><input type="date" id="date">
+                  <label for = "date">Время завершения аукциона:</label><input type="date" id="date">
+               <div class="justify-content-center text-center">
+                <button class="btn btn-primary">Добавить</button>
+              </div> 
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid" style="margin: 30px auto 50px auto;">
+      <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample3" >
+            <div class="card card-body" style="border: 1px solid white;">
+              <p style="margin-bottom: 35px;">Мои ставки</p>
+              </div>
+            </div>
+        </div>
+
+
+    <div class="container-fluid" style="margin: 30px auto 50px auto;">
+      <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample4" >
+            <div class="card card-body" style="border: 1px solid white;">
+              <p style="margin-bottom: 35px;">Избранное</p>
+              </div>
+            </div>
+        </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/script2.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
+
+  </body>
+</html>
