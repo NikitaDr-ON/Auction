@@ -1,6 +1,6 @@
 package com.RGR.Auction.models;
 
-import javax.persistence.*;
+/*import javax.persistence.*;
 
 @Entity
 @Table(name="lot")
@@ -78,4 +78,4 @@ public class Lot {
     public void setCategory(int category) {
         this.category = category;
     }
-}
+}*/

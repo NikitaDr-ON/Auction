@@ -1,6 +1,6 @@
 package com.RGR.Auction.models;
 
-import javax.persistence.*;
+/*import javax.persistence.*;
 
 @Entity
 @Table(name="categories")
@@ -35,4 +35,4 @@ public class CategoryModel {
     public void setName(String name) {
         Name = name;
     }
-}
+}*/
