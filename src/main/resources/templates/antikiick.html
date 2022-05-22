@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/font-awesome.css" >
+    <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>HAMMER</title>
+  </head>
+  <body style="background: url(img/bg-body.jpg);"> 
+    <div id="index"></div>
+     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+    <div class="container">
+     <a href="index.html" class="navbar-brand" >
+        <img src="img/logo.png" width="120px" height="120px" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto nav-icon">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link "><i class="fa fa-home"></i>Главная</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>  
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="antikiick.html">Антиквариат и искусство</a>
+            <a class="dropdown-item" href="vintag.html">Винтаж</a>
+            <a class="dropdown-item" href="collec.html">Коллекционное</a>
+            <a class="dropdown-item" href="sdelsruk.html">Сделанное своими руками</a>
+            <a class="dropdown-item" href="dragiukr.html">Драгоценности и украшения</a>
+        </div> 
+        </li>
+        <li class="nav-item">
+          <a href="services.html" id="madia-request2" data-toggle="modal" data-target="#exampleModal" class="nav-link"><i class="fa fa-user"></i>Вход/Регистрация</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input type="text" class="form-control mr-sm 2" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
+      </form>
+     </div> 
+    </div>
+    </nav> 
+
+    <div class="container-fluid" style="background: url(img/bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+      <div class="container">
+        <h1 style="color: #fff; font-size: 50px;">Антиквариат и искусство</h1>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="model-title" id="exampleModalLabel">Вход</h5>
+            <button class="close turn" type="button" data-dismiss="modal" aria-label="Close">
+              <span class="fs-35" aria-hidden="true" >&times;</span>
+            </button>
+          </div>
+          <form action="mail.php" method="POST">
+             <div class="container">
+               <div class="form-row">
+               <div class="col-12">
+                 <label for="validationDefault02" class="m-b-3">Введите E-mail</label>
+                 <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="Введите E-mail"  required>
+               </div>
+               <div class="col-12">
+                 <label for="validationDefault03" class="m-b-3">Введите пароль</label>
+                 <input type="password" class="form-control" id="validationDefault02" name="user.password" placeholder="Введите пароль"  required>
+               </div>
+             </div>
+             <div class="form-group">
+             </div>
+            <button id="madia-button" class="btn btn-info justify-content-center" type="submit" >Войти</button>
+            <button class="btn btn-info justify-content-center" type="submit" id="madia-button" data-toggle="modal" data-target="#exampleModal2">Регистрация</button>
+           </form>
+           <div class="model-footer text-center" style="padding-bottom: 15px;">
+             <a href="#" class="justify-content-center regestration" type="" id="madia-request2" data-toggle="modal" data-target="#exampleModal2">Забыли пароль?</a>
+           </div>
+         </div>  
+     </div>
+   </div>
+
+   <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="model-title" id="exampleModalLabel">Регистрация</h5>
+          <button class="close turn" type="button" data-dismiss="modal" aria-label="Close">
+            <span class="fs-35" aria-hidden="true" >&times;</span>
+          </button>
+        </div>
+        <form action="mail.php" method="POST">
+           <div class="container">
+             <div class="form-row">
+               <div class="col-12">
+                 <label for="validationDefault02" class="m-b-3">Введите имя</label>
+                 <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="Имя"  required>
+               </div>
+               <div class="col-12">
+                 <label for="validationDefault02" class="m-b-3">Введите фамилию</label>
+                 <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="Фамилия"  required>
+               </div>
+               <div class="col-12">
+                 <label for="validationDefault02" class="m-b-3">Введите E-mail</label>
+                 <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="E-mail"  required>
+               </div>
+               <div class="col-12">
+                <label for="validationDefault03" class="m-b-3">Введите пароль</label>
+                 <input type="password" class="form-control" id="validationDefault02" name="user.password" placeholder="Пароль"  required>
+               </div>
+               <div class="col-12">
+                <label for="validationDefault03" class="m-b-3">Введите подтверждение</label>
+                 <input type="password" class="form-control" id="validationDefault02" name="user.password" placeholder="Подтверждение"  required>
+               </div>
+             </div>
+           <div class="form-group">
+           </div>
+          <button id="madia-button" class="btn btn-info justify-content-center" type="submit" >Зарегистрироваться</button>
+         </form>
+       </div>  
+   </div>
+ </div>
+  
+
+ <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3" aria-hidden="true" data-backdrop="static">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="model-title" id="exampleModalLabel">Забыли пароль?</h5>
+         <button class="close turn" type="button" data-dismiss="modal" aria-label="Close">
+           <span class="fs-35" aria-hidden="true" >&times;</span>
+         </button>
+       </div>
+       <form action="mail.php" method="POST">
+          <div class="container">
+            <div class="form-row">
+              <div class="col-12">
+                <label for="validationDefault02" class="m-b-3">Введите имя</label>
+                <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="Имя"  required>
+              </div>
+              <div class="col-12">
+                <label for="validationDefault02" class="m-b-3">Введите фамилию</label>
+                <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="Фамилия"  required>
+              </div>
+              <div class="col-12">
+                <label for="validationDefault02" class="m-b-3">Введите E-mail</label>
+                <input type="text" class="form-control" id="validationDefault02" name="user_email" placeholder="E-mail"  required>
+              </div>
+              <div class="col-12">
+               <label for="validationDefault03" class="m-b-3">Введите </label>
+                <input type="password" class="form-control" id="validationDefault02" name="user.password" placeholder="Пароль"  required>
+              </div>
+            </div>
+          <div class="form-group">
+          </div>
+         <button id="madia-button" class="btn btn-info justify-content-center" type="submit" >Восстановить доступ</button>
+        </form>
+      </div>  
+  </div>
+</div>
+  
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/script2.js"></script>
+  </body>
