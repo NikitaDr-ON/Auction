@@ -49,14 +49,14 @@ public class DataService implements UserDetailsService {
       {
          Data newUser = new Data(name,surname,mail,password);
          newUser.setPassword( new BCryptPasswordEncoder().encode(password));
-         newUser.setActivation("true");
+         newUser.setActivation("false");
          newUser.setActivationCode(UUID.randomUUID().toString());
          Repository.save(newUser);
          if(!StringUtils.isEmpty(newUser.getMail()))
          {
-            String message=String.format("Hello world");
             newUser.getUsername();
             newUser.getActivationCode();
+            String message=String.format(newUser.getActivationCode());
             mailSender.send(newUser.getMail(),"Activation code", message);
          }
       }
