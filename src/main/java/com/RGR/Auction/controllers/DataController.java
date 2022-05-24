@@ -18,16 +18,14 @@ public class DataController {
     @Autowired
     DataService dataService;
     
-    @GetMapping("/authorization") 
-    public String authorization(Model model)
+    @GetMapping("/authorization") public String authorization(Model model)
         {
             Iterable<Data> data =  Repositories.findAll();
             model.addAttribute("data",data);
             return "authorization";
         }
 
-    @GetMapping("/privateOffice") 
-    public String privateOffice(Model model)
+    @GetMapping("/privateOffice") public String privateOffice(Model model)
     {
 
         return "privateOffice";

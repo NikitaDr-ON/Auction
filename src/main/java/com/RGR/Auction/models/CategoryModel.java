@@ -2,7 +2,6 @@ package com.RGR.Auction.models;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name="categories")
 public class CategoryModel {
@@ -37,4 +36,3 @@ public class CategoryModel {
         Name = name;
     }
 }
-
