@@ -5,13 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div th:each="el : ${data}">
-    <h3>
-        <p th:text="${el.getUsername()}"></p>
-        <p th:text="${el.getSurname()}"></p>
-        <p th:text="${el.getMail()}"></p>
-        <p th:text="${el.getRole()}"></p>
-    </h3>
+<div>
+    <form  method="post">
+        <input type="text" name="code" placeholder="введите код из почты"/>
+        <button type="submit">добавить</button>
+    </form>
 </div>
 </body>
 </html>

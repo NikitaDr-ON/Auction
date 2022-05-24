@@ -15,17 +15,23 @@ public class MainController {
         model.addAttribute("name", name);
         return "hello";
     }*/
+
+    @PostMapping("/antikiick")
+    public String show(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
+    {
+        return "antikiick";
+    }
     @GetMapping("/index")
     public String showIndex()
     {
         return "index";
     }
     @PostMapping("/index")
-    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
+    public String showIndex(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
     {
 
 
-        return "authorization";
+        return "index";
     }
 
 }

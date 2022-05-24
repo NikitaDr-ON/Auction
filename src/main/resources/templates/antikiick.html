@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+      <link th:href="@{/style.css}" rel="stylesheet" />
     <link rel="stylesheet" href="css/font-awesome.css" >
     <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>HAMMER</title>
   </head>
-  <body style="background: url(img/bg-body.jpg);"> 
+  <body style="background: url(bg-body.jpg);">
     <div id="index"></div>
      <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
     <div class="container">
@@ -28,16 +28,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto nav-icon">
         <li class="nav-item">
-          <a href="index.html" class="nav-link "><i class="fa fa-home"></i>Главная</a>
+          <a href="index" class="nav-link "><i class="fa fa-home"></i>Главная</a>
         </li>
         <li class="nav-item dropdown active">
           <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>  
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="antikiick.html">Антиквариат и искусство</a>
-            <a class="dropdown-item" href="vintag.html">Винтаж</a>
-            <a class="dropdown-item" href="collec.html">Коллекционное</a>
-            <a class="dropdown-item" href="sdelsruk.html">Сделанное своими руками</a>
-            <a class="dropdown-item" href="dragiukr.html">Драгоценности и украшения</a>
+            <a class="dropdown-item" href="/antikiick">Антиквариат и искусство</a>
+            <a class="dropdown-item" href="/vintag">Винтаж</a>
+            <a class="dropdown-item" href="/collec">Коллекционное</a>
+            <a class="dropdown-item" href="/sdelsruk">Сделанное своими руками</a>
+            <a class="dropdown-item" href="/dragiukr">Драгоценности и украшения</a>
         </div> 
         </li>
         <li class="nav-item">
@@ -52,7 +52,7 @@
     </div>
     </nav> 
 
-    <div class="container-fluid" style="background: url(img/bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+    <div class="container-fluid" style="background: url(bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
       <div class="container">
         <h1 style="color: #fff; font-size: 50px;">Антиквариат и искусство</h1>
       </div>
