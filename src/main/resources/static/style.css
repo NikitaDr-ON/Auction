@@ -6,8 +6,8 @@ html{
 
 body{
 	font-size: 16px;
-	/*background: url(img/bg-body.jpg) center center;
-	background-size: cover;*/
+	background: url(bg-body.jpg) center center;
+	background-size: cover;
 } 
 
 body h3{
