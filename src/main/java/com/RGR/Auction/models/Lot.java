@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="lot")
 public class Lot {
+	
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -78,4 +80,6 @@ public class Lot {
     public void setCategory(int category) {
         this.category = category;
     }
+
 }
+

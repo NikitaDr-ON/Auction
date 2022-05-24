@@ -41,7 +41,8 @@ public class DataService implements UserDetailsService {
       return userFromDb.orElse(new Data());
    }
 
-   public void saveUser(String name,String surname,String mail,String password) {
+   @SuppressWarnings("deprecation")
+public void saveUser(String name,String surname,String mail,String password) {
       Data userFromDB = Repository.findByMail(mail);
       if (userFromDB != null) {
       }
