@@ -1,20 +1,19 @@
 package com.RGR.Auction.models;
 
 import javax.persistence.*;
-/*
+
 @Entity
 @Table(name="categories")
 public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ManyToOne(fetch = FetchType.LAZY)
     private long id;
     @Column(name="name")
-    private String Name;
+    private String name;
 
     public CategoryModel(long id, String name) {
         this.id = id;
-        Name = name;
+        this.name = name;
     }
 
     public CategoryModel() {
@@ -29,10 +28,10 @@ public class CategoryModel {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
-}*/
+}

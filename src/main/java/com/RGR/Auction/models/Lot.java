@@ -1,6 +1,6 @@
 package com.RGR.Auction.models;
 
-/*import javax.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name="lot")
@@ -16,10 +16,11 @@ public class Lot {
     private String product;
     @Column(name="Description")
     private String description;
-    @Column(name="Category")
-    private int category;
+    @ManyToOne   
+    @JoinColumn(name="Category")  
+    private CategoryModel category;
 
-    public Lot(long id, int coast, int seller, String product, String description, int category) {
+    public Lot(long id, int coast, int seller, String product, String description, CategoryModel category) {
         this.id = id;
         this.coast = coast;
         this.seller = seller;
@@ -71,11 +72,11 @@ public class Lot {
         this.description = description;
     }
 
-    public int getCategory() {
+    public CategoryModel getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory( CategoryModel category) {
         this.category = category;
     }
-}*/
+}
