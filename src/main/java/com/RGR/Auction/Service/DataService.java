@@ -41,9 +41,10 @@ public class DataService implements UserDetailsService {
       return userFromDb.orElse(new Data());
    }
 
-   public void saveUser(String name,String surname,String mail,String password) {
+   public boolean saveUser(String name,String surname,String mail,String password) {
       Data userFromDB = Repository.findByMail(mail);
       if (userFromDB != null) {
+         return false;
       }
       else
       {
@@ -59,6 +60,7 @@ public class DataService implements UserDetailsService {
             String message=String.format(newUser.getActivationCode());
             mailSender.send(newUser.getMail(),"Activation code", message);
          }
+         return true;
       }
    }
 

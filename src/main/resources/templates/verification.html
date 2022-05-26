@@ -1,10 +1,61 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>HAMMER</title>
 </head>
-<body>
+<body style="background: url(bg-body.jpg);">
+<div id="index"></div>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+    <div class="container">
+        <a href="index" class="navbar-brand">
+            <img src="logo.png" width="120px" height="120px" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto nav-icon">
+                <li class="nav-item active">
+                    <a href="index" class="nav-link "><i class="fa fa-home"></i>Главная</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/antikiick">Антиквариат и искусство</a>
+                        <a class="dropdown-item" href="/vintag">Винтаж</a>
+                        <a class="dropdown-item" href="/collec">Коллекционное</a>
+                        <a class="dropdown-item" href="/sdelsruk">Сделанное своими руками</a>
+                        <a class="dropdown-item" href="/dragiukr.">Драгоценности и украшения</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a href="vhod" class="nav-link "><i class="fa fa-home"></i>Вход/Регистрация</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск"
+                       aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0"
+                        style="margin: 0 0 0 0px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
+            </form>
+        </div>
+    </div>
+</nav>
 <div>
     <form  method="post">
         <input type="text" name="code" placeholder="введите код из почты"/>

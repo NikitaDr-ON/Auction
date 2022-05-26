@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
 
@@ -32,10 +31,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto nav-icon">
-          <li class="nav-item">
+          <li class="nav-item active">
             <a href="index" class="nav-link "><i class="fa fa-home"></i>Главная</a>
           </li>
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,7 +42,7 @@
               <a class="dropdown-item" href="/vintag">Винтаж</a>
               <a class="dropdown-item" href="/collec">Коллекционное</a>
               <a class="dropdown-item" href="/sdelsruk">Сделанное своими руками</a>
-              <a class="dropdown-item" href="/dragiukr">Драгоценности и украшения</a>
+              <a class="dropdown-item" href="/dragiukr.">Драгоценности и украшения</a>
             </div>
           </li>
           <li class="nav-item active">
@@ -51,25 +50,38 @@
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск" aria-label="Search">
+          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск"
+            aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0"
-            style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
+            style="margin: 0 0 0 0px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
         </form>
       </div>
     </div>
   </nav>
 
-  <div class="container-fluid"
-    style="background: url(bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
-    <div class="container">
-      <h1 style="color: #fff; font-size: 50px;">Антиквариат и искусство</h1>
+
+    <div class="contain" style="width: 25%">
+      <h1>Регистрация</h1>
+      <hr>
+
+      <form  method="post">
+        <input type="text" name="name" class ="input" placeholder="Введите логин"/>
+        <input type="text" name="surname" class ="input" placeholder="Введите фамилию"/>
+        <input type="text" name="mail" class ="input" placeholder="Введите почту"/>
+        <input type="text" name="password" class ="input" id="password" placeholder="Введите пароль"/>
+        <button type="submit" id="registration" class="button">Зарегистрироваться</button>
+      </form>
+
+      <hr>
     </div>
-  </div>
-
-
+<div >
+  <p th:text="${message}" class="message"></p>
+</div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/script2.js"></script>
+  <script src="JS.js"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -82,7 +94,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
-  <script src="js/script2.js"></script>
+
 </body>
 
 </html>
