@@ -98,4 +98,15 @@ public class DataController {
 
         return "vintag";
     }
+    @GetMapping("/vhod")
+    public String vhod(Model model) {
+
+        return "vhod";
+    }
+    @GetMapping("/zabpar")
+    public String zabpar(Model model) {
+
+        return "zabpar";
+    }
+
 }

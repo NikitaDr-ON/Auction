@@ -21,25 +21,31 @@ public class RegistrationController {
     @Autowired
     Repositories Repository;
 
-    @GetMapping("/registration") public String showRegistration(Model model)
+    @GetMapping("/registr") public String showRegistration(Model model)
     {
 
-        return "registration";
+        return "registr";
     }
 
 
-    @PostMapping("/registration")
-    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password)
+    @PostMapping("/registr")
+    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password, Model model)
     {
-       dataService.saveUser(name,surname,mail,password);
-        return "redirect:registration/verification";
+       if(dataService.saveUser(name,surname,mail,password))
+       {
+           return "redirect:registr/verification";
+       }
+       else {
+           model.addAttribute("message","user with this email already exists");
+           return  "registr";
+       }
     }
-    @GetMapping("/registration/verification")
+    @GetMapping("/registr/verification")
     public String verification()
     {
         return  "verification";
     }
-    @PostMapping("/registration/verification")
+    @PostMapping("/registr/verification")
     public String verificationCode(@RequestParam String code)
     {
         Data user = Repository.findByActivationCode(code);
@@ -50,6 +56,6 @@ public class RegistrationController {
             Repository.save(user);
             System.out.println(user.getActivation());
         }
-        return  "verification";
+        return  "redirect:/index";
     }
 }
