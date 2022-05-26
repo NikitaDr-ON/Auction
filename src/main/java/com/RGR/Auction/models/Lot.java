@@ -10,8 +10,9 @@ public class Lot {
     private long id;
     @Column(name="Coast")
     private int coast;
-    @Column(name="Seller")
-    private int seller;
+    @ManyToOne   
+    @JoinColumn(name="Seller")  
+    private Data seller;
     @Column(name="Product_name")
     private String product;
     @Column(name="Description")
@@ -20,7 +21,7 @@ public class Lot {
     @JoinColumn(name="Category")  
     private CategoryModel category;
 
-    public Lot(long id, int coast, int seller, String product, String description, CategoryModel category) {
+    public Lot(long id, int coast, Data seller, String product, String description, CategoryModel category) {
         this.id = id;
         this.coast = coast;
         this.seller = seller;
@@ -48,11 +49,11 @@ public class Lot {
         this.coast = coast;
     }
 
-    public int getSeller() {
+    public Data getSeller() {
         return seller;
     }
 
-    public void setSeller(int seller) {
+    public void setSeller(Data seller) {
         this.seller = seller;
     }
 
