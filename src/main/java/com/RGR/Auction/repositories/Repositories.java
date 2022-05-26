@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface Repositories extends CrudRepository<Data, Long> {
     Data findByName(String name);
     Data findByMail(String mail);
+    Data findById(long id);
 
     Data findByActivationCode(String code);
 }

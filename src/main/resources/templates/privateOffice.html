@@ -1,17 +1,22 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>Личный кабинет</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div th:each="el : ${data}">
-    <h3>
-        <p th:text="${el.getUsername()}"></p>
-        <p th:text="${el.getSurname()}"></p>
-        <p th:text="${el.getMail()}"></p>
-        <p th:text="${el.getRole()}"></p>
-    </h3>
+<p>Личный кабинет</p>
+<div>
+    <div th:each="el : ${data}">
+        <h3>
+            <p th:text="${el.getUsername()}"></p>
+            <p th:text="${el.getSurname()}"></p>
+            <p th:text="${el.getMail()}"></p>
+            <p th:text="${el.getRole()}"></p>
+            <p th:text="${el.getBalanse()}"></p>
+            <p th:text="${el.getActivation()}"></p>
+        </h3>
+    </div>
 </div>
 </body>
 </html>

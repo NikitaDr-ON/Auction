@@ -2,13 +2,17 @@ package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Lot;
+import com.RGR.Auction.repositories.LotRepository;
 import com.RGR.Auction.repositories.Repositories;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -20,21 +24,24 @@ public class DataController {
     private Repositories Repositories;
     @Autowired
     DataService dataService;
+    @Autowired
+    private LotRepository lotRepository;
 
     @GetMapping("/authorization")
     public String authorization(Model model) {
         Iterable<Data> data = Repositories.findAll();
         model.addAttribute("data", data);
+        System.out.println("id");
         return "authorization";
     }
 
-    @GetMapping("/privateOffice/{id}")
-    public String privateOffice(@PathVariable(value = "id") long userId,Model model) {
-        Optional<Data> user = Repositories.findById(userId);
-        ArrayList<Data> resultat = new ArrayList<>();
-        user.ifPresent(resultat::add);
-        model.addAttribute("data",resultat);
-        return "privateOffice/{id}";
+    @GetMapping("/privateOffice")
+    public String privateOffice(@AuthenticationPrincipal Data user, Model model) {
+
+       System.out.println(user.getId());
+       model.addAttribute("data",user);
+        System.out.println("id");
+        return "privateOffice";
     }
 
 
@@ -59,6 +66,8 @@ public class DataController {
 
     @GetMapping("/antikiick")
     public String antikiick(Model model) {
+        Iterable<Lot> lot = lotRepository.findAll();
+        model.addAttribute("lot",lot);
 
         return "antikiick";
     }
@@ -74,10 +83,10 @@ public class DataController {
 
         return "dragiukr";
     }
-    @GetMapping("/lc")
+    @GetMapping("/lk")
     public String lc(Model model) {
 
-        return "lc";
+        return "lk";
     }
     @GetMapping("/sdelsruk")
     public String sdelsruk(Model model) {

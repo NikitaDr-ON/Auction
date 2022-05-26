@@ -12,6 +12,7 @@ public class Data implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID")
     private long id;
     @Column(name="Name")
     private String name;
