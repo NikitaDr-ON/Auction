@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
 
@@ -32,10 +31,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto nav-icon">
-          <li class="nav-item">
+          <li class="nav-item active">
             <a href="index.html" class="nav-link "><i class="fa fa-home"></i>Главная</a>
           </li>
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -51,7 +50,8 @@
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск" aria-label="Search">
+          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск"
+            aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0"
             style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
         </form>
@@ -59,18 +59,29 @@
     </div>
   </nav>
 
-  <div class="container-fluid"
-    style="background: url(img/bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
-    <div class="container">
-      <h1 style="color: #fff; font-size: 50px;">Сделанное своими руками</h1>
-    </div>
-  </div>
 
+  <form action="action_page.php">
+    <div class="contain" style="width: 25%">
+      <h1>Забыли пароль?</h1>
+      <hr>
+
+      <label for="email"><b>E-mail</b></label>
+      <input type="text" placeholder="Введите Email" name="email" required>
+
+      <label for="psw"><b>Введите пароль с письма</b></label>
+      <input type="password" placeholder="Введите пароль" name="psw" required>
+
+      <hr>
+      <button type="submit" class="vhodbtn">Войти</button>
+    </div>
+
+  </form>
 
 
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/script2.js"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -83,7 +94,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
-  <script src="js/script2.js"></script>
+
 </body>
 
 </html>
