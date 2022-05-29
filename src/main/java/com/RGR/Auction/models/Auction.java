@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 
-@Entity
+/*@Entity
 @Table(name="auction")
 public class Auction {
 	@Id
@@ -77,7 +77,7 @@ public class Auction {
 		this.end = end;
 	}
 	
-	
+
 	
 
-}
+}*/

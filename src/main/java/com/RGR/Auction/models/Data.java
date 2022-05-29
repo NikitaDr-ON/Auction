@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -22,14 +23,14 @@ public class Data implements UserDetails {
     private String mail;
     @Column(name="Password")
     private String password;
-    @Column(name="Role")
-    private String role;
     @Column(name="Balance")
     private int balanse;
     @Column(name="Activation_code")
     private String activationCode;
     @Column(name="Activation")
     private String activation;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     public Data() {
     }
@@ -39,7 +40,6 @@ public class Data implements UserDetails {
         this.surname = surname;
         this.mail = mail;
         this.password = password;
-        this.role="user";
         this.balanse=0;
     }
 
@@ -75,8 +75,12 @@ public class Data implements UserDetails {
         return true;
     }
 
-    public void setUsername(String name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getSurname() {
@@ -97,7 +101,7 @@ public class Data implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRole();
     }
 
     public String getPassword() {
@@ -106,14 +110,6 @@ public class Data implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public int getBalanse() {
@@ -139,5 +135,12 @@ public class Data implements UserDetails {
         this.activationCode = activationCode;
     }
 
+    public Set<Role> getRole() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
 }

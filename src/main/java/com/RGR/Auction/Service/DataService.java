@@ -1,20 +1,18 @@
 package com.RGR.Auction.Service;
 
 import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Role;
 import com.RGR.Auction.repositories.Repositories;
+import com.RGR.Auction.repositories.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -23,6 +21,8 @@ public class DataService implements UserDetailsService {
    Repositories Repository;
    @Autowired
    MailSender mailSender;
+   @Autowired
+   RoleRepo roleRepo;
 
    @Override
    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
@@ -49,6 +49,7 @@ public class DataService implements UserDetailsService {
       else
       {
          Data newUser = new Data(name,surname,mail,password);
+         newUser.setRoles(Collections.singleton(new Role(1L, "ROLE_ADMIN")));
          newUser.setPassword( new BCryptPasswordEncoder().encode(password));
          newUser.setActivation("false");
          newUser.setActivationCode(UUID.randomUUID().toString());
