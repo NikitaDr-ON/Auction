@@ -7,30 +7,35 @@ import javax.persistence.*;
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID_Product")
     private long id;
-    @Column(name="Coast")
-    private int coast;
+    @Column(name="Product_name")
+    private String product;
+    @Column(name="StartCost")
+    private int startCost;
     @ManyToOne   
     @JoinColumn(name="Seller")  
     private Data seller;
-    @Column(name="Product_name")
-    private String product;
     @Column(name="Description")
     private String description;
-    @ManyToOne   
+    @Column(name="Photo")
+    private String photo;
+	@ManyToOne   
     @JoinColumn(name="Category")  
     private CategoryModel category;
+    
 
-    public Lot(long id, int coast, Data seller, String product, String description, CategoryModel category) {
-        this.id = id;
-        this.coast = coast;
-        this.seller = seller;
-        this.product = product;
-        this.description = description;
-        this.category = category;
-    }
+    public Lot(String product, int startCost, Data seller, String description, String photo, CategoryModel category) {
+		
+		this.product = product;
+		this.startCost = startCost;
+		this.seller = seller;
+		this.description = description;
+		this.photo = photo;
+		this.category = category;
+	}
 
-    public Lot() {
+	public Lot() {
     }
 
     public long getId() {
@@ -41,15 +46,15 @@ public class Lot {
         this.id = id;
     }
 
-    public int getCoast() {
-        return coast;
-    }
+    public int getStartCost() {
+		return startCost;
+	}
 
-    public void setCoast(int coast) {
-        this.coast = coast;
-    }
+	public void setStartCost(int startCost) {
+		this.startCost = startCost;
+	}
 
-    public Data getSeller() {
+	public Data getSeller() {
         return seller;
     }
 
@@ -72,6 +77,13 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
     public CategoryModel getCategory() {
         return category;
