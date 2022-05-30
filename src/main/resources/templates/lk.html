@@ -106,40 +106,49 @@
       <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="card card-body" style="border: 1px solid white;">
           <p style="margin-bottom: 35px;">Мои лоты</p>
+          <div th:each="el : ${lots}">
+   	 <h3>
+        <p th:text="${el.getId()}"></p>
+        <p th:text="${el.getStartCost()}"></p>
+        <p th:text="${el.getSeller().getUsername()}"></p>
+        <p th:text="${el.getProduct()}"></p>
+        <p th:text="${el.getDescription()}"></p>
+        <p th:text="${el.getCategory().getName()}"></p>
+    </h3>
+		</div>
         </div>
       </div>
     </div>
 
-
+<form  method="post">
     <div class="container-fluid" style="margin: 30px auto 50px auto;">
       <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
         <div class="collapse multi-collapse" id="multiCollapseExample2">
           <div class="card card-body" style="border: 1Fpx solid white;">
             <div style="text-align: left;">
               <p>Введите название товара: </p>
-              <input type="text" value="Название">
+              <input type="text" name="product">
             </div>
             <div style="text-align: left;">
               <p>Введите описание товара: </p>
-              <input type="text" value="Описание">
+              <input type="text" name="description">
             </div>
             <div style="text-align: left;">
               <p>Начальная ставка: </p>
-              <input type="text" value="0">
-              <button> Ставка</button>
+              <input type="text" name="startCost" value="0">
             </div>
             <div style="text-align: left;">
               <label for="file">Файл:</label>
-              <input type="file" id="file" value>
+              <input type="file" name="photo" id="file" value>
             </div>
             <div style="text-align: left;">
               <label for="categories">Выберите категорию товара:</label>
-              <select name="categories">
-                <option value="AII" selected="selected">Антиквариат и искусство</option>
-                <option value="VIN">Винтаж</option>
-                <option value="KOL">Коллекционное</option>
-                <option value="SSR">Сделанное своими руками</option>
-                <option value="DIU">Драгоценности и украшения</option>
+              <select name="categoryId">
+                <option value="1" selected="selected">Антиквариат и искусство</option>
+                <option value="2">Винтаж</option>
+                <option value="3">Коллекционное</option>
+                <option value="4">Сделанное своими руками</option>
+                <option value="5">Драгоценности и украшения</option>
               </select>
               <div style="text-align: left;">
                 <label for="date">Время начала аукциона:</label><input type="date" id="date">
@@ -152,7 +161,7 @@
           </div>
         </div>
       </div>
-
+</form>
 
       <div class="container-fluid" style="margin: 30px auto 50px auto;">
         <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">

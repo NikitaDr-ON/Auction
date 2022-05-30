@@ -6,11 +6,12 @@ import java.util.Date;
 import javax.persistence.*;
 
 
-/*@Entity
+@Entity
 @Table(name="auction")
 public class Auction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="ID")
 	private int id;
 	@ManyToOne 
 	@JoinColumn(name="ID_product")
@@ -18,8 +19,8 @@ public class Auction {
 	@Column(name="ID_comment")
 	@OneToMany(fetch=FetchType.EAGER)
 	private Collection <Comment> comments;
-	@Column(name="Coast")
-	private int coast;
+	@Column(name="Cost")
+	private int cost;
 	@Column(name="Start")
 	private Date start;
 	@Column(name="End")
@@ -29,11 +30,10 @@ public class Auction {
 	public Auction() {
 
 	}
-	public Auction(int id, Lot lot, Collection<Comment> comments, int coast, Date start, Date end) {
-		this.id = id;
+	public Auction( Lot lot, Collection<Comment> comments, int cost, Date start, Date end) {
 		this.lot = lot;
 		this.comments = comments;
-		this.coast = coast;
+		this.cost = cost;
 		this.start = start;
 		this.end = end;
 	}
@@ -58,11 +58,11 @@ public class Auction {
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
 	}
-	public int getCoast() {
-		return coast;
+	public int getCost() {
+		return cost;
 	}
-	public void setCoast(int coast) {
-		this.coast = coast;
+	public void setCoast(int cost) {
+		this.cost = cost;
 	}
 	public Date getStart() {
 		return start;
@@ -76,8 +76,5 @@ public class Auction {
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-	
-
-	
-
-}*/
+		
+}
