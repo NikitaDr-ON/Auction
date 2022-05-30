@@ -98,11 +98,16 @@ public class DataController {
 
         return "vintag";
     }
-    @GetMapping("/vhod")
-    public String vhod(Model model) {
+    @RequestMapping("/login")
+    public String login(Model model) {
 
-        return "vhod";
+        return "login";
     }
+    //@PostMapping("/login")
+    //public String vhod(@RequestParam String mail,@RequestParam String password,Model model) {
+
+      //  return "redirect:/lk";
+   // }
     @GetMapping("/zabpar")
     public String zabpar(Model model) {
 

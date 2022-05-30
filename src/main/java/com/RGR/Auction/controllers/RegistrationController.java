@@ -56,6 +56,6 @@ public class RegistrationController {
             Repository.save(user);
             System.out.println(user.getActivation());
         }
-        return  "redirect:/index";
+        return  "redirect:/vhod";
     }
 }
