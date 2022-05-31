@@ -23,8 +23,7 @@ public class MainController {
         return "antikiick";
     }
     @GetMapping("/index")
-    public String showIndex(@AuthenticationPrincipal Data user, Model model) {
-        model.addAttribute("userID",user.getId());
+    public String showIndex( Model model) {
         return "index";
     }
 

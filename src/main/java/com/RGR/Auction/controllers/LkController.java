@@ -36,7 +36,7 @@ public class LkController {
     return "lk";
 	}
 
-	@SuppressWarnings("null")
+	/*@SuppressWarnings("null")
 	@PostMapping("lk")
     public String add(@RequestParam String product, @RequestParam int startCost, @RequestParam int sellerId, @RequestParam String description,
     		 @RequestParam String photo, @RequestParam int categoryId, Model model) {
@@ -51,7 +51,7 @@ public class LkController {
         Iterable<Lot> lots = lotRepository.findAll();
         model.addAttribute("lots", lots);
         return "lk";
-    }
+    }*/
 
 
 
