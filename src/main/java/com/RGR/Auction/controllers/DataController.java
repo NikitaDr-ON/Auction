@@ -83,11 +83,6 @@ public class DataController {
 
         return "dragiukr";
     }
-    @GetMapping("/lk")
-    public String lc(Model model) {
-
-        return "lk";
-    }
     @GetMapping("/sdelsruk")
     public String sdelsruk(Model model) {
 

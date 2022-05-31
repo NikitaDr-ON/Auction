@@ -14,6 +14,8 @@ import com.RGR.Auction.repositories.CategoryRepositories;
 import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 
+import java.util.Optional;
+
 public class LkController {
 	
 	@Autowired
@@ -34,12 +36,12 @@ public class LkController {
     return "lk";
 	}
 
-	/*@SuppressWarnings("null")
+	@SuppressWarnings("null")
 	@PostMapping("lk")
     public String add(@RequestParam String product, @RequestParam int startCost, @RequestParam int sellerId, @RequestParam String description,
     		 @RequestParam String photo, @RequestParam int categoryId, Model model) {
-        CategoryModel category=new CategoryModel();
-        category=catRepository.findById(categoryId);
+       CategoryModel category=new CategoryModel();
+	   category=catRepository.findById(categoryId);
         
         Data seller=new Data();	        
         seller=userRepository.findById(sellerId);
@@ -49,7 +51,7 @@ public class LkController {
         Iterable<Lot> lots = lotRepository.findAll();
         model.addAttribute("lots", lots);
         return "lk";
-    }*/
+    }
 
 
 

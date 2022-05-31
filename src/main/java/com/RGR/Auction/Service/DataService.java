@@ -25,9 +25,9 @@ public class DataService implements UserDetailsService {
    RoleRepo roleRepo;
 
    @Override
-   public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+   public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-      Data user = Repository.findByName(name);
+      Data user = Repository.findByMail(mail);
 
       if (user == null) {
          throw new UsernameNotFoundException("User not found");

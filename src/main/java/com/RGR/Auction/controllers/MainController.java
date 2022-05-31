@@ -1,6 +1,7 @@
 package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.models.Data;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +23,10 @@ public class MainController {
         return "antikiick";
     }
     @GetMapping("/index")
-    public String showIndex()
-    {
+    public String showIndex(@AuthenticationPrincipal Data user, Model model) {
+        model.addAttribute("userID",user.getId());
         return "index";
     }
-    @PostMapping("/index")
-    public String showIndex(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password,Model model)
-    {
 
-
-        return "index";
-    }
 
 }
