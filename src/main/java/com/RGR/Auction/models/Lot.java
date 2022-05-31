@@ -1,6 +1,9 @@
 package com.RGR.Auction.models;
 
+import java.sql.Blob;
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name="lot")
@@ -8,24 +11,25 @@ public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID_Product")
-    private long id;
+    private int id;
     @Column(name="Product_name")
     private String product;
-    @Column(name="StartCost")
+    @Column(name="Start_cost")
     private int startCost;
     @ManyToOne   
     @JoinColumn(name="Seller")  
     private Data seller;
     @Column(name="Description")
     private String description;
+    @Lob
     @Column(name="Photo")
-    private String photo;
+    private Blob photo;
 	@ManyToOne   
     @JoinColumn(name="Category")  
     private CategoryModel category;
     
 
-    public Lot(String product, int startCost, Data seller, String description, String photo, CategoryModel category) {
+    public Lot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category) {
 		
 		this.product = product;
 		this.startCost = startCost;
@@ -38,11 +42,11 @@ public class Lot {
 	public Lot() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -77,11 +81,11 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getPhoto() {
+    public Blob getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(Blob photo) {
 		this.photo = photo;
 	}
 

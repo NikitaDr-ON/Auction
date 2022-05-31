@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.RGR.Auction.models.CategoryModel;
 
 @Repository
-public interface CategoryRepositories extends CrudRepository<CategoryModel, Integer>{
+public interface CategoryRepositories extends CrudRepository<CategoryModel, Long>{
 	
-	CategoryModel findById(Long id);
+	CategoryModel findById(long id);
     List <CategoryModel> findAllByOrderByIdDesc();
 	
 }

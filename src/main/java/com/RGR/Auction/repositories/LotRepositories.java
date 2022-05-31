@@ -9,9 +9,9 @@ import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Lot;
 
 @Repository
-public interface LotRepositories extends CrudRepository<Lot, Long> {
+public interface LotRepositories extends CrudRepository<Lot, Integer> {
 	
-    Lot findById(long id);
+    Lot findById(int id);
     List <Lot> findAllByOrderByIdDesc();
 	
 }

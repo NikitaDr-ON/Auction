@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Categories</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1Список категорий</h1>
+<br/>
+<div th:each="el : ${categories}">
+    <h3>
+        <p th:text="${el.getId()}"></p>
+        <p th:text="${el.getName()}"></p>        
+  	</h3>
+</div>
+</body>
+</html>

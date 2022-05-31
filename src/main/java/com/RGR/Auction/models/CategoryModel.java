@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID")
     private long id;
     @Column(name="name")
     private String name;

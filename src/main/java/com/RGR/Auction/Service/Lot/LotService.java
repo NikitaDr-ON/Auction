@@ -1,5 +1,6 @@
 package com.RGR.Auction.Service.Lot;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -13,10 +14,10 @@ import com.RGR.Auction.models.Lot;
 public interface LotService {
 
 	List<Lot> getAll();
-	Lot getById(long id) throws NotFoundException;
-	void saveLot(String product, int startCost, Data seller, String description, String photo, CategoryModel category);
-	boolean deleteById(long id);
-	Lot update(long id, Lot lot) throws NotFoundException;
+	Lot getById(int id) throws NotFoundException;
+	void saveLot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category);
+	boolean deleteById(int id);
+	Lot update(int id, Lot lot) throws NotFoundException;
 	//boolean deleteByNameProduct(String nameProduct);
 	
 }

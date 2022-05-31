@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public CategoryModel getById(Long id) throws NotFoundException {
+	public CategoryModel getById(long id) throws NotFoundException {
 	     CategoryModel category = categoryRepository.findById(id);
 	     if (category == null) {
 	         throw new NotFoundException();

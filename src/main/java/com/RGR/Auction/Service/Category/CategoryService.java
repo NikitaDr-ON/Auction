@@ -11,7 +11,7 @@ import com.RGR.Auction.models.CategoryModel;
 public interface CategoryService {
 
 	List<CategoryModel> getAll();
-	CategoryModel getById(Long id) throws NotFoundException;
+	CategoryModel getById(long id) throws NotFoundException;
  
 
 }

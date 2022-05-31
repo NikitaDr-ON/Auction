@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="ID_comment")
 	private int id;
 	@Column(name="Text")
 	private String text;
