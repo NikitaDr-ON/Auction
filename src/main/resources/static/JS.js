@@ -26,10 +26,10 @@ let password = form.value
     if (is_sp) rating++;
     if(rating ==1){
     }
-    if(rating == 2) {
+    if(rating == 2 && password.length>=8) {
      showButton.removeAttribute("disabled")
     }
-    if(rating == 3) {
+    if(rating == 3  && password.length>=8) {
     showButton.removeAttribute("disabled")
         div.className = "good";
     }

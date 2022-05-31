@@ -65,7 +65,7 @@ public class LotServiceImpl implements LotService {
         return lotRepository.save(newLot);
     }
     
-    /*
+
 	public boolean deleteByNameProduct(String nameProduct) {
     	boolean flag=false;
     	Iterable<Lot> lots = lotRepository.findAll();
@@ -86,7 +86,7 @@ public class LotServiceImpl implements LotService {
         	return true;
         }      
     }
-    */
+
     
 
 }
