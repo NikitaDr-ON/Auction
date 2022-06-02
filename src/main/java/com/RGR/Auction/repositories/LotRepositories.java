@@ -13,5 +13,6 @@ public interface LotRepositories extends CrudRepository<Lot, Integer> {
 	
     Lot findById(int id);
     List <Lot> findAllByOrderByIdDesc();
+    List<Lot> findBySeller(Long id);
 	
 }

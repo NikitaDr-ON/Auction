@@ -19,47 +19,51 @@
 </head>
 
 <body style="background: url(bg-body.jpg);">
-  <div id="index"></div>
-  <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
-    <div class="container">
-      <a href="index" class="navbar-brand">
-        <img src="logo.png" width="120px" height="120px" alt="logo">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto nav-icon">
-          <li class="nav-item active">
-            <a href="index" class="nav-link "><i class="fa fa-home"></i>Главная</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/antikiick">Антиквариат и искусство</a>
-              <a class="dropdown-item" href="/vintag">Винтаж</a>
-              <a class="dropdown-item" href="/collec">Коллекционное</a>
-              <a class="dropdown-item" href="/sdelsruk">Сделанное своими руками</a>
-              <a class="dropdown-item" href="/dragiukr">Драгоценности и украшения</a>
-            </div>
-          </li>
-          <li class="nav-item active">
-            <a href="lk" class="nav-link "><i class="fa fa-home"></i>личный кабинет</a>
-          </li>
-          <li class="nav-item active">
-            <a href="login" class="nav-link "><i class="fa fa-home"></i>Вход/Регистрация</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0"
-            style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
-        </form>
-      </div>
+<div id="index"></div>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+  <div class="container">
+    <a href="index" class="navbar-brand">
+      <img src="logo.png" width="120px" height="120px" alt="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto nav-icon">
+        <li class="nav-item active">
+          <a href="index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                  class="fa fa-info"></i><p th:text="#{label.category}"></p></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/antikiick"><p th:text="#{label.antiquesAndArt}"></p></a>
+            <a class="dropdown-item" href="/vintag"><p th:text="#{label.vintage}"></p></a>
+            <a class="dropdown-item" href="/collec"><p th:text="#{label.collection}"></p></a>
+            <a class="dropdown-item" href="/sdelsruk"><p th:text="#{label.handmade}"></p></a>
+            <a class="dropdown-item" href="/dragiukr" ><p th:text="#{label.drag}"></p></a>
+          </div>
+        </li>
+        <li class="nav-item active">
+          <a href="login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
+        </li>
+        <li class="nav-item active">
+          <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
+        </li>
+        <li>
+          <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0"
+                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
+      </form>
     </div>
-  </nav>
+  </div>
+</nav>
 
 
 

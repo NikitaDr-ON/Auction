@@ -16,20 +16,23 @@ public class Lot {
     private String product;
     @Column(name="Start_cost")
     private int startCost;
-    @ManyToOne   
-    @JoinColumn(name="Seller")  
-    private Data seller;
+  //  @ManyToOne
+   // @JoinColumn(name="Seller")
+    //private Data seller;
+    private Long seller;
     @Column(name="Description")
     private String description;
     @Lob
-    @Column(name="Photo")
-    private Blob photo;
-	@ManyToOne   
-    @JoinColumn(name="Category")  
-    private CategoryModel category;
+    @Column(name="Photo" ,columnDefinition = "MEDIUMBLOB")
+    private String photo;
+    //private Blob photo;
+	//@ManyToOne
+   // @JoinColumn(name="Category")
+   //private CategoryModel category;
+    private Long category;
     
 
-    public Lot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category) {
+   /* public Lot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category) {
 		
 		this.product = product;
 		this.startCost = startCost;
@@ -37,9 +40,18 @@ public class Lot {
 		this.description = description;
 		this.photo = photo;
 		this.category = category;
-	}
+	}*/
 
-	public Lot() {
+    public Lot(String product, int startCost, Long seller, String description, String photo, Long category) {
+        this.product = product;
+        this.startCost = startCost;
+        this.seller = seller;
+        this.description = description;
+        this.photo = photo;
+        this.category = category;
+    }
+
+    public Lot() {
     }
 
     public int getId() {
@@ -58,11 +70,19 @@ public class Lot {
 		this.startCost = startCost;
 	}
 
-	public Data getSeller() {
+	/*public Data getSeller() {
+        return seller;
+    }*/
+
+   /* public void setSeller(Data seller) {
+        this.seller = seller;
+    }*/
+
+    public Long getSeller() {
         return seller;
     }
 
-    public void setSeller(Data seller) {
+    public void setSeller(Long seller) {
         this.seller = seller;
     }
 
@@ -81,19 +101,35 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Blob getPhoto() {
+   /* public Blob getPhoto() {
 		return photo;
 	}
 
 	public void setPhoto(Blob photo) {
 		this.photo = photo;
-	}
+	}*/
 
-    public CategoryModel getCategory() {
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    /* public CategoryModel getCategory() {
         return category;
     }
 
     public void setCategory( CategoryModel category) {
+        this.category = category;
+    }*/
+
+    public Long getCategory() {
+        return category;
+    }
+
+    public void setCategory(Long category) {
         this.category = category;
     }
 }
