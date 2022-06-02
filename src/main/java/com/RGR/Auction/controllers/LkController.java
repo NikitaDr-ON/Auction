@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.RGR.Auction.Service.Lot.LotService;
 import com.RGR.Auction.models.CategoryModel;
 import com.RGR.Auction.models.Data;
-n.repositories.CategoryRepositories;
+import com.RGR.Auction.models.Lot;
+import com.RGR.Auction.repositories.CategoryRepositories;
 import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 

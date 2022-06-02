@@ -23,13 +23,13 @@ public class Lot {
     private String description;
     @Lob
     @Column(name="Photo")
-    private Blob photo;
+    private String photo;
 	@ManyToOne   
     @JoinColumn(name="Category")  
     private CategoryModel category;
     
 
-    public Lot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category) {
+    public Lot(String product, int startCost, Data seller, String description, String photo, CategoryModel category) {
 		
 		this.product = product;
 		this.startCost = startCost;
@@ -81,11 +81,11 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Blob getPhoto() {
+    public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Blob photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

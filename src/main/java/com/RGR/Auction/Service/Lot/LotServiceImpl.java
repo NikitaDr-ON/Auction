@@ -23,7 +23,7 @@ public class LotServiceImpl implements LotService {
     }
 
     @Override
-    public Lot getById(long id) throws NotFoundException {
+    public Lot getById(int id) throws NotFoundException {
         Lot lot = lotRepository.findById(id);
         if (lot == null) {
             throw new NotFoundException();
@@ -38,7 +38,7 @@ public class LotServiceImpl implements LotService {
     }
     
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteById(int id) {
     	Lot lot = lotRepository.findById(id);
         if (lot == null) {
             return false;
@@ -50,7 +50,7 @@ public class LotServiceImpl implements LotService {
     }
     
     @Override
-    public Lot update(long id, Lot lot) throws NotFoundException {
+    public Lot update(int id, Lot lot) throws NotFoundException {
         if (!lotRepository.existsById(id)) {
             throw new NotFoundException();
         }
@@ -73,7 +73,7 @@ public class LotServiceImpl implements LotService {
     	for (int i = 0; i < ((List<Lot>) lots).size(); i++) {
     	    Lot lot=((List<Lot>) lots).get(i);
     	    if(lot.getProduct()==nameProduct) { 
-    	    	Long lotid=lot.getId();
+    	    	int lotid=lot.getId();
     	    	lotRepository.deleteById(lotid);
     	    	flag=true;
     	    }

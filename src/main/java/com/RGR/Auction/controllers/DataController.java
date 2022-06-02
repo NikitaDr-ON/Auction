@@ -3,7 +3,7 @@ package com.RGR.Auction.controllers;
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Lot;
-import com.RGR.Auction.repositories.LotRepository;
+import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,7 @@ public class DataController {
     @Autowired
     DataService dataService;
     @Autowired
-    private LotRepository lotRepository;
+    private LotRepositories lotRepository;
 
     @GetMapping("/authorization")
     public String authorization(Model model) {

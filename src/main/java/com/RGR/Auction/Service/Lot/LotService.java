@@ -15,9 +15,9 @@ public interface LotService {
 
 	List<Lot> getAll();
 	Lot getById(int id) throws NotFoundException;
-	void saveLot(String product, int startCost, Data seller, String description, Blob photo, CategoryModel category);
 	boolean deleteById(int id);
 	Lot update(int id, Lot lot) throws NotFoundException;
 	//boolean deleteByNameProduct(String nameProduct);
+	void saveLot(String product, int startCost, Data seller, String description, String photo, CategoryModel category);
 	
 }
