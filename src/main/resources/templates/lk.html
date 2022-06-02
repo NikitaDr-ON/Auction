@@ -119,11 +119,9 @@
    	 <h3>
         <p th:text="${el.getId()}"></p>
         <p th:text="${el.getStartCost()}"></p>
-        <p th:text="${el.getSeller().getUsername()}"></p>
         <p th:text="${el.getProduct()}"></p>
         <p th:text="${el.getDescription()}"></p>
-        <p th:text="${el.getCategory().getName()}"></p>
-       <img alt="" th:src="*{'data:photo/jpeg;base64,'+{product.image}}" style="width: 100px;height: 100px;">
+       <img alt="" th:src="*{'data:photo/jpeg;base64,'+{el.photo}}" style="width: 100px;height: 100px;">
     </h3>
 		</div>
         </div>

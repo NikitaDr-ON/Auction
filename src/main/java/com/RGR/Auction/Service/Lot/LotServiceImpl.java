@@ -53,7 +53,7 @@ public class LotServiceImpl implements LotService {
             System.out.println("not a a valid file");
         }
         try {
-            newLot.setPhoto(Base64.getEncoder().encodeToString(file.getBytes()));
+            newLot.setPhoto(file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

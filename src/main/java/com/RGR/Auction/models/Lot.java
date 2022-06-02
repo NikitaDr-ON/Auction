@@ -24,7 +24,7 @@ public class Lot {
     private String description;
     @Lob
     @Column(name="Photo" ,columnDefinition = "MEDIUMBLOB")
-    private String photo;
+    private byte[] photo;
     //private Blob photo;
 	//@ManyToOne
    // @JoinColumn(name="Category")
@@ -42,7 +42,7 @@ public class Lot {
 		this.category = category;
 	}*/
 
-    public Lot(String product, int startCost, Long seller, String description, String photo, Long category) {
+    public Lot(String product, int startCost, Long seller, String description, byte[] photo, Long category) {
         this.product = product;
         this.startCost = startCost;
         this.seller = seller;
@@ -109,11 +109,11 @@ public class Lot {
 		this.photo = photo;
 	}*/
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
