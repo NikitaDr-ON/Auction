@@ -121,7 +121,8 @@
         <p th:text="${el.getStartCost()}"></p>
         <p th:text="${el.getProduct()}"></p>
         <p th:text="${el.getDescription()}"></p>
-       <img alt="" th:src="*{'data:photo/jpeg;base64,'+{el.photo}}" style="width: 100px;height: 100px;">
+       <p th:text="${el.getPhoto}"></p>
+       <img th:src="'/Img/'+${el.getPhoto()}+.jpg">
     </h3>
 		</div>
         </div>

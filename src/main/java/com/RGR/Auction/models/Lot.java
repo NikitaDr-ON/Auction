@@ -22,10 +22,8 @@ public class Lot {
     private Long seller;
     @Column(name="Description")
     private String description;
-    @Lob
-    @Column(name="Photo" ,columnDefinition = "MEDIUMBLOB")
-    private byte[] photo;
-    //private Blob photo;
+    @Column(name="Photo")
+    private String photo;
 	//@ManyToOne
    // @JoinColumn(name="Category")
    //private CategoryModel category;
@@ -47,7 +45,6 @@ public class Lot {
         this.startCost = startCost;
         this.seller = seller;
         this.description = description;
-        this.photo = photo;
         this.category = category;
     }
 
@@ -101,7 +98,16 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-   /* public Blob getPhoto() {
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    /* public Blob getPhoto() {
 		return photo;
 	}
 
@@ -109,13 +115,6 @@ public class Lot {
 		this.photo = photo;
 	}*/
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
     /* public CategoryModel getCategory() {
         return category;
