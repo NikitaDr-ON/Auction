@@ -1,9 +1,16 @@
 package com.RGR.Auction.Service.Lot;
 
+<<<<<<< HEAD
+=======
+import java.awt.*;
+import java.io.File;
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class LotServiceImpl implements LotService {
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     private LotRepositories lotRepository;
@@ -35,16 +44,17 @@ public class LotServiceImpl implements LotService {
     @Override
     public void saveLot(String product, int startCost, Long seller, String description, MultipartFile file, Long category) throws IOException {
         Lot newLot = new Lot();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if(fileName.contains(".."))
-        {
-            System.out.println("not a a valid file");
+
+        File uploadDir = new File(uploadPath);
+        if(!uploadDir.exists()){
+            uploadDir.mkdir();
         }
-        try {
-            newLot.setPhoto(file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        String uuidFile = UUID.randomUUID().toString();
+        String res = uuidFile;
+        file.transferTo(new File(uploadPath + "/" + res+".jpg"));
+
+        newLot.setPhoto(res);
         newLot.setProduct(product);
         newLot.setStartCost(startCost);
         newLot.setSeller(seller);
@@ -77,7 +87,7 @@ public class LotServiceImpl implements LotService {
         newLot.setStartCost(lot.getStartCost());
         newLot.setDescription(lot.getDescription());
         newLot.setCategory(lot.getCategory());
-        newLot.setPhoto(lot.getPhoto());
+       // newLot.setPhoto(lot.getPhoto());
         newLot.setSeller(lot.getSeller());
         return lotRepository.save(newLot);
     }
