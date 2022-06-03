@@ -1,6 +1,5 @@
 package com.RGR.Auction.models;
 
-
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;

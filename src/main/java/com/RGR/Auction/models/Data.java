@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name="users")
 public class Data implements UserDetails {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
     private long id;

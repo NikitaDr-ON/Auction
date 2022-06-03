@@ -1,7 +1,5 @@
 package com.RGR.Auction.models;
 
-import java.sql.Blob;
-
 import javax.persistence.*;
 
 
@@ -16,30 +14,33 @@ public class Lot {
     private String product;
     @Column(name="Start_cost")
     private int startCost;
-    @ManyToOne   
-    @JoinColumn(name="Seller")  
-    private Data seller;
+    @Column(name="Seller")
+    private Long seller;
     @Column(name="Description")
     private String description;
     @Lob
-    @Column(name="Photo")
-    private String photo;
-	@ManyToOne   
-    @JoinColumn(name="Category")  
-    private CategoryModel category;
-    
+    @Column(name="Photo" ,columnDefinition = "MEDIUMBLOB")
+    private byte[] photo;
+    @Column(name="Category")
+    private Long category;
 
-    public Lot(String product, int startCost, Data seller, String description, String photo, CategoryModel category) {
-		
-		this.product = product;
-		this.startCost = startCost;
-		this.seller = seller;
-		this.description = description;
-		this.photo = photo;
-		this.category = category;
-	}
+    public Lot(String product, int startCost, Long seller, String description, byte[] photo, Long category) {
+        this.product = product;
+        this.startCost = startCost;
+        this.seller = seller;
+        this.description = description;
+        this.photo = photo;
+        this.category = category;
+    }
 
-	public Lot() {
+    public Lot(String product, int startCost, Long seller, String description,  Long category) {
+        this.product = product;
+        this.startCost = startCost;
+        this.seller = seller;
+        this.description = description;
+        this.category = category;
+    }
+    public Lot() {
     }
 
     public int getId() {
@@ -58,11 +59,11 @@ public class Lot {
 		this.startCost = startCost;
 	}
 
-	public Data getSeller() {
+    public Long getSeller() {
         return seller;
     }
 
-    public void setSeller(Data seller) {
+    public void setSeller(Long seller) {
         this.seller = seller;
     }
 
@@ -81,19 +82,20 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getPhoto() {
-		return photo;
-	}
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+    public byte[] getPhoto() {
+        return photo;
+    }
 
-    public CategoryModel getCategory() {
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public Long getCategory() {
         return category;
     }
 
-    public void setCategory( CategoryModel category) {
+    public void setCategory(Long category) {
         this.category = category;
     }
 }

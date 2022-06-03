@@ -66,8 +66,7 @@ public class DataController {
 
     @GetMapping("/antikiick")
     public String antikiick(Model model) {
-        Iterable<Lot> lot = lotRepository.findAll();
-        model.addAttribute("lot",lot);
+
 
         return "antikiick";
     }

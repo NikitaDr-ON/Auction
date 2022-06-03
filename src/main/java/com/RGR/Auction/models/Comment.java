@@ -11,15 +11,16 @@ public class Comment {
 	private int id;
 	@Column(name="Text")
 	private String text;
-	@ManyToOne   
-    @JoinColumn(name="Support_id")
-	private Data support_id;
+	@Column(name="Support_id")
+	private int support_id;
+	
+	private int auction;
 	
 	
 	public Comment() {
 		
 	}
-	public Comment(int id, String text, Data support_id) {
+	public Comment(int id, String text, int support_id) {
 		this.id = id;
 		this.text = text;
 		this.support_id = support_id;
@@ -37,12 +38,18 @@ public class Comment {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public Data getSupport_id() {
+	public int getSupport_id() {
 		return support_id;
 	}
-	public void setSupport_id(Data support_id) {
+	public void setSupport_id(int support_id) {
 		this.support_id = support_id;
 	}
-
+	
+	public int getAuction() {
+		return auction;
+	}
+	public void setAuction(int auction) {
+		this.auction = auction;
+	}
 	
 }

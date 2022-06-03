@@ -14,9 +14,20 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
 	private CommentRepositories commentRepository;
+	
+	
+	@SuppressWarnings("null")
 	@Override
-	public List<Comment> getAll() {
-		 return commentRepository.findAllByOrderByIdDesc();
+	public List<Comment> getAllByIdAuction(int id_Auction) {
+		 List <Comment> list=commentRepository.findAllByOrderByIdDesc();
+		 List <Comment> listComments = null;
+		 for(Comment com:list) {
+			 if(com.getAuction()==id_Auction)
+			 {
+				 listComments.add(com);
+			 }
+		 }
+		 return listComments;
 	}
 
 	@Override
@@ -26,6 +37,11 @@ public class CommentServiceImpl implements CommentService {
 	         throw new NotFoundException();
 	         }
 	     return comment;
+	}
+
+	@Override
+	public List<Comment> getAll() {
+		return commentRepository.findAllByOrderByIdDesc();
 	}
 
 }

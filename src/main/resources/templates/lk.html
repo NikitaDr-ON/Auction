@@ -16,45 +16,56 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <title>HAMMER</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body style="background: url(bg-body.jpg);">
-  <div id="index"></div>
-  <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
-    <div class="container">
-      <a href="index" class="navbar-brand">
-        <img src="logo.png" width="120px" height="120px" alt="logo">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto nav-icon">
-          <li class="nav-item active">
-            <a href="index.html" class="nav-link "><i class="fa fa-home"></i>Главная</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i>Категории</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/antikiick">Антиквариат и искусство</a>
-              <a class="dropdown-item" href="/vintag">Винтаж</a>
-              <a class="dropdown-item" href="/collec">Коллекционное</a>
-              <a class="dropdown-item" href="/sdelsruk">Сделанное своими руками</a>
-              <a class="dropdown-item" href="/dragiukr">Драгоценности и украшения</a>
-            </div>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" placeholder="Поиск"
-            aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0"
-            style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/">Поиск</button>
-        </form>
-      </div>
+<div id="index"></div>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+  <div class="container">
+    <a href="index" class="navbar-brand">
+      <img src="logo.png" width="120px" height="120px" alt="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto nav-icon">
+        <li class="nav-item active">
+          <a href="index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                  class="fa fa-info"></i><p th:text="#{label.category}"></p></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/antikiick"><p th:text="#{label.antiquesAndArt}"></p></a>
+            <a class="dropdown-item" href="/vintag"><p th:text="#{label.vintage}"></p></a>
+            <a class="dropdown-item" href="/collec"><p th:text="#{label.collection}"></p></a>
+            <a class="dropdown-item" href="/sdelsruk"><p th:text="#{label.handmade}"></p></a>
+            <a class="dropdown-item" href="/dragiukr" ><p th:text="#{label.drag}"></p></a>
+          </div>
+        </li>
+        <li class="nav-item active">
+          <a href="login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
+        </li>
+        <li class="nav-item active">
+          <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
+        </li>
+        <li>
+          <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0"
+                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
+      </form>
     </div>
-  </nav>
+  </div>
+</nav>
 
 
   <div class="container-fluid"
@@ -106,44 +117,39 @@
       <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="card card-body" style="border: 1px solid white;">
           <p style="margin-bottom: 35px;">Мои лоты</p>
-          <div th:each="el : ${lots}">
-   	 <h3>
-        <p th:text="${el.getId()}"></p>
-        <p th:text="${el.getStartCost()}"></p>
-        <p th:text="${el.getSeller().getUsername()}"></p>
-        <p th:text="${el.getProduct()}"></p>
-        <p th:text="${el.getDescription()}"></p>
-        <p th:text="${el.getCategory().getName()}"></p>
-    </h3>
-		</div>
+			<div class = "table" id="test_database"></div>        
         </div>
       </div>
     </div>
-
-<form  method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="container-fluid" style="margin: 30px auto 50px auto;">
       <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
         <div class="collapse multi-collapse" id="multiCollapseExample2">
           <div class="card card-body" style="border: 1Fpx solid white;">
+         
             <div style="text-align: left;">
               <p>Введите название товара: </p>
-              <input type="text" name="product">
+              <input type="text" name="product" id="product">
             </div>
             <div style="text-align: left;">
               <p>Введите описание товара: </p>
-              <input type="text" name="description">
+              <input type="text" name="description"id="description">
             </div>
             <div style="text-align: left;">
               <p>Начальная ставка: </p>
-              <input type="text" name="startCost" value="0">
+              <input type="number" name="startCost" id="startCost" value="0" >
             </div>
             <div style="text-align: left;">
-              <label for="file">Файл:</label>
-              <input type="file" name="photo" id="file" value>
+              <p>Продавец: </p>
+              <input type="number" name="seller" id="seller" >
+            </div>
+            <div style="text-align: left;">
+              <label for="photo">Файл:</label>
+              <input type="file" name="file" id="photo"/> 
             </div>
             <div style="text-align: left;">
               <label for="categories">Выберите категорию товара:</label>
-              <select name="categoryId">
+              <select name="categoryId" id="categoryId"  >
                 <option value="1" selected="selected">Антиквариат и искусство</option>
                 <option value="2">Винтаж</option>
                 <option value="3">Коллекционное</option>
@@ -151,18 +157,20 @@
                 <option value="5">Драгоценности и украшения</option>
               </select>
               <div style="text-align: left;">
-                <label for="date">Время начала аукциона:</label><input type="date" id="date">
-                <label for="date">Время завершения аукциона:</label><input type="date" id="date">
+                <label for="dateStart">Время начала аукциона:</label><input type="date" id="dateStart">
+                <label for="dateEnd">Время завершения аукциона:</label><input type="date" id="dateEnd">
                 <div class="justify-content-center text-center">
-                  <button class="btn btn-primary">Добавить</button>
+                  <button class="btn btn-primary" onclick="addLot();">Добавить</button>
                 </div>
               </div>
-            </div>
+            </div>            
           </div>
         </div>
       </div>
+	</div>
 </form>
-
+   
+   
       <div class="container-fluid" style="margin: 30px auto 50px auto;">
         <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
           <div class="collapse multi-collapse" id="multiCollapseExample3">
@@ -190,7 +198,7 @@
       <script src="js/script2.js"></script>
       <script src="js/jquery-3.4.1.min.js"></script>
       <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -201,6 +209,7 @@
         crossorigin="anonymous"></script>
       <script src="js/script.js"></script>
       <script src="js/main.js"></script>
+      <script type="text/javascript" src="js/mainAjax.js"></script>
 
 </body>
 

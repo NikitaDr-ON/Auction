@@ -11,5 +11,6 @@ public interface CommentService {
 	
 	List<Comment> getAll();
 	Comment getById(Long id) throws NotFoundException;
+	List<Comment> getAllByIdAuction(int id_Auction);
 
 }

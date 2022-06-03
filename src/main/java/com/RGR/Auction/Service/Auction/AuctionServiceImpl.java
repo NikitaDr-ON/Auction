@@ -1,6 +1,5 @@
 package com.RGR.Auction.Service.Auction;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -8,16 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.RGR.Auction.models.Auction;
-import com.RGR.Auction.models.CategoryModel;
-import com.RGR.Auction.models.Comment;
-import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.repositories.AuctionRepositories;
 
 public class AuctionServiceImpl implements AuctionService {
 
 	@Autowired
 	private AuctionRepositories auctionRepository;
+	
 	@Override
 	public List<Auction> getAll() {
 		return auctionRepository.findAllByOrderByIdDesc();
@@ -33,9 +29,9 @@ public class AuctionServiceImpl implements AuctionService {
 	}	
 	
 	@Override
-    public void saveAuction(Lot lot, Collection<Comment> comments, int cost, Date start, Date end) {
+    public void saveAuction(int lot_id, int cost, Date start, Date end) {
     	   
-       Auction newAuction = new Auction(lot,comments,cost,start,end);
+       Auction newAuction = new Auction(lot_id,cost,start,end);
        auctionRepository.save(newAuction);
     }
     

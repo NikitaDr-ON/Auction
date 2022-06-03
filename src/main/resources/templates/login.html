@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
@@ -69,7 +68,7 @@
 
 
     <form action="/login" method="post">
-        <h1>Вход</h1>
+        <h1 th:text="#{label.Login}">Вход</h1>
         <input type="text" name="username" class="input1" th:placeholder="#{label.mail}"/>
         <input type="password" name="password" class="input1" th:placeholder="#{label.password}"/>
         <input type="submit" name="button" class="input1" th:value="#{label.submit}"/>
