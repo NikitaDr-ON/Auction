@@ -117,9 +117,7 @@
       <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="card card-body" style="border: 1px solid white;">
           <p style="margin-bottom: 35px;">Мои лоты</p>
-<<<<<<< HEAD
-			<div class = "table" id="test_database"></div>        
-=======
+			<div class = "table" id="test_database"></div>
           <div th:each="el : ${lots}">
    	 <h3>
         <p th:text="${el.getId()}"></p>
@@ -130,7 +128,6 @@
        <img th:src="'/Img/'+${el.getPhoto()}+.jpg">
     </h3>
 		</div>
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
         </div>
       </div>
     </div>

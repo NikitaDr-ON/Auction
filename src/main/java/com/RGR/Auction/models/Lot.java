@@ -18,18 +18,12 @@ public class Lot {
     private Long seller;
     @Column(name="Description")
     private String description;
-<<<<<<< HEAD
-    @Lob
-    @Column(name="Photo" ,columnDefinition = "MEDIUMBLOB")
-    private byte[] photo;
-    @Column(name="Category")
-=======
+
     @Column(name="Photo")
     private String photo;
 	//@ManyToOne
    // @JoinColumn(name="Category")
    //private CategoryModel category;
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
     private Long category;
 
     public Lot(String product, int startCost, Long seller, String description, byte[] photo, Long category) {
@@ -89,8 +83,6 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-<<<<<<< HEAD
-=======
 
     public String getPhoto() {
         return photo;
@@ -107,7 +99,6 @@ public class Lot {
 	public void setPhoto(Blob photo) {
 		this.photo = photo;
 	}*/
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
 
     public Long getCategory() {

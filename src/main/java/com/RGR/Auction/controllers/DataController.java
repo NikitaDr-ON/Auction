@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -89,7 +90,16 @@ public class DataController {
     }
     @GetMapping("/vintag")
     public String vintag(Model model) {
-
+       /* Iterable<Lot> lots = lotRepository.findAll();
+        List<Lot> vintage = new ArrayList<>();
+        lots.forEach(vintage::add);
+        for(int i=0;i< vintage.size();i++)
+        {
+            if(vintage.get(i).getCategory()!=1)//у меня vintage под id=1
+                vintage.remove(i);
+        }
+        model.addAttribute("vintage",vintage);
+        System.out.println(vintage);*/
         return "vintag";
     }
     @RequestMapping("/login")
