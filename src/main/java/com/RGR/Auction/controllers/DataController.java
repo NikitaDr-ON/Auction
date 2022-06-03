@@ -2,6 +2,7 @@ package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -89,7 +91,16 @@ public class DataController {
     }
     @GetMapping("/vintag")
     public String vintag(Model model) {
-
+       /* Iterable<Lot> lots = lotRepository.findAll();
+        List<Lot> vintage = new ArrayList<>();
+        lots.forEach(vintage::add);
+        for(int i=0;i< vintage.size();i++)
+        {
+            if(vintage.get(i).getCategory()!=1)//у меня vintage под id=1
+                vintage.remove(i);
+        }
+        model.addAttribute("vintage",vintage);
+        System.out.println(vintage);*/
         return "vintag";
     }
     @RequestMapping("/login")
@@ -106,6 +117,12 @@ public class DataController {
     public String zabpar(Model model) {
 
         return "zabpar";
+    }
+    @GetMapping("lot/{id}")
+    public String addFavourites(@PathVariable("id") int id,Model model) {
+        Lot lots = lotRepository.findById(id);
+        model.addAttribute("Lot", lots);
+        return "lot";
     }
 
 }

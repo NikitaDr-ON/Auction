@@ -18,9 +18,19 @@ public class Lot {
     private Long seller;
     @Column(name="Description")
     private String description;
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
     @Column(name="Photo")
     private String photo;
+<<<<<<< HEAD
     @Column(name="Category")
+=======
+	//@ManyToOne
+   // @JoinColumn(name="Category")
+   //private CategoryModel category;
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
     private Long category;
 
     public Lot(String product, int startCost, Long seller, String description, String photo, Long category) {
@@ -88,6 +98,26 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
+<<<<<<< HEAD
+=======
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    /* public Blob getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Blob photo) {
+		this.photo = photo;
+	}*/
+
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
     public Long getCategory() {
         return category;

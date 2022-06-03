@@ -1,5 +1,10 @@
 package com.RGR.Auction.Service.Lot;
 
+<<<<<<< HEAD
+=======
+
+import java.awt.*;
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

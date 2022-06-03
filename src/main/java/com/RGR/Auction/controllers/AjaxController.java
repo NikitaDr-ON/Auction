@@ -1,6 +1,7 @@
 package com.RGR.Auction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,10 +68,71 @@ public class AjaxController {
     public void addLot(@RequestBody Lot lot) {
     	lotService.saveLot(lot);
     }
+<<<<<<< HEAD
     @PostMapping("/add_auction")
     public void addAuction(@RequestBody Auction auction) {
     	auctionService.saveAuction(auction);
     }
     
+=======
+
+    @GetMapping("/get_vintage")
+    public List<Lot> getVintageLots() {
+        List<Lot> lots = lotRepository.findAll();
+        List<Lot> vintage = new ArrayList<>();
+        for(int i=0;i< lots.size();i++)
+        {
+            if(lots.get(i).getCategory()==1)
+                vintage.add(lots.get(i));
+        }
+        return vintage;
+    }
+    @GetMapping("/get_antic")
+    public List<Lot> getAnticLots() {
+        List<Lot> lots = lotRepository.findAll();
+        List<Lot> antic = new ArrayList<>();
+        for(int i=0;i< lots.size();i++)
+        {
+            if(lots.get(i).getCategory()==2)
+                antic.add(lots.get(i));
+        }
+        return antic;
+    }
+    @GetMapping("/get_handmade")
+    public List<Lot> getHandmadeLots(){
+        List<Lot> lots = lotRepository.findAll();
+        List<Lot> handmade = new ArrayList<>();
+        for(int i=0;i< lots.size();i++)
+        {
+            if(lots.get(i).getCategory()==3)
+                handmade.add(lots.get(i));
+        }
+        return handmade;
+    }
+
+    @GetMapping("/get_collectable")
+    public List<Lot> getCollectableLots() {
+        List<Lot> lots = lotRepository.findAll();
+        List<Lot> collectable = new ArrayList<>();
+        for(int i=0;i< lots.size();i++)
+        {
+            if(lots.get(i).getCategory()==4)
+                collectable.add(lots.get(i));
+        }
+        return collectable;
+    }
+
+    @GetMapping("/get_drag")
+    public List<Lot> getDragLots() {
+        List<Lot> lots = lotRepository.findAll();
+        List<Lot> jewelry = new ArrayList<>();
+        for(int i=0;i< lots.size();i++)
+        {
+            if(lots.get(i).getCategory()==5)
+                jewelry.add(lots.get(i));
+        }
+        return jewelry;
+    }
+>>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 }
 
