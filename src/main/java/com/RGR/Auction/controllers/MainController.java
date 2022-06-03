@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 	
-	 public Collection <Favourites> fav=null;
 
    /* @GetMapping("/hello")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -34,12 +33,9 @@ public class MainController {
         return "index";
     }
     
-    @GetMapping("index/id={id}")
-    public String addFavourites(@PathVariable("id") int id, @AuthenticationPrincipal Data user, Model model) {
-        
-    	fav.add(new Favourites(id,user.getId()));
-    	System.out.println(fav.toString());
-        return "index";
+    @GetMapping("/index/id={id}")
+    public String takeRate(@PathVariable("id") int id, @AuthenticationPrincipal Data user, Model model) {
+        return "index/rate";
     }
 
 

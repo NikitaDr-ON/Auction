@@ -1,20 +1,39 @@
 $(document).ready(function (){
     showLots();
     showAllLots();
+    showAuctions();
 });
 
 function showLots() {
     $.get('/ajax/get_lots', function (data){
 		console.log(data);
 		
-        let table = "<table> <tr><th>Название</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+        let table = "<table> <tr><th>Название</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
 
         for (i = 0; i<data.length; i++){
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>" 
-            + data[i].startCost+"</td></tr>";
+            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].description + "</td><td>"+ data[i].photo + "</td><td>" 
+            + data[i].category+"</td><td>" + data[i].startCost
+            +"</td><td><label for=\"dateStart\">Время начала аукциона:</label><input type=\"date\" id=\"dateStart"+data[i].id+"\">"
+            +"</td><td><label for=\"dateEnd\">Время завершения аукциона:</label><input type=\"date\" id=\"dateEnd"+data[i].id+"\">"
+            +"</td><td><button class=\"btn btn-primary\" onclick=\"addAuction(this.id);\" id=\""+data[i].id+"\">Назначить аукцион</button></td></tr>";
         }
         table = table + "</table>";
         $("#test_database").html(table);
+        $("table").addClass("table");
+    });
+}
+function showAuctions() {
+    $.get('/ajax/show_auctions', function (data){
+		console.log(data);
+		
+        let table = "<table> <tr><th>ID продукта</th><th>Цена</th><th>Начало аукциона</th><th>Конец аукциона</th>"
+
+        for (i = 0; i<data.length; i++){
+            table = table + "<tr><td>" + data[i].lot +"</td><td>" + data[i].cost + "</td><td>"+ data[i].start + "</td><td>" 
+            + data[i].end+"</td></tr>";
+        }
+        table = table + "</table>";
+        $("#list_auction").html(table);
         $("table").addClass("table");
     });
 }
@@ -22,12 +41,12 @@ function showAllLots() {
     $.get('/ajax/get_all_lots', function (data){
 		console.log(data);
 		
-        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
 
         for (i = 0; i<data.length; i++){
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>" 
+            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].photo + "</td><td>"+ data[i].category+"</td><td>" 
             + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-            +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka();\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
+            +"</td><td><a href='/index/id=" + data[i].id + "' class=\"btn btn-primary\" id=\""+data[i].id+"\">Сделать ставку</a></td></tr>";
             
         }
         table = table + "</table>";
@@ -48,6 +67,50 @@ function addLot() {
             description:$("#description").val(),
             photo:$("#photo").val(),
             category:$("#categoryId").val()
+        }),
+        success: function () {
+            showLots()
+        }
+
+    });
+}
+function addAuction(clicked_id) {
+	let dateStartID="dateStart"+clicked_id;
+	var objStart = document.getElementById(dateStartID).value;
+	let dateEndID="dateEnd"+clicked_id;
+	var objEnd = document.getElementById(dateEndID).value;
+
+    $.ajax({
+        url: "/ajax/add_auction",
+        method: 'POST',
+        cache: false,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            lot: clicked_id,
+            start: objStart,
+            end: objEnd           
+        }),
+        success: function () {
+            showLots()
+        }
+
+    });
+}
+function takeRate(clicked_id) {
+	let dateStartID="dateStart"+clicked_id;
+	var objStart = document.getElementById(dateStartID).value;
+	let dateEndID="dateEnd"+clicked_id;
+	var objEnd = document.getElementById(dateEndID).value;
+
+    $.ajax({
+        url: "/ajax/add_auction",
+        method: 'POST',
+        cache: false,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            lot: clicked_id,
+            start: objStart,
+            end: objEnd           
         }),
         success: function () {
             showLots()
