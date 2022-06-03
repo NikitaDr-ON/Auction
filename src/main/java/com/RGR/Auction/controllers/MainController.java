@@ -3,7 +3,6 @@ package com.RGR.Auction.controllers;
 import com.RGR.Auction.models.Auction;
 import com.RGR.Auction.models.AuctionLot;
 import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Favourites;
 
 import java.util.ArrayList;
 import java.util.Collection;

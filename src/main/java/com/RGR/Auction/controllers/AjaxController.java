@@ -61,12 +61,13 @@ public class AjaxController {
     public void addLot(@RequestBody Lot lot) {
     	lotService.saveLot(lot);
     }
-    
+
     @PostMapping("/add_auction")
     public void addAuction(@RequestBody Auction auction) {
     	auction.setCost(lotRepository.findById(auction.getLot()).getStartCost());
     	auctionService.saveAuction(auction);
     }
+
     @PostMapping("/take_rate")
     public void takeRate(@RequestBody Auction auction) {
     	int rate=auction.getCost();

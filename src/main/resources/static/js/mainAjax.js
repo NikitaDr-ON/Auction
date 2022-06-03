@@ -44,6 +44,23 @@ function showAuctions() {
     });
 }
 
+function showAllLots() {
+    $.get('/ajax/get_all_lots', function (data){
+		console.log(data);
+		
+        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
+        for (i = 0; i<data.length; i++){
+            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].photo + "</td><td>"+ data[i].category+"</td><td>"
+            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>"
+            + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
+            +"</td><td><a href='/index/id=" + data[i].id + "' class=\"btn btn-primary\" id=\""+data[i].id+"\">Сделать ставку</a></td></tr>";
+            
+        }
+        table = table + "</table>";
+        $("#test_database_all").html(table);
+        $("table").addClass("table");
+    });
+}
 function addLot() {
     $.ajax({
         url: "/ajax/add_lot",
@@ -64,7 +81,6 @@ function addLot() {
 
     });
 }
-
 function addAuction(clicked_id) {
 	let dateStartID="dateStart"+clicked_id;
 	var objStart = document.getElementById(dateStartID).value;
@@ -193,5 +209,4 @@ function showCollectable() {
                 $("table").addClass("table");
             });
 }
-
 

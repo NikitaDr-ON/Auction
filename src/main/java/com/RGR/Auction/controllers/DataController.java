@@ -2,22 +2,14 @@ package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class DataController {

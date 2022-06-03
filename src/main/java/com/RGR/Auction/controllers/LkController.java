@@ -3,6 +3,7 @@ package com.RGR.Auction.controllers;
 import com.RGR.Auction.Service.Lot.LotServiceImpl;
 import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.repositories.CategoryRepositories;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import com.RGR.Auction.repositories.Repositories;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/lk")
@@ -35,10 +37,9 @@ public class LkController {
 	LotServiceImpl lotServiceImpl;
  
 	@GetMapping()
-	public String getAllLots(Model model) {
-
-	 Iterable<Lot> lots=lotRepository.findAll();
-    // model.addAttribute("lots",lots);
+	public String getAllLots(@AuthenticationPrincipal Data user,Model model) {
+		Lot lot = lotRepository.findById(133);
+		model.addAttribute("lot", lot.getUsers());
 		return "lk";
 	}
 	

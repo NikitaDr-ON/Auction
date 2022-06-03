@@ -120,7 +120,9 @@
     <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
       <div class="collapse multi-collapse" id="multiCollapseExample1">
         <div class="card card-body" style="border: 1px solid white;">
-        
+          <p style="margin-bottom: 35px;">Мои лоты</p>
+			<div class = "table" id="test_database"></div>        
+
           <p style="margin-bottom: 35px;">Мои лоты</p>
 			<div class = "table" id="test_database"></div>
           <div th:each="el : ${lots}">
@@ -132,6 +134,8 @@
        <p th:text="${el.getPhoto}"></p>
        <img th:src="'/Img/'+${el.getPhoto()}+.jpg">
     </h3>
+
+		</div>
 		</div>
         </div>
       </div>
@@ -213,8 +217,10 @@
           </div>
         </div>
       </div>
+  <h3>
+    <p th:text="${lot}"></p>
 
-
+  </h3>
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script src="js/script2.js"></script>

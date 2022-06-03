@@ -1,6 +1,8 @@
 package com.RGR.Auction.models;
 
 import javax.persistence.*;
+import java.sql.Array;
+import java.util.*;
 
 
 @Entity
@@ -22,6 +24,8 @@ public class Lot {
     private String photo;
     @Column(name="Category")
     private Long category;
+    @ManyToMany(mappedBy = "lots")
+    private List<Data> users=new ArrayList<>();
 
     public Lot(String product, int startCost, Long seller, String description, String photo, Long category) {
         this.product = product;
@@ -95,5 +99,13 @@ public class Lot {
 
     public void setCategory(Long category) {
         this.category = category;
+    }
+
+    public List<Data> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Data> users) {
+        this.users = users;
     }
 }
