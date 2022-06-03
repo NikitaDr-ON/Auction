@@ -35,10 +35,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto nav-icon">
         <li class="nav-item active">
-          <a href="index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
+          <a href="/index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+          <a href="/index" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                   class="fa fa-info"></i><p th:text="#{label.category}"></p></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,10 +50,10 @@
           </div>
         </li>
         <li class="nav-item active">
-          <a href="login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
+          <a href="/login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
         </li>
         <li class="nav-item active">
-          <a href="lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
+          <a href="/lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
         </li>
         <li class="nav-item active">
           <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
@@ -73,8 +73,37 @@
 
 <br/>
 <p>Страница для ставки</p>
+<a th:href="@{lots}">Лоты</a>
+<table border="1">
+  <tr>
+    <th>Product</th>
+    <th>Seller</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>StartCost</th>
+  </tr>
 
-</div>
+  <tr th:each="el : ${lots}">
+    <td th:utext="${el.getProduct()}"></td>
+    <td th:utext="${el.getSeller()}"></td>
+    <td th:utext="${el.getDescription()}"></td>
+    <td th:utext="${el.getCategory()}"></td>
+    <td th:utext="${el.getStartCost()}"></td>
+  </tr>
+
+</table>
+<br/>
+
+<label for="takeRate"><h3>Сделать ставку</h3></label>
+<form method="post" id="takeRate">
+    <label for="rate">Введите ставку</label>
+    <input type="number" required name="rate" id="rate" value="0">
+    <input type="hidden" id="id_product" name="id_product" th:value="${id_product}">
+    <br/>
+    <button class="btn btn-primary" onclick="takeRate();">Ставка</button>
+</form>
+<br/>
+<h1 th:text = "${result}"></h1>
 
 
   <!-- Optional JavaScript -->

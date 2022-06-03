@@ -78,21 +78,29 @@
 
 <table border="1">
   <tr>
-    <th>Product</th>
-    <th>Seller</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>StartCost</th>
+    <th>Продукт</th>
+    <th>Продавец</th>
+    <th>Описание</th>
+    <th>Фото</th>
+    <th>Категория</th>
+    <th>Начальная ставка</th>
+    <th>Дата начала</th>
+    <th>Дата окончания</th>
+    <th>Цена</th>
   </tr>
 
-  <tr th:each="el : ${lots}">
-    <td th:utext="${el.getProduct()}"></td>
-    <td th:utext="${el.getSeller()}"></td>
-    <td th:utext="${el.getDescription()}"></td>
-    <td th:utext="${el.getCategory()}"></td>
-    <td th:utext="${el.getStartCost()}"></td>
-    <td><a class="dropdown-item" th:href="'/lot/'+${el.getId()}" ><p>Сделать ставку</p></a></td>
-    <td th:utext="${el.getStartCost()}"></td>
+  <tr th:each="el : ${auctionLot}">
+    <td th:utext="${el.getLot().getProduct()}"></td>
+    <td th:utext="${el.getLot().getSeller()}"></td>
+    <td th:utext="${el.getLot().getDescription()}"></td>
+    <td th:utext="${el.getLot().getPhoto()}"></td>
+    <td th:utext="${el.getLot().getCategory()}"></td>
+    <td th:utext="${el.getLot().getStartCost()}"></td>
+    <td th:utext="${el.getStart()}"></td>
+    <td th:utext="${el.getEnd()}"></td>
+    <td th:utext="${el.getCost()}"></td>
+    <td><a class="btn btn-primary" th:href="'/index/id='+${el.getLot().getId()}" ><p>Сделать ставку</p></a></td>
+    
   </tr>
 
 </table>

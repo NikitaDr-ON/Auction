@@ -19,6 +19,7 @@ import com.RGR.Auction.models.Auction;
 import com.RGR.Auction.models.AuctionLot;
 import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Lot;
+import com.RGR.Auction.repositories.AuctionRepositories;
 import com.RGR.Auction.repositories.LotRepositories;
 
 
@@ -32,6 +33,8 @@ public class AjaxController {
     LotService lotService;    
     @Autowired
     AuctionService auctionService;    
+    @Autowired
+    AuctionRepositories auctionRepository;
 
     
     @GetMapping("/get_lots")
@@ -44,37 +47,37 @@ public class AjaxController {
     }
     @SuppressWarnings("null")
 	@GetMapping("/show_auctions")
-    public List<Auction> showAuctions(@AuthenticationPrincipal Data user) {
-    	/*
-    	List <Auction> listResult = null;
+    public List<AuctionLot> showAuctions(@AuthenticationPrincipal Data user) {
+    	List<AuctionLot> al = new ArrayList<>();
     	
-    	List<Auction> listAuction=auctionService.getAll();
-    	List<Lot>lots=lotRepository.findBySeller(user.getId());
-    	List<Integer> listIdLots = lots.stream().map(Lot::getId).collect(Collectors.toList());
-    	List<Integer> listLotsFromAuction = listAuction.stream().map(Auction::getLot).collect(Collectors.toList());
-    	
-    	listLotsFromAuction.retainAll(listIdLots);
-    	
-    	for (int i=0; i<listLotsFromAuction.size();i++) {
-    		listResult.add((Auction) auctionService.getByLot(listLotsFromAuction.get(i)));
-    	}
-    	
-        return listResult;
-        */
-    	return auctionService.getAll();
+    	List<Auction> auctions = (List<Auction>) auctionRepository.findAll();
+    	for(int i=0;i<auctions.size();i++) {
+    		al.add(new AuctionLot((auctions).get(i).getId(),lotRepository.findById(auctions.get(i).getLot()), (auctions).get(i).getStart(),(auctions).get(i).getEnd(),(auctions).get(i).getCost()));	
+    	} 
+    	return al;
     }
     
     @PostMapping("/add_lot")
     public void addLot(@RequestBody Lot lot) {
     	lotService.saveLot(lot);
     }
-<<<<<<< HEAD
+    
     @PostMapping("/add_auction")
     public void addAuction(@RequestBody Auction auction) {
+    	auction.setCost(lotRepository.findById(auction.getLot()).getStartCost());
     	auctionService.saveAuction(auction);
     }
-    
-=======
+    @PostMapping("/take_rate")
+    public void takeRate(@RequestBody Auction auction) {
+    	int rate=auction.getCost();
+    	List<Auction> upAuction=auctionRepository.findByLot(auction.getLot());
+    	Auction updateAuction=upAuction.get(0);
+    	System.out.println(rate+"id"+updateAuction.getId());
+    	if( rate>=updateAuction.getCost()) {
+    	updateAuction.setCost(rate);
+    	}
+    	auctionRepository.save(updateAuction);
+    }
 
     @GetMapping("/get_vintage")
     public List<Lot> getVintageLots() {
@@ -133,6 +136,5 @@ public class AjaxController {
         }
         return jewelry;
     }
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 }
 

@@ -37,7 +37,7 @@ public class LkController {
 	@GetMapping()
 	public String getAllLots(Model model) {
 
-	// Iterable<Lot> lots=lotRepository.findAll();
+	 Iterable<Lot> lots=lotRepository.findAll();
     // model.addAttribute("lots",lots);
 		return "lk";
 	}

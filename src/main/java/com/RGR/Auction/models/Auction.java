@@ -59,7 +59,7 @@ public class Auction {
 	public int getCost() {
 		return cost;
 	}
-	public void setCoast(int cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 	public Date getStart() {

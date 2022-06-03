@@ -1,10 +1,5 @@
 package com.RGR.Auction.Service.Lot;
 
-<<<<<<< HEAD
-=======
-
-import java.awt.*;
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -88,7 +83,7 @@ public class LotServiceImpl implements LotService {
         newLot.setStartCost(lot.getStartCost());
         newLot.setDescription(lot.getDescription());
         newLot.setCategory(lot.getCategory());
-       // newLot.setPhoto(lot.getPhoto());
+        newLot.setPhoto(lot.getPhoto());
         newLot.setSeller(lot.getSeller());
         return lotRepository.save(newLot);
     }

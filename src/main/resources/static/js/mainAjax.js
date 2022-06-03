@@ -1,41 +1,28 @@
 $(document).ready(function (){
     showLots();
     showAllLots();
-<<<<<<< HEAD
     showAuctions();
-=======
     showVintage() ;
     showAntic();
     showHandmade();
     showJewelry();
     showJewelry();
     showCollectable();
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 });
 
 function showLots() {
     $.get('/ajax/get_lots', function (data){
-<<<<<<< HEAD
 		console.log(data);
 		
         let table = "<table> <tr><th>Название</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
-=======
-        let table = "<table> <tr><th>Название</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
         for (i = 0; i<data.length; i++){
-<<<<<<< HEAD
             table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].description + "</td><td>"+ data[i].photo + "</td><td>" 
             + data[i].category+"</td><td>" + data[i].startCost
             +"</td><td><label for=\"dateStart\">Время начала аукциона:</label><input type=\"date\" id=\"dateStart"+data[i].id+"\">"
             +"</td><td><label for=\"dateEnd\">Время завершения аукциона:</label><input type=\"date\" id=\"dateEnd"+data[i].id+"\">"
             +"</td><td><button class=\"btn btn-primary\" onclick=\"addAuction(this.id);\" id=\""+data[i].id+"\">Назначить аукцион</button></td></tr>";
         }
-=======
-                   table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>"
-                   + data[i].startCost+"</td></tr>";
-               }
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
         table = table + "</table>";
         $("#test_database").html(table);
         $("table").addClass("table");
@@ -56,31 +43,7 @@ function showAuctions() {
         $("table").addClass("table");
     });
 }
-function showAllLots() {
-    $.get('/ajax/get_all_lots', function (data){
-		console.log(data);
-<<<<<<< HEAD
-		
-        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
-=======
-        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
-        for (i = 0; i<data.length; i++){
-<<<<<<< HEAD
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].photo + "</td><td>"+ data[i].category+"</td><td>" 
-=======
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>"
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
-            + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-            +"</td><td><a href='/index/id=" + data[i].id + "' class=\"btn btn-primary\" id=\""+data[i].id+"\">Сделать ставку</a></td></tr>";
-            
-        }
-        table = table + "</table>";
-        $("#test_database_all").html(table);
-        $("table").addClass("table");
-    });
-}
 function addLot() {
     $.ajax({
         url: "/ajax/add_lot",
@@ -101,7 +64,7 @@ function addLot() {
 
     });
 }
-<<<<<<< HEAD
+
 function addAuction(clicked_id) {
 	let dateStartID="dateStart"+clicked_id;
 	var objStart = document.getElementById(dateStartID).value;
@@ -124,29 +87,27 @@ function addAuction(clicked_id) {
 
     });
 }
-function takeRate(clicked_id) {
-	let dateStartID="dateStart"+clicked_id;
-	var objStart = document.getElementById(dateStartID).value;
-	let dateEndID="dateEnd"+clicked_id;
-	var objEnd = document.getElementById(dateEndID).value;
+function takeRate() {
 
     $.ajax({
-        url: "/ajax/add_auction",
+        url: "/ajax/take_rate",
         method: 'POST',
         cache: false,
         contentType: 'application/json',
         data: JSON.stringify({
-            lot: clicked_id,
-            start: objStart,
-            end: objEnd           
+			lot:$("#id_product").val(),
+            cost:$("#rate").val(),
+            start: null,
+            end:null
+                    
         }),
         success: function () {
-            showLots()
+      		console.log(1)
         }
 
     });
 }
-=======
+
 function showVintage() {
      $.get('/ajax/get_vintage', function (data){
 		console.log(data);
@@ -232,8 +193,5 @@ function showCollectable() {
                 $("table").addClass("table");
             });
 }
-function takeStavka(name)
-{
-console.log(name)
-}
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
+
+
