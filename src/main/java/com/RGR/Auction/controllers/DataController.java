@@ -2,6 +2,7 @@ package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
@@ -116,6 +117,12 @@ public class DataController {
     public String zabpar(Model model) {
 
         return "zabpar";
+    }
+    @GetMapping("lot/{id}")
+    public String addFavourites(@PathVariable("id") int id,Model model) {
+        Lot lots = lotRepository.findById(id);
+        model.addAttribute("Lot", lots);
+        return "lot";
     }
 
 }

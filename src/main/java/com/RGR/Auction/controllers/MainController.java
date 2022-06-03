@@ -4,7 +4,11 @@ import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Favourites;
 
 import java.util.Collection;
+import java.util.List;
 
+import com.RGR.Auction.models.Lot;
+import com.RGR.Auction.repositories.LotRepositories;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
-	
+	@Autowired
+    LotRepositories lotRepositories;
 	 public Collection <Favourites> fav=null;
 
    /* @GetMapping("/hello")
@@ -31,6 +36,8 @@ public class MainController {
     }
     @GetMapping("/index")
     public String showIndex( Model model) {
+        List<Lot> lots = lotRepositories.findAll();
+        model.addAttribute("lots",lots);
         return "index";
     }
     
