@@ -1,6 +1,8 @@
 package com.RGR.Auction.models;
 
 import javax.persistence.*;
+import java.sql.Array;
+import java.util.*;
 
 
 @Entity
@@ -18,20 +20,16 @@ public class Lot {
     private Long seller;
     @Column(name="Description")
     private String description;
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
     @Column(name="Photo")
     private String photo;
-<<<<<<< HEAD
     @Column(name="Category")
-=======
 	//@ManyToOne
    // @JoinColumn(name="Category")
    //private CategoryModel category;
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
     private Long category;
+    @ManyToMany(mappedBy = "lots")
+    private List<Data> users=new ArrayList<>();
 
     public Lot(String product, int startCost, Long seller, String description, String photo, Long category) {
         this.product = product;
@@ -98,16 +96,8 @@ public class Lot {
     public void setDescription(String description) {
         this.description = description;
     }
-<<<<<<< HEAD
-=======
 
-    public String getPhoto() {
-        return photo;
-    }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     /* public Blob getPhoto() {
 		return photo;
@@ -117,7 +107,7 @@ public class Lot {
 		this.photo = photo;
 	}*/
 
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
+
 
     public Long getCategory() {
         return category;
@@ -125,5 +115,13 @@ public class Lot {
 
     public void setCategory(Long category) {
         this.category = category;
+    }
+
+    public List<Data> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Data> users) {
+        this.users = users;
     }
 }

@@ -68,13 +68,11 @@ public class AjaxController {
     public void addLot(@RequestBody Lot lot) {
     	lotService.saveLot(lot);
     }
-<<<<<<< HEAD
     @PostMapping("/add_auction")
     public void addAuction(@RequestBody Auction auction) {
     	auctionService.saveAuction(auction);
     }
-    
-=======
+
 
     @GetMapping("/get_vintage")
     public List<Lot> getVintageLots() {
@@ -133,6 +131,5 @@ public class AjaxController {
         }
         return jewelry;
     }
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 }
 

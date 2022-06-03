@@ -76,26 +76,6 @@
 <div class = "table" id="test_database_all">
 </div>
 
-<table border="1">
-  <tr>
-    <th>Product</th>
-    <th>Seller</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>StartCost</th>
-  </tr>
-
-  <tr th:each="el : ${lots}">
-    <td th:utext="${el.getProduct()}"></td>
-    <td th:utext="${el.getSeller()}"></td>
-    <td th:utext="${el.getDescription()}"></td>
-    <td th:utext="${el.getCategory()}"></td>
-    <td th:utext="${el.getStartCost()}"></td>
-    <td><a class="dropdown-item" th:href="'/lot/'+${el.getId()}" ><p>Сделать ставку</p></a></td>
-    <td th:utext="${el.getStartCost()}"></td>
-  </tr>
-
-</table>
 
 
   <!-- Optional JavaScript -->

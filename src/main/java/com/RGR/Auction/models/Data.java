@@ -4,8 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Entity
 @Table(name="users")
@@ -31,6 +31,13 @@ public class Data implements UserDetails {
     private String activation;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    @ManyToMany
+    @JoinTable(name = "favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Lot> lots = new ArrayList<>();
 
     public Data() {
     }
@@ -143,4 +150,19 @@ public class Data implements UserDetails {
         this.roles = roles;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public List<Lot> getLots() {
+        return lots;
+    }
+
+    public void setLots(List<Lot> lots) {
+        this.lots = lots;
+    }
+
+    public void addLot(Lot lot) {
+        lots.add(lot);
+    }
 }

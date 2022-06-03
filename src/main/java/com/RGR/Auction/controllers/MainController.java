@@ -1,7 +1,6 @@
 package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Favourites;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,13 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
-<<<<<<< HEAD
-	
-=======
+
 	@Autowired
     LotRepositories lotRepositories;
-	 public Collection <Favourites> fav=null;
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
    /* @GetMapping("/hello")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {

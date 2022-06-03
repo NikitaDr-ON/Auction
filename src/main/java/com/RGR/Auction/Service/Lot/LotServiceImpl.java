@@ -1,18 +1,20 @@
 package com.RGR.Auction.Service.Lot;
 
-<<<<<<< HEAD
-=======
 
 import java.awt.*;
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Role;
+import com.RGR.Auction.repositories.Repositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.RGR.Auction.models.Lot;
@@ -27,6 +29,9 @@ public class LotServiceImpl implements LotService {
 
     @Autowired
     private LotRepositories lotRepository;
+
+    @Autowired
+    private Repositories repositories;
 
     @Override
     public List<Lot> getAll() {
@@ -97,5 +102,6 @@ public class LotServiceImpl implements LotService {
 	public void saveLot(Lot lot) {
         lotRepository.save(lot);
 	}
+
     
 }

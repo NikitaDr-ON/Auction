@@ -1,7 +1,10 @@
 package com.RGR.Auction.Service;
 
+import com.RGR.Auction.Service.Lot.LotService;
 import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Lot;
 import com.RGR.Auction.models.Role;
+import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 import com.RGR.Auction.repositories.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class DataService implements UserDetailsService {
    MailSender mailSender;
    @Autowired
    RoleRepo roleRepo;
+   @Autowired
+   LotRepositories lotRepositories;
 
    @Override
    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
@@ -65,18 +70,10 @@ public class DataService implements UserDetailsService {
       }
    }
 
-   public boolean activateUser(String code)
+   public void addFav(Data user,Lot lot)
    {
-      Data user = Repository.findByActivationCode(code);
-      if(user==null) {
-         return false;
-      }
-      else
-      {
-         user.setActivationCode(null);
-         Repository.save(user);
-         return  true;
-      }
+      user.addLot(lot);
+      Repository.save(user);
    }
 
 
