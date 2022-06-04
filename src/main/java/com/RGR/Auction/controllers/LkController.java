@@ -37,9 +37,7 @@ public class LkController {
 	LotServiceImpl lotServiceImpl;
  
 	@GetMapping()
-	public String getAllLots(@AuthenticationPrincipal Data user,Model model) {
-		Lot lot = lotRepository.findById(133);
-		model.addAttribute("lot", lot.getUsers());
+	public String getAllLots(Model model) {
 		return "lk";
 	}
 	

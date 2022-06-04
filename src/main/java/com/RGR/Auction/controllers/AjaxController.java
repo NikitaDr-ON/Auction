@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.RGR.Auction.repositories.Repositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,8 @@ public class AjaxController {
     AuctionService auctionService;    
     @Autowired
     AuctionRepositories auctionRepository;
+    @Autowired
+    Repositories repositories;
 
     
     @GetMapping("/get_lots")
@@ -136,6 +139,12 @@ public class AjaxController {
                 jewelry.add(lots.get(i));
         }
         return jewelry;
+    }
+    @GetMapping("/get_user")
+    public Data getUser(@AuthenticationPrincipal Data usersup) {
+        Data user = repositories.findById(usersup.getId());
+        System.out.println(user.getId());
+        return user;
     }
 }
 

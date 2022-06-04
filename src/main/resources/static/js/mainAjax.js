@@ -8,6 +8,7 @@ $(document).ready(function (){
     showJewelry();
     showJewelry();
     showCollectable();
+    ShowUser();
 });
 
 function showLots() {
@@ -209,4 +210,19 @@ function showCollectable() {
                 $("table").addClass("table");
             });
 }
+function ShowUser() {
+     $.get('/ajax/get_user', function (data){
+		console.log(data);
+		console.log(data.lots[0].product)
+		let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
 
+                        for (i = 0; i<data.lots.length; i++){
+                            table = table + "<tr><td>" + data.lots[i].product +"</td><td>" +  data.lots[i].seller+"</td><td>" +  data.lots[i].description + "</td><td>" + "collectable"+"</td><td>"
+                            +  data.lots[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka(qwe);\" id=\""+ data.lots[i].id+"\">Сделать ставку</button></td></tr>";
+
+                        }
+                        table = table + "</table>";
+                        $("#show_user").html(table);
+                        $("table").addClass("table");
+            });
+}

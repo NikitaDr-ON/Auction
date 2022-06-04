@@ -101,11 +101,4 @@ public class Lot {
         this.category = category;
     }
 
-    public List<Data> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<Data> users) {
-        this.users = users;
-    }
 }
