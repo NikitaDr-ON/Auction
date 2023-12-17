@@ -1,0 +1,146 @@
+CREATE TABLE `category` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=6
+;  
+
+CREATE TABLE `delivery` (
+	`delivery_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id_sale` INT(11) NULL DEFAULT NULL,
+	`isSent` INT(11) NULL DEFAULT NULL,
+	`service` INT(11) NULL DEFAULT NULL,
+	`date_delivery` DATE NULL DEFAULT NULL,
+	PRIMARY KEY (`delivery_id`) USING BTREE,
+	INDEX `FK_delivery_purchase_sale` (`id_sale`) USING BTREE,
+	INDEX `FK_delivery_service` (`service`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=67
+;
+
+CREATE TABLE `favourites` (
+	`user_id` INT(11) NULL DEFAULT NULL,
+	`product_id` INT(11) NULL DEFAULT NULL,
+	UNIQUE INDEX `user_id` (`user_id`, `product_id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `product` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`description` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`photo` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`category` INT(11) NULL DEFAULT NULL,
+	`price` INT(11) NULL DEFAULT NULL,
+	`quant` INT(11) NULL DEFAULT NULL,
+	`seller` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `FK_product_seller` (`seller`) USING BTREE,
+	INDEX `FK_product_category` (`category`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=13
+;
+
+
+CREATE TABLE `purchase_sale` (
+	`id_sale` INT(11) NOT NULL AUTO_INCREMENT,
+	`buyer` INT(11) NULL DEFAULT NULL,
+	`product_id` INT(11) NULL DEFAULT NULL,
+	`purchase_price` INT(11) NULL DEFAULT NULL,
+	`purchase_quant` INT(11) NULL DEFAULT '0',
+	`old` INT(11) NULL DEFAULT '0',
+	PRIMARY KEY (`id_sale`) USING BTREE,
+	INDEX `FK_purchase_sale_product` (`product_id`) USING BTREE,
+	INDEX `FK_purchase_sale_user` (`buyer`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=17
+;
+CREATE TABLE `role` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=3
+;
+
+CREATE TABLE `seller` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`firstname` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`surname` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`fathername` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`birthdate` DATE NULL DEFAULT NULL,
+	`gender` INT(11) NULL DEFAULT NULL,
+	`phone` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`email` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`cardinfo` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+
+CREATE TABLE `service` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=6
+;
+
+
+CREATE TABLE `users` (
+	`ID` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`surname` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`fathername` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`birthdate` DATE NULL DEFAULT NULL,
+	`gender` INT(11) NULL DEFAULT NULL,
+	`phone` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`mail` VARCHAR(255) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`address` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`cardinfo` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`Password` VARCHAR(100) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`Activation_code` VARCHAR(255) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`Activation` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	PRIMARY KEY (`ID`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=26
+;
+
+CREATE TABLE `users_roles` (
+	`data_id` INT(11) NOT NULL DEFAULT '0',
+	`roles_id` BIGINT(20) NOT NULL,
+	PRIMARY KEY (`data_id`, `roles_id`) USING BTREE,
+	INDEX `roles_id` (`roles_id`) USING BTREE,
+	CONSTRAINT `FKd64py7rithyv3td1hhhe9prvk` FOREIGN KEY (`roles_id`) REFERENCES `anticshop`.`role` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `FKkwpta9pnqxjywu4tato0n0l6v` FOREIGN KEY (`data_id`) REFERENCES `anticshop`.`users` (`ID`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;
+
+
+
+
+
+
+
+
