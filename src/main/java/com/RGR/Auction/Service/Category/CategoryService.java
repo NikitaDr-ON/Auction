@@ -2,16 +2,12 @@ package com.RGR.Auction.Service.Category;
 
 import java.util.List;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import com.RGR.Auction.models.Category;
 import org.springframework.stereotype.Service;
-
-import com.RGR.Auction.models.CategoryModel;
 
 @Service
 public interface CategoryService {
 
-	List<CategoryModel> getAll();
-	CategoryModel getById(long id) throws NotFoundException;
- 
-
+	Category getCategoryById(int id);
+	List<Category> getAllCategories();
 }

@@ -1,228 +1,475 @@
 $(document).ready(function (){
-    showLots();
-    showAllLots();
-    showAuctions();
+    showAllProducts();
+    showFavProducts();
+    showPurchaseSale();
+    checkFavProducts();
+    //showMessage();
+
     showVintage() ;
     showAntic();
     showHandmade();
     showJewelry();
-    showJewelry();
     showCollectable();
-    ShowUser();
+
+	$('body').on('click', '.number-minus, .number-plus', function(){
+		var $row = $(this).closest('.number');
+		var $input = $row.find('.number-text');
+		var step = $row.data('step');
+		var val = parseFloat($input.val());
+		if ($(this).hasClass('number-minus')) {
+			val -= step;
+		} else {
+			val += step;
+		}
+		$input.val(val);
+		$input.change();
+		return false;
+
+	});
+
+	$('body').on('change', '.number-text', function(){
+		var $input = $(this);
+		var $row = $input.closest('.number');
+		var step = $row.data('step');
+		var min = parseInt($row.data('min'));
+		var max = parseInt($row.data('max'));
+		var val = parseFloat($input.val());
+		if (isNaN(val)) {
+			val = step;
+		} else if (min && val < min) {
+			val = min;
+		} else if (max && val > max) {
+			val = max;
+		}
+
+		var quant=document.getElementsByClassName('quant');
+		const idQuant =quant[0].id;
+		console.log("idQuant="+idQuant)
+		var maxQuant=document.getElementById(idQuant).innerHTML
+		console.log("maxQuant="+maxQuant)
+		if(val>maxQuant){
+		 alert("Превышено количество товара!")
+		 $input.val(maxQuant);
+		}else{
+		$input.val(val);
+		}
+		console.log("количество="+document.querySelector('.number-text').value)
+
+	});
 });
 
-function showLots() {
-    $.get('/ajax/get_lots', function (data){
+/*Обработка кнопки Купить(class=buy)*/
+	$('body').on('click', '#buy', function(){
+    	    var array = []
+    	    var idService=null
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+            idService=document.querySelector('input[name="service"]:checked').value;
+
+            for (var i = 0; i < checkboxes.length; i++) {
+              array.push(checkboxes[i].value)
+            }
+            if(array.length==0 || idService==null){
+            alert("Товар/товары или сервис для доставки не выбраны!")}
+            else{
+            console.log(array);
+
+            var postData = {
+                           arraySale: array,
+                           "service": idService
+                           }
+
+                      /* Ключ: тип Ajax, url, dataType, атрибуты данных */
+                   $.ajax({
+                           async : false,
+                           cache : false,
+                           type : 'POST',
+                           url : '/ajax/buy',
+                           dataType : "json",
+                           data : postData,
+
+                           success : function(data) {
+                              console.log("Отправлен массив и сервис")
+                           }
+
+                       });
+            }
+    	});
+
+/*отмена оплаты корзины*/
+$('body').on('click', '#cancel', function(){
+var cancel=1;
+$.ajax({
+                           async : false,
+                           cache : false,
+                           type : 'POST',
+                           url : '/ajax/cancel',
+                           dataType : "json",
+                           data : {"cancel" : cancel}
+});
+});
+/*оплата корзины*/
+$('body').on('click', '#pay', function(){
+var pay=1;
+$.ajax({
+                           async : false,
+                           cache : false,
+                           type : 'POST',
+                           url : '/ajax/pay',
+                           dataType : "json",
+                           data : {"pay" : pay}
+});
+
+});
+/*
+function showMessage(){
+$.get('/ajax/show_message', function (data){
 		console.log(data);
-		
-        let table = "<table> <tr><th>Название</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
-
-        for (i = 0; i<data.length; i++){
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].description + "</td><td>"+ data[i].photo + "</td><td>" 
-            + data[i].category+"</td><td>" + data[i].startCost
-            +"</td><td><label for=\"dateStart\">Время начала аукциона:</label><input type=\"date\" id=\"dateStart"+data[i].id+"\">"
-            +"</td><td><label for=\"dateEnd\">Время завершения аукциона:</label><input type=\"date\" id=\"dateEnd"+data[i].id+"\">"
-            +"</td><td><button class=\"btn btn-primary\" onclick=\"addAuction(this.id);\" id=\""+data[i].id+"\">Назначить аукцион</button></td></tr>";
-        }
-        table = table + "</table>";
-        $("#test_database").html(table);
-        $("table").addClass("table");
+		document.getElementById("messageSum").value=data;
     });
 }
-function showAuctions() {
-    $.get('/ajax/show_auctions', function (data){
+*/
+
+function showAllProducts(){
+$.get('/ajax/get_all_products', function (data){
 		console.log(data);
-		
-        let table = "<table> <tr><th>ID продукта</th><th>Цена</th><th>Начало аукциона</th><th>Конец аукциона</th>"
 
-        for (i = 0; i<data.length; i++){
-            table = table + "<tr><td>" + data[i].lot +"</td><td>" + data[i].cost + "</td><td>"+ data[i].start + "</td><td>" 
-            + data[i].end+"</td></tr>";
-        }
-        table = table + "</table>";
-        $("#list_auction").html(table);
-        $("table").addClass("table");
-    });
+let cardItem = " "
+
+let out = document.getElementById('out')
+for (i = 0; i<data.length; i++){
+    cardItem = cardItem + "<div class=\"card\">"
+    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+    +"<p>"+data[i].id+"</p>"
+    +"<p>"+data[i].name+"</p>"
+    +"<p>"+data[i].description+"</p>"
+    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+    +"<p>"+data[i].category+"</p>"
+    +"<p>"+data[i].price+"</p>"
+    +"<p>"+data[i].quant+"</p>"
+    +"<p>"+data[i].seller+"</p>"
+    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+    +"</div></div>";
 }
+$("#out").html(cardItem);
 
-function showAllLots() {
-    $.get('/ajax/get_all_lots', function (data){
+});
+}
+function showPurchaseSale(){
+
+/*Список товаров из корзины*/
+
+$.get('/ajax/get_goods_purchase_sale', function (data){
 		console.log(data);
-		
-        let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Фото</th><th>Категория</th><th>Стартовая цена</th>"
-        for (i = 0; i<data.length; i++){
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].photo + "</td><td>"+ data[i].category+"</td><td>"
-            table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + data[i].category+"</td><td>"
-            + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-            +"</td><td><a href='/index/id=" + data[i].id + "' class=\"btn btn-primary\" id=\""+data[i].id+"\">Сделать ставку</a></td></tr>";
-            
-        }
-        table = table + "</table>";
-        $("#test_database_all").html(table);
-        $("table").addClass("table");
-    });
+
+let cardItem = " "
+
+let out = document.getElementById('basket_purchase')
+for (i = 0; i<data.length; i++){
+    cardItem = cardItem + "<div class=\"card\">"
+    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+    +"<p>"+data[i].id+"</p>"
+    +"<p>"+data[i].name+"</p>"
+    +"<p>"+data[i].description+"</p>"
+    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+    +"<p>"+data[i].category+"</p>"
+    +"<p>"+data[i].price+"</p>"
+    +"<p>"+data[i].quant+"</p>"
+    +"<p>"+data[i].seller+"</p>"
+    +"<div><label>Количество в корзине:  </label><output class=\"quantFromPS\" id=\"qps"+data[i].id+"\"></output></div>"
+    +"<p><input class=\"checkPS\" name=\"goods\" id=\"chps"+data[i].id+"\" value=\"0\" type=\"checkbox\"></p>"
+    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Изменить количество товара</a></p>"
+    +"<p><form action=\"#\" target=\"_self\"><button onclick=\"deletePurchaseSale(this.id);\" class=\"delClass\" id=\"deleteId"+data[i].id+"\" value=\"1\" >Удалить из корзины</button></form></p>"
+    +"</div></div>";
 }
-function addLot() {
-    $.ajax({
-        url: "/ajax/add_lot",
-        method: 'POST',
-        cache: false,
-        contentType: 'application/json',
-        data: JSON.stringify({
-            product: $("#product").val(),
-            startCost: $("#startCost").val(),
-            seller: $("#seller").val(),
-            description:$("#description").val(),
-            photo:$("#photo").val(),
-            category:$("#categoryId").val()
-        }),
-        success: function () {
-            showLots()
-        }
+$("#basket_purchase").html(cardItem);
 
-    });
+});
+
+/*Список способов доставки*/
+
+$.get('/ajax/get_services', function (data){
+		console.log(data);
+
+let cardItem = " "
+
+let out = document.getElementById('cont-service')
+for (i = 0; i<data.length; i++){
+    cardItem = cardItem + "<div><input type=\"radio\" name=\"service\" id=\"service\" value=\""+data[i].id+"\">"
+                +"<label>"+data[i].name+"</label></div>";
 }
-function addAuction(clicked_id) {
-	let dateStartID="dateStart"+clicked_id;
-	var objStart = document.getElementById(dateStartID).value;
-	let dateEndID="dateEnd"+clicked_id;
-	var objEnd = document.getElementById(dateEndID).value;
+$("#cont-service").html(cardItem);
+});
 
-    $.ajax({
-        url: "/ajax/add_auction",
-        method: 'POST',
-        cache: false,
-        contentType: 'application/json',
-        data: JSON.stringify({
-            lot: clicked_id,
-            start: objStart,
-            end: objEnd           
-        }),
-        success: function () {
-            showLots()
-        }
+/*Вывод количества товаров и idSale из корзины*/
 
-    });
+$.get('/ajax/get_purchase', function (data){
+		console.log(data);
+
+var quantFromPS = document.getElementsByClassName('quantFromPS');
+var idSale = document.getElementsByClassName('checkPS');
+var delSale=document.getElementsByClassName('delClass');
+for (var i=0; i< quantFromPS.length; i++ ) {
+  const qps =quantFromPS[i].id;
+  const cps=idSale[i].id;
+  const dps=delSale[i].id;
+
+  var quant=data[i].purchase_quant;
+  var sale=data[i].id_sale;
+
+
+  document.getElementById(dps).value=sale;
+  document.getElementById(qps).value=quant;
+  document.getElementById(cps).value=sale;
 }
-function takeRate() {
 
-    $.ajax({
-        url: "/ajax/take_rate",
-        method: 'POST',
-        cache: false,
-        contentType: 'application/json',
-        data: JSON.stringify({
-			lot:$("#id_product").val(),
-            cost:$("#rate").val(),
-            start: null,
-            end:null
-                    
-        }),
-        success: function () {
-      		console.log(1)
-        }
+});
+}
 
-    });
+
+
+
+
+/*Обработка кнопки (избранное-сердце)*/
+$('#favoriteout').on('click', '.fav', function(e) {
+
+   const whiteHeart = '\u2661';
+   const blackHeart = '\u2665';
+   var idd = $(this).attr('id');
+   const buttone = this.textContent;
+   var status = $("#stat_fav_prod").val();
+   if(buttone==whiteHeart) {
+   document.getElementById('stat_fav_prod').value=1;
+   status=1;
+       this.textContent=blackHeart;
+     } else {
+     document.getElementById('stat_fav_prod').value=0;
+     status=0;
+       this.textContent=whiteHeart;
+     }
+
+   $.ajax({
+                  url: "/ajax/add_fav_product",
+                  method: 'POST',
+                  cache: false,
+                  contentType: 'application/json',
+                  data: JSON.stringify({
+                      favoriteProd: idd,
+                      stat: status
+                  }),
+                  success: function () {
+                    checkFavProducts();
+                  }
+              });
+
+});
+
+function checkFavProducts(){
+var status = $("#stat_fav_prod").val();
+console.log("stat_fav= "+status);
+const blackHeart = '\u2665';
+let out = document.querySelector('.fav');
+if (status==1){
+out.textContent=blackHeart;
+}
+}
+
+
+function showFavProducts(){
+$.get('/ajax/get_fav_products', function (data){
+		console.log(data);
+
+let cardItem = " "
+
+let out = document.getElementById('out_fav')
+for (i = 0; i<data.length; i++){
+    cardItem = cardItem + "<div class=\"card\">"
+    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+    +"<p>"+data[i].id+"</p>"
+    +"<p>"+data[i].name+"</p>"
+    +"<p>"+data[i].description+"</p>"
+    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+    +"<p>"+data[i].category+"</p>"
+    +"<p>"+data[i].price+"</p>"
+    +"<p>"+data[i].quant+"</p>"
+    +"<p>"+data[i].seller+"</p>"
+    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+    +"</div></div>";
+}
+$("#out_fav").html(cardItem);
+
+});
+}
+
+function deletePurchaseSale(clicked_id){
+
+    var idSale=document.getElementById(clicked_id).value
+
+$.ajax({
+               async : false,
+               cache : false,
+               type : 'POST',
+               url : '/ajax/delete_purchase_sale',
+               dataType : "json",
+               data : {"idSale" : idSale},
+
+               success : function(data) {
+                   showPurchaseSale();
+               }
+
+           });
+}
+function addPurchaseSale(clicked_id) {
+
+    var product_id = clicked_id;
+    var purchase_quant = $("#number-text").val();
+
+    var postData = {
+               "product_id": product_id,
+               "purchase_quant": purchase_quant
+               }
+
+          /* Ключ: тип Ajax, url, dataType, атрибуты данных */
+       $.ajax({
+               async : false,
+               cache : false,
+               type : 'POST',
+               url : '/ajax/add_purchase_sale',
+               dataType : "json",
+               data : postData,
+
+               success : function(data) {
+                   alert(data);
+               }
+
+           });
+
 }
 
 function showVintage() {
      $.get('/ajax/get_vintage', function (data){
 		console.log(data);
 
-                let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+        let cardItem = " "
 
-                for (i = 0; i<data.length; i++){
-                    table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + "vintage"+"</td><td>"
-                    + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-                    +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka();\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
+        let out = document.getElementById('vintag')
+        for (i = 0; i<data.length; i++){
+            cardItem = cardItem + "<div class=\"card\">"
+            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+            +"<p>"+data[i].id+"</p>"
+            +"<p>"+data[i].name+"</p>"
+            +"<p>"+data[i].description+"</p>"
+            +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+            +"<p>"+data[i].category+"</p>"
+            +"<p>"+data[i].price+"</p>"
+            +"<p>"+data[i].quant+"</p>"
+            +"<p>"+data[i].seller+"</p>"
+            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+            +"</div></div>";
+        }
+        $("#vintag").html(cardItem);
 
-                }
-                table = table + "</table>";
-                $("#test_database_vintage").html(table);
-                $("table").addClass("table");
-            });
-}
+        });
+    }
+
 function showAntic() {
      $.get('/ajax/get_antic', function (data){
 		console.log(data);
 
-                let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+        let cardItem = " "
 
-                for (i = 0; i<data.length; i++){
-                    table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + "antiques"+"</td><td>"
-                    + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-                    +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka();\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
+        let out = document.getElementById('antic')
+        for (i = 0; i<data.length; i++){
+            cardItem = cardItem + "<div class=\"card\">"
+            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+            +"<p>"+data[i].id+"</p>"
+            +"<p>"+data[i].name+"</p>"
+            +"<p>"+data[i].description+"</p>"
+            +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+            +"<p>"+data[i].category+"</p>"
+            +"<p>"+data[i].price+"</p>"
+            +"<p>"+data[i].quant+"</p>"
+            +"<p>"+data[i].seller+"</p>"
+            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+            +"</div></div>";
+        }
+        $("#antic").html(cardItem);
 
-                }
-                table = table + "</table>";
-                $("#test_database_antic").html(table);
-                $("table").addClass("table");
-            });
-}
+        });
+    }
 function showHandmade() {
      $.get('/ajax/get_handmade', function (data){
 		console.log(data);
 
-                let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+                let cardItem = " "
 
                 for (i = 0; i<data.length; i++){
-                    table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + "handmade"+"</td><td>"
-                    + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-                    +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka();\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
-
+                    cardItem = cardItem + "<div class=\"card\">"
+                    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+                    +"<p>"+data[i].id+"</p>"
+                    +"<p>"+data[i].name+"</p>"
+                    +"<p>"+data[i].description+"</p>"
+                   +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+                    +"<p>"+data[i].category+"</p>"
+                    +"<p>"+data[i].price+"</p>"
+                    +"<p>"+data[i].quant+"</p>"
+                    +"<p>"+data[i].seller+"</p>"
+                    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+                    +"</div></div>";
                 }
-                table = table + "</table>";
-                $("#test_database_handmade").html(table);
-                $("table").addClass("table");
-            });
+                $("#handmade").html(cardItem);
+
+                });
 }
 function showJewelry() {
      $.get('/ajax/get_drag', function (data){
 		console.log(data);
 
-                let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+                        let cardItem = " "
 
-                for (i = 0; i<data.length; i++){
-                    table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + "jewelry"+"</td><td>"
-                    + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-                    +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka();\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
+                        for (i = 0; i<data.length; i++){
+                            cardItem = cardItem + "<div class=\"card\">"
+                            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+                            +"<p>"+data[i].id+"</p>"
+                            +"<p>"+data[i].name+"</p>"
+                            +"<p>"+data[i].description+"</p>"
+                           +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+                            +"<p>"+data[i].category+"</p>"
+                            +"<p>"+data[i].price+"</p>"
+                            +"<p>"+data[i].quant+"</p>"
+                            +"<p>"+data[i].seller+"</p>"
+                            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+                            +"</div></div>";
+                        }
+                        $("#drag").html(cardItem);
 
-                }
-                table = table + "</table>";
-                $("#test_database_jewelry").html(table);
-                $("table").addClass("table");
-            });
+                        });
 }
 function showCollectable() {
      $.get('/ajax/get_collectable', function (data){
 		console.log(data);
 
-                let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
+                                let cardItem = " "
 
-                for (i = 0; i<data.length; i++){
-                    table = table + "<tr><td>" + data[i].product +"</td><td>" + data[i].seller+"</td><td>" + data[i].description + "</td><td>" + "collectable"+"</td><td>"
-                    + data[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"addFavLot();\" id=\""+data[i].id+"\" >Добавить в избранное</button>"
-                    +"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka(qwe);\" id=\""+data[i].id+"\">Сделать ставку</button></td></tr>";
+                                for (i = 0; i<data.length; i++){
+                                    cardItem = cardItem + "<div class=\"card\">"
+                                    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
+                                    +"<p>"+data[i].id+"</p>"
+                                    +"<p>"+data[i].name+"</p>"
+                                    +"<p>"+data[i].description+"</p>"
+                                   +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
+                                    +"<p>"+data[i].category+"</p>"
+                                    +"<p>"+data[i].price+"</p>"
+                                    +"<p>"+data[i].quant+"</p>"
+                                    +"<p>"+data[i].seller+"</p>"
+                                    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
+                                    +"</div></div>";
+                                }
+                                $("#collec").html(cardItem);
 
-                }
-                table = table + "</table>";
-                $("#test_database_collectable").html(table);
-                $("table").addClass("table");
-            });
+                                });
+
+
+
 }
-function ShowUser() {
-     $.get('/ajax/get_user', function (data){
-		console.log(data);
-		console.log(data.lots[0].product)
-		let table = "<table> <tr><th>Название</th><th>Продавец</th><th>Описание</th><th>Категория</th><th>Стартовая цена</th>"
 
-                        for (i = 0; i<data.lots.length; i++){
-                            table = table + "<tr><td>" + data.lots[i].product +"</td><td>" +  data.lots[i].seller+"</td><td>" +  data.lots[i].description + "</td><td>" + "collectable"+"</td><td>"
-                            +  data.lots[i].startCost+"</td><td><button class=\"btn btn-primary\" onclick=\"takeStavka(qwe);\" id=\""+ data.lots[i].id+"\">Сделать ставку</button></td></tr>";
-
-                        }
-                        table = table + "</table>";
-                        $("#show_user").html(table);
-                        $("table").addClass("table");
-            });
-}

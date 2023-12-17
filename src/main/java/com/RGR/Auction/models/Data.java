@@ -19,12 +19,22 @@ public class Data implements UserDetails {
     private String name;
     @Column(name="Surname")
     private String surname;
+    @Column(name="Fathername")
+    private String fathername;
+    @Column(name="Birthdate")
+    private Date birthdate;
+    @Column(name="Gender")
+    private int gender;
+    @Column(name="Phone")
+    private String phone;
     @Column(name="Mail")
     private String mail;
+    @Column(name="Address")
+    private String address;
+    @Column(name="cardinfo")
+    private String cardInfo;
     @Column(name="Password")
     private String password;
-    @Column(name="Balance")
-    private int balanse;
     @Column(name="Activation_code")
     private String activationCode;
     @Column(name="Activation")
@@ -32,22 +42,22 @@ public class Data implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToMany
-    @JoinTable(name = "favorites",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Lot> lots = new ArrayList<>();
-
     public Data() {
     }
 
-    public Data(String name, String surname, String mail, String password) {
+    public Data(String name, String surname,String fathername, Date birthdate,int gender,String phone,
+                String mail,String address,String cardInfo, String password) {
         this.name = name;
         this.surname = surname;
+        this.fathername = fathername;
+        this.birthdate=birthdate;
+        this.gender=gender;
+        this.phone=phone;
         this.mail = mail;
+        this.address=address;
+        this.cardInfo=cardInfo;
         this.password = password;
-        this.balanse=0;
+
     }
 
     public long getId() {
@@ -119,13 +129,6 @@ public class Data implements UserDetails {
         this.password = password;
     }
 
-    public int getBalanse() {
-        return balanse;
-    }
-
-    public void setBalanse(int money) {
-        this.balanse = money;
-    }
 
     public String getActivation() {
         return activation;
@@ -154,15 +157,11 @@ public class Data implements UserDetails {
         return roles;
     }
 
-    public List<Lot> getLots() {
-        return lots;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLots(List<Lot> lots) {
-        this.lots = lots;
-    }
-
-    public void addLot(Lot lot) {
-        lots.add(lot);
+    public String getCardInfo() {
+        return cardInfo;
     }
 }

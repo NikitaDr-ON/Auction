@@ -3,148 +3,228 @@ package com.RGR.Auction.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
+import com.RGR.Auction.Service.Delivery.DeliveryService;
+import com.RGR.Auction.Service.DataService;
+import com.RGR.Auction.Service.Favourites.FavouritesService;
+import com.RGR.Auction.Service.Product.ProductService;
+import com.RGR.Auction.Service.PurchaseSale.PurchaseSaleService;
+import com.RGR.Auction.Service.TypeDelivery.TypeDeliveryService;
+import com.RGR.Auction.models.*;
 import com.RGR.Auction.repositories.Repositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.RGR.Auction.Service.Auction.AuctionService;
-import com.RGR.Auction.Service.Lot.LotService;
-import com.RGR.Auction.models.Auction;
-import com.RGR.Auction.models.AuctionLot;
-import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Lot;
-import com.RGR.Auction.repositories.AuctionRepositories;
-import com.RGR.Auction.repositories.LotRepositories;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/ajax")
 public class AjaxController {
-	
-	@Autowired
-	LotRepositories lotRepository;
-    @Autowired
-    LotService lotService;    
-    @Autowired
-    AuctionService auctionService;    
-    @Autowired
-    AuctionRepositories auctionRepository;
-    @Autowired
-    Repositories repositories;
 
-    
-    @GetMapping("/get_lots")
-    public List<Lot> getLots(@AuthenticationPrincipal Data user) {
-        return lotRepository.findBySeller(user.getId());
-    }
-    @GetMapping("/get_all_lots")
-    public List<Lot> getAllLots() {
-        return lotService.getAll();
-    }
-    @SuppressWarnings("null")
-	@GetMapping("/show_auctions")
-    public List<AuctionLot> showAuctions(@AuthenticationPrincipal Data user) {
-    	List<AuctionLot> al = new ArrayList<>();
-    	
-    	List<Auction> auctions = (List<Auction>) auctionRepository.findAll();
-    	for(int i=0;i<auctions.size();i++) {
-    		al.add(new AuctionLot((auctions).get(i).getId(),lotRepository.findById(auctions.get(i).getLot()), (auctions).get(i).getStart(),(auctions).get(i).getEnd(),(auctions).get(i).getCost()));	
-    	} 
-    	return al;
-    }
-    
-    @PostMapping("/add_lot")
-    public void addLot(@RequestBody Lot lot) {
-    	lotService.saveLot(lot);
-    }
+    @Autowired
+    FavouritesService favService;
+    @Autowired
+    DataService userService;
+    @Autowired
+    DeliveryService del;
+    @Autowired
+    ProductService prod;
+    @Autowired
+    PurchaseSaleService purchaseService;
+    @Autowired
+    TypeDeliveryService services;
+    @Autowired
+    Repositories dataRepo;
 
-    @PostMapping("/add_auction")
-    public void addAuction(@RequestBody Auction auction) {
-    	auction.setCost(lotRepository.findById(auction.getLot()).getStartCost());
-    	auctionService.saveAuction(auction);
+
+    @GetMapping("/get_all_products")
+    public List<Product> getAllProducts() {
+        return prod.getAllProducts();
+    }
+    @GetMapping("/get_fav_products")
+    public List<Product> getFavProducts(@AuthenticationPrincipal Data user) {
+        return favService.getFavProductsByIdUser(user);
+    }
+    @GetMapping("/get_goods_purchase_sale")
+    public List<Product> getGoodsPurchaseSale(@AuthenticationPrincipal Data user) {
+        return prod.getProductsFromPurchaseSale(user);
+    }
+    @GetMapping("/get_purchase")
+    public List<PurchaseSale> getPurchaseSale(@AuthenticationPrincipal Data user) {
+        return purchaseService.getAllPurchaseSaleByBuyer(user);
+    }
+    @GetMapping("/get_services")
+    public List<ServiceModel> getServices() {
+        return services.getAllServices();
     }
 
-    @PostMapping("/take_rate")
-    public void takeRate(@RequestBody Auction auction) {
-    	int rate=auction.getCost();
-    	List<Auction> upAuction=auctionRepository.findByLot(auction.getLot());
-    	Auction updateAuction=upAuction.get(0);
-    	System.out.println(rate+"id"+updateAuction.getId());
-    	if( rate>=updateAuction.getCost()) {
-    	updateAuction.setCost(rate);
-    	}
-    	auctionRepository.save(updateAuction);
+/*
+    @GetMapping("/show_message")
+    public int showMessageSum() {
+        List<Delivery> activDeliveries=del.getActiveDeliveriesByUser();
+        List<Integer> salesDeliveries = new ArrayList<>();
+        List<PurchaseSale> listSale=new ArrayList<>();
+
+        for(Delivery deliv: activDeliveries){
+                salesDeliveries.add(deliv.getId_sale());
+        }
+
+       for (int nd : salesDeliveries) {
+               listSale.add(purchaseService.getPurchaseSaleById(nd));
+       }
+
+        int sum=0;
+        for(int i=0;i<listSale.size();i++) {
+            sum =sum+ listSale.get(i).getPurchase_quant()*listSale.get(i).getPurchase_price();
+        }
+
+        return sum;
     }
+
+ */
+
+
+    @PostMapping("/add_fav_product")
+    public void addFavProduct(@AuthenticationPrincipal Data user, @RequestBody Request request) {
+       int stat=request.getStat();
+       int idFav=request.getFavorite();
+       Favourites fav=new Favourites();
+       fav.setProduct_id(idFav);
+       //fav.setUser_id((int)userService.getCurrentUser().getId());
+        fav.setUser_id((int)user.getId());
+        if(stat==1) {
+           favService.addFavProductByObj(fav);
+       }
+       if(stat==0){
+           favService.deleteFavProductByObj(fav);
+       }
+
+    }
+    @ResponseBody
+    @RequestMapping(value = "/add_purchase_sale", method = RequestMethod.POST)
+    public void addPurchaseSale(@AuthenticationPrincipal Data user, @RequestParam("product_id") int product_id, @RequestParam("purchase_quant") int purchase_quant) throws IOException {
+
+        System.out.println("product_id= "+product_id);
+        System.out.println("purchase_quant= "+purchase_quant);
+
+        purchaseService.addPurchaseSale(user,prod.getProductById(product_id),purchase_quant);
+
+    }
+    @ResponseBody
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public void cancel(@AuthenticationPrincipal Data user,@RequestParam("cancel") int canc) throws IOException {
+        del.deleteActiveDeliveriesByUser(user);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+    public void pay(@AuthenticationPrincipal Data user, @RequestParam("pay") int pay) throws IOException {
+        del.payDelivery(user);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/delete_purchase_sale", method = RequestMethod.POST)
+    public void deletePS(@RequestParam("idSale") int idSale) throws IOException {
+        purchaseService.deletePurchaseSale(idSale);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public void buy(@RequestParam("arraySale[]") List<Integer> myArray, @RequestParam("service") int serviceId) throws IOException {
+
+        System.out.println("myArray[]= "+myArray.toString());
+        System.out.println("serviceid= "+serviceId);
+        for(int el: myArray){
+        del.addDelivery(el,serviceId);
+
+        }
+    }
+
+
 
     @GetMapping("/get_vintage")
-    public List<Lot> getVintageLots() {
-        List<Lot> lots = lotRepository.findAll();
-        List<Lot> vintage = new ArrayList<>();
-        for(int i=0;i< lots.size();i++)
+    public List<Product> getVintage() {
+        List<Product> products = prod.getAllProducts();
+        List<Product> vintage = new ArrayList<>();
+        for(int i=0;i< products.size();i++)
         {
-            if(lots.get(i).getCategory()==1)
-                vintage.add(lots.get(i));
+            if(products.get(i).getCategory()==2)
+                vintage.add(products.get(i));
         }
         return vintage;
     }
     @GetMapping("/get_antic")
-    public List<Lot> getAnticLots() {
-        List<Lot> lots = lotRepository.findAll();
-        List<Lot> antic = new ArrayList<>();
-        for(int i=0;i< lots.size();i++)
+    public List<Product> getAntic() {
+        List<Product> products = prod.getAllProducts();
+        List<Product> antic = new ArrayList<>();
+        for(int i=0;i< products.size();i++)
         {
-            if(lots.get(i).getCategory()==2)
-                antic.add(lots.get(i));
+            if(products.get(i).getCategory()==1)
+                antic.add(products.get(i));
         }
         return antic;
     }
     @GetMapping("/get_handmade")
-    public List<Lot> getHandmadeLots(){
-        List<Lot> lots = lotRepository.findAll();
-        List<Lot> handmade = new ArrayList<>();
-        for(int i=0;i< lots.size();i++)
+    public List<Product> getHandmade(){
+        List<Product> products = prod.getAllProducts();
+        List<Product> handmade = new ArrayList<>();
+        for(int i=0;i< products.size();i++)
         {
-            if(lots.get(i).getCategory()==3)
-                handmade.add(lots.get(i));
+            if(products.get(i).getCategory()==4)
+                handmade.add(products.get(i));
         }
         return handmade;
     }
 
     @GetMapping("/get_collectable")
-    public List<Lot> getCollectableLots() {
-        List<Lot> lots = lotRepository.findAll();
-        List<Lot> collectable = new ArrayList<>();
-        for(int i=0;i< lots.size();i++)
+    public List<Product> getCollectable() {
+        List<Product> products = prod.getAllProducts();
+        List<Product> collectable = new ArrayList<>();
+        for(int i=0;i< products.size();i++)
         {
-            if(lots.get(i).getCategory()==4)
-                collectable.add(lots.get(i));
+            if(products.get(i).getCategory()==3)
+                collectable.add(products.get(i));
         }
         return collectable;
     }
 
     @GetMapping("/get_drag")
-    public List<Lot> getDragLots() {
-        List<Lot> lots = lotRepository.findAll();
-        List<Lot> jewelry = new ArrayList<>();
-        for(int i=0;i< lots.size();i++)
+    public List<Product> getDrag() {
+        List<Product> products = prod.getAllProducts();
+        List<Product> jewelry = new ArrayList<>();
+        for(int i=0;i< products.size();i++)
         {
-            if(lots.get(i).getCategory()==5)
-                jewelry.add(lots.get(i));
+            if(products.get(i).getCategory()==5)
+                jewelry.add(products.get(i));
         }
         return jewelry;
     }
+
     @GetMapping("/get_user")
-    public Data getUser(@AuthenticationPrincipal Data usersup) {
-        Data user = repositories.findById(usersup.getId());
-        System.out.println(user.getId());
+    public Optional<Data> getUser(@AuthenticationPrincipal Data usersup) {
+        Optional<Data> user = Optional.ofNullable(dataRepo.findById(usersup.getId()));
+        user.ifPresent(data -> System.out.println(data.getId()));
         return user;
+    }
+
+    public static class Request {
+        public int favoriteProd;
+        public int stat;
+
+        public int getFavorite() {
+            return favoriteProd;
+        }
+
+        public void setFavorite(int favoriteProd) {
+            this.favoriteProd = favoriteProd;
+        }
+
+        public int getStat() {
+            return stat;
+        }
+
+        public void setStat(int stat) {
+            this.stat = stat;
+        }
     }
 }
 

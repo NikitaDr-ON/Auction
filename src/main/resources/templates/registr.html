@@ -74,10 +74,28 @@
       <hr>
 
       <form  method="post">
-        <input type="text" name="name" class ="input" th:placeholder="#{label.Name}"/>
-        <input type="text" name="surname" class ="input"  th:placeholder="#{label.Surname}"/>
-        <input type="text" name="mail" class ="input"  th:placeholder="#{label.Mail}"/>
+        <hr>
+        <label for="nam"><b>Введите имя</b></label>
+        <input type="text" id="nam" name="name" class ="input" th:placeholder="#{label.Name}"/>
+        <label for="sur"><b>Введите фамилию</b></label>
+        <input type="text" id="sur" name="surname" class ="input"  th:placeholder="#{label.Surname}"/>
+        <label for="fath"><b>Введите отчество</b></label>
+        <input type="text" id="fath" name="fathername" class ="input" th:placeholder="#{label.Fathername}"/>
+        <label for="date" style="margin-bottom: 25px;">Дата рождения: </label>
+        <input type="date" id="date" name="birthdate" class ="input"  th:placeholder="#{label.Birthdate}"/>
+        <label for="emai"><b>E-mail</b></label>
+        <input type="text" id="emai" name="mail" class ="input"  th:placeholder="#{label.Mail}"/>
+        <label for="pho"><b>Введите номер телефона</b></label>
+        <input type="text" id="pho" name="phone" class ="input" th:placeholder="#{label.Phone}"/>
+        <label for="addr"><b>Введите адрес</b></label>
+        <input type="text" id="addr" name="address" class ="input"  th:placeholder="#{label.Address}"/>
+        <label for="crd"><b>Введите реквизиты</b></label>
+        <input type="text" id="crd" name="cardInfo" class ="input" th:placeholder="#{label.cardInfo}"/>
+        <input type="text" id="gdr" name="gender" class ="input" th:placeholder="#{label.gender}"/>
+
+        <label for="password"><b>Пароль</b></label>
         <input type="text" name="password" class ="input" id="password"  th:placeholder="#{label.EnterPassword}"/>
+        <hr>
         <button type="submit" id="registration" class="button"><p th:text="#{label.registr}"></p></button>
       </form>
 

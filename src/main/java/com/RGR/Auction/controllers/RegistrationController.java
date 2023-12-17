@@ -14,24 +14,34 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 public class RegistrationController {
     @Autowired
     private DataService dataService;
     @Autowired
-    Repositories Repository;
+    private Repositories Repository;
 
     @GetMapping("/registr") public String showRegistration(Model model)
     {
 
         return "registr";
     }
+    //test registrathion
+    @GetMapping("/reg") public String showTest(Model model)
+    {
 
+        return "reg";
+    }
 
     @PostMapping("/registr")
-    public String add(@RequestParam String name,@RequestParam String surname,@RequestParam String mail,@RequestParam String password, Model model)
+    public String add(@RequestParam String name, @RequestParam String surname, @RequestParam String mail, @RequestParam String password,
+                      @RequestParam String fathername, @RequestParam Date birthdate, @RequestParam int gender, @RequestParam String phone,
+                      @RequestParam String address, @RequestParam String cardInfo, Model model)
     {
-       if(dataService.saveUser(name,surname,mail,password))
+       if(dataService.saveUser(name,surname,fathername,birthdate,gender,phone,
+               mail,address,cardInfo,password))
        {
            return "redirect:registr/verification";
        }
@@ -53,7 +63,7 @@ public class RegistrationController {
         {
             System.out.println(code+user.getActivation());
             user.setActivation("true");
-            Repository.save(user);
+            dataService.saveActivation(user);
             System.out.println(user.getActivation());
         }
         return  "redirect:/login";

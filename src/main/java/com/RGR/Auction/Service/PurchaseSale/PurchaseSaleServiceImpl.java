@@ -2,51 +2,158 @@ package com.RGR.Auction.Service.PurchaseSale;
 
 import java.util.List;
 
+import com.RGR.Auction.Service.DataService;
+import com.RGR.Auction.Service.Product.ProductService;
+import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Product;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.PurchaseSale;
-import com.RGR.Auction.repositories.PurchaseSaleRepositories;
-import com.RGR.Auction.repositories.Repositories;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PurchaseSaleServiceImpl implements PurchaseSaleService{
-	
-	@Autowired
-    private PurchaseSaleRepositories purchaseSaleRepository;
-	@Autowired
-    private Repositories userRepository;
+    SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
+    @Autowired
+    ProductService products;
+
 
     @Override
-    public List<PurchaseSale> getAll() {
-        return purchaseSaleRepository.findAllByOrderByIdDesc();
+    @Transactional
+    public PurchaseSale getPurchaseSaleById(int id) {
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale WHERE id_sale=:id" ;
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        List<PurchaseSale> purchaseSale=session.createNativeQuery(sqlQuery).setParameter("id", id)
+                .setResultTransformer(Transformers.aliasToBean(PurchaseSale.class)).list();
+        tr.commit();
+        return purchaseSale.get(0);
+    }
+    @Override
+    @Transactional
+    public List<PurchaseSale> getAllPurchaseSale() {
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale WHERE old=0" ;
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        List<PurchaseSale> purchaseSales=session.createNativeQuery(sqlQuery)
+                .setResultTransformer(Transformers.aliasToBean(PurchaseSale.class)).list();
+        tr.commit();
+        return purchaseSales;
+    }
+    @Override
+    @Transactional
+    public List<PurchaseSale> getAllPurchaseSaleByBuyer(Data user) {
+        int idBuyer=(int)new DataService().getCurrentUser().getId();
+        //int idBuyer=(int)user.getId();
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant" +
+                " FROM purchase_sale WHERE buyer=:idBuyer AND old=0" ;
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        List<PurchaseSale> purchaseSales=session.createNativeQuery(sqlQuery).setParameter("idBuyer", idBuyer)
+                .setResultTransformer(Transformers.aliasToBean(PurchaseSale.class)).list();
+        tr.commit();
+
+
+        return purchaseSales;
     }
 
     @Override
-    public PurchaseSale getById(int id) throws NotFoundException {
-    	PurchaseSale purchaseSale = purchaseSaleRepository.findById(id);
-        if (purchaseSale == null) {
-            throw new NotFoundException();
+    @Transactional
+    public void addPurchaseSale(Data user, Product product, int purchaseQuant) {
+        //int userId=new DataService().getCurrentUser().getId();
+        int userId=(int)user.getId();
+
+        int idProduct=product.getId();
+        List <PurchaseSale> existPurchaseSale= getAllPurchaseSale();
+        boolean flag=false;
+        int idExistPurchaseSale=0;
+        for(PurchaseSale ps:existPurchaseSale){
+            if((ps.getProduct_id() == idProduct) && (ps.getBuyer() == userId)){
+                flag=true;
+                idExistPurchaseSale=ps.getId_sale();
+            }
         }
-        return purchaseSale;
+
+        int purchasePrice=product.getPrice();
+        int quantOfProd= product.getQuant();
+
+        if (quantOfProd>=purchaseQuant) {
+            if(flag==false){
+            String sqlQuery =  "INSERT INTO purchase_sale(buyer,product_id,purchase_price,purchase_quant) VALUE(" +
+                    ":userId," +
+                    ":idProduct," +
+                    ":purchasePrice," +
+                    ":purchaseQuant)";
+            Session session = sessionFactory.openSession();
+            org.hibernate.Transaction tr = session.beginTransaction();
+
+            Query query = session.createNativeQuery(sqlQuery);
+            query.setParameter("userId", userId);
+            query.setParameter("idProduct", idProduct);
+            query.setParameter("purchasePrice", purchasePrice);
+            query.setParameter("purchaseQuant", purchaseQuant);
+            int result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+            tr.commit();
+            }else{
+                String sqlQuery =  "UPDATE purchase_sale SET " +
+                        "purchase_quant=:purchaseQuant, purchase_price=:purchasePrice " +
+                        "WHERE id_sale=:idSale";
+                Session session = sessionFactory.openSession();
+                org.hibernate.Transaction tr = session.beginTransaction();
+
+                Query query = session.createNativeQuery(sqlQuery);
+
+                query.setParameter("purchaseQuant", purchaseQuant);
+                query.setParameter("purchasePrice", purchasePrice);
+                query.setParameter("idSale", idExistPurchaseSale);
+                int result = query.executeUpdate();
+                System.out.println("Rows update: " + result);
+                tr.commit();
+                }
+        }
+        else System.out.println("Товаров недостаточно");
     }
 
     @Override
-    public void savePurchaseSale(int id_Seller, int id_Buyer) throws NotFoundException {
-    	PurchaseSale newPurchaseSale = new PurchaseSale();
-    	
-    	Data seller=userRepository.findById(id_Seller);
-    	Data buyer=userRepository.findById(id_Buyer);
-    	if (seller == null || buyer==null) {
-            throw new NotFoundException();
-        }
-    	newPurchaseSale.setSeller(seller);
-    	newPurchaseSale.setBuyer(buyer);
-        
-    	purchaseSaleRepository.save(newPurchaseSale);
+    @Transactional
+    public void deletePurchaseSale(int idSale) {
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        String sqlQuery =  "DELETE FROM purchase_sale WHERE id_sale=:idSale";
+        Query query = session.createNativeQuery(sqlQuery);
+        query.setParameter("idSale",idSale);
+
+        int result = query.executeUpdate();
+        System.out.println("Rows delete: " + result);
+        tr.commit();
     }
-    
+    @Override
+    @Transactional
+    public void checkOldPurchaseSale(int idSale) {
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        String sqlQuery =  "UPDATE purchase_sale SET old=\"1\" WHERE id_sale=:idSale";
+        Query query = session.createNativeQuery(sqlQuery);
+        query.setParameter("idSale",idSale);
+
+        int result = query.executeUpdate();
+        System.out.println("Rows delete: " + result);
+        tr.commit();
+    }
+
 
 }

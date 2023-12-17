@@ -2,30 +2,45 @@ package com.RGR.Auction.Service.Category;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import com.RGR.Auction.models.Category;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Service;
 
-import com.RGR.Auction.models.CategoryModel;
-import com.RGR.Auction.repositories.CategoryRepositories;
+import org.springframework.transaction.annotation.Transactional;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
-	
-	@Autowired
-	private CategoryRepositories categoryRepository;
-	@Override
-	public List<CategoryModel> getAll() {
-		 return categoryRepository.findAllByOrderByIdDesc();
-	}
+
+	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
 	@Override
-	public CategoryModel getById(long id) throws NotFoundException {
-	     CategoryModel category = categoryRepository.findById(id);
-	     if (category == null) {
-	         throw new NotFoundException();
-	         }
-	     return category;
-	}
+	@Transactional
+	public Category getCategoryById(int id) {
+		String sqlQuery = "SELECT * FROM category WHERE id=:id" ;
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction tr = session.beginTransaction();
 
+		List<Category> categories=session.createNativeQuery(sqlQuery).setParameter("id", id)
+				.setResultTransformer(Transformers.aliasToBean(Category.class)).list();
+		//if(!products.isEmpty()){}
+		tr.commit();
+		return categories.get(0);
+	}
+	@Override
+	@Transactional
+	public List<Category> getAllCategories() {
+		String sqlQuery = "SELECT * FROM category" ;
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction tr = session.beginTransaction();
+
+		List<Category> categories=session.createNativeQuery(sqlQuery)
+				.setResultTransformer(Transformers.aliasToBean(Category.class)).list();
+		//if(!products.isEmpty()){}
+		tr.commit();
+		return categories;
+	}
 }

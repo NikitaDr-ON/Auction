@@ -72,47 +72,12 @@
 </nav>
 
 <br/>
-<p>Список популярных лотов</p>
-<div class = "table" id="test_database_all">
-</div>
+<div class="cards" id = "out"></div>
 
-<<<<<<< HEAD
-<table border="1">
-  <tr>
-    <th>Продукт</th>
-    <th>Продавец</th>
-    <th>Описание</th>
-    <th>Фото</th>
-    <th>Категория</th>
-    <th>Начальная ставка</th>
-    <th>Дата начала</th>
-    <th>Дата окончания</th>
-    <th>Цена</th>
-  </tr>
-
-  <tr th:each="el : ${auctionLot}">
-    <td th:utext="${el.getLot().getProduct()}"></td>
-    <td th:utext="${el.getLot().getSeller()}"></td>
-    <td th:utext="${el.getLot().getDescription()}"></td>
-    <td th:utext="${el.getLot().getPhoto()}"></td>
-    <td th:utext="${el.getLot().getCategory()}"></td>
-    <td th:utext="${el.getLot().getStartCost()}"></td>
-    <td th:utext="${el.getStart()}"></td>
-    <td th:utext="${el.getEnd()}"></td>
-    <td th:utext="${el.getCost()}"></td>
-    <td><a class="btn btn-primary" th:href="'/index/id='+${el.getLot().getId()}" ><p>Сделать ставку</p></a></td>
-    
-  </tr>
-
-</table>
-=======
->>>>>>> branch 'Test' of https://github.com/NikitaDr-ON/Auction.git
 
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="js/script2.js"></script>
-  <script src="js/jquery-3.4.1.min.js"></script>
   <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -123,7 +88,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
- <script src="js/main.js"></script>
+
  <script type="text/javascript" src="js/mainAjax.js"></script>
 
 

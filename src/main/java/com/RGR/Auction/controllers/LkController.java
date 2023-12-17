@@ -1,58 +1,77 @@
 package com.RGR.Auction.controllers;
 
-import com.RGR.Auction.Service.Lot.LotServiceImpl;
-import com.RGR.Auction.models.Lot;
-import com.RGR.Auction.repositories.CategoryRepositories;
-import org.hibernate.Hibernate;
+import com.RGR.Auction.Service.DataService;
+import com.RGR.Auction.Service.Delivery.DeliveryService;
+import com.RGR.Auction.Service.Product.ProductService;
+import com.RGR.Auction.Service.PurchaseSale.PurchaseSaleService;
+import com.RGR.Auction.models.Data;
+import com.RGR.Auction.models.Delivery;
+import com.RGR.Auction.models.PurchaseSale;
+import com.RGR.Auction.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
-import com.RGR.Auction.Service.Lot.LotService;
-import com.RGR.Auction.models.Data;
-import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
-@RequestMapping("/lk")
 public class LkController {
-	
-	@Autowired
-	LotRepositories lotRepository;
-	@Autowired
- 	private CategoryRepositories catRepository;
 	@Autowired
  	private Repositories userRepository;
+
 	@Autowired
-	LotServiceImpl lotServiceImpl;
- 
-	@GetMapping()
-	public String getAllLots(Model model) {
+	DeliveryService deliveryService;
+
+	@Autowired
+	ProductService prod;
+	@Autowired
+	PurchaseSaleService purchaseService;
+
+/*Покупка товаров(кнопка *купить*)*/
+	@GetMapping("/lk/buy")
+	public String buy( @AuthenticationPrincipal Data user, Model model) {
+
+		List<Delivery> activDeliveries=deliveryService.getActiveDeliveriesByUser(user);
+		List<Integer> salesDeliveries = new ArrayList<>();
+		List<PurchaseSale> listSale=new ArrayList<>();
+		//String cardInfoUser= new DataService().getCurrentUser().getCardInfo();
+		String cardInfoUser= user.getCardInfo();
+
+		for(Delivery deliv: activDeliveries){
+			salesDeliveries.add(deliv.getId_sale());
+		}
+
+		for (int nd : salesDeliveries) {
+			listSale.add(purchaseService.getPurchaseSaleById(nd));
+		}
+
+		int sum=0;
+		for(int i=0;i<listSale.size();i++) {
+			sum =sum+ listSale.get(i).getPurchase_quant()*listSale.get(i).getPurchase_price();
+		}
+
+		if(sum==0){
+			return "redirect:/lk";
+		}
+		else{
+			model.addAttribute("message",sum);
+			model.addAttribute("schet", cardInfoUser);
+			return "buy";
+		}
+	}
+
+
+
+	@RequestMapping(path = "/lk", method = RequestMethod.GET)
+	public String getUsers(@AuthenticationPrincipal Data user, Model model) {
+		//System.out.println("user= "+user.getMail()+","+user.getId());
+
 		return "lk";
 	}
-	
-	
-	/*
-	@PostMapping()
-	public String getAllLots(@RequestParam String product, @RequestParam int startCost, @RequestParam String description,
-							 @RequestParam("file") MultipartFile file, @RequestParam Long categoryId, Model model, @AuthenticationPrincipal Data user)  throws IOException{
-		lotServiceImpl.saveLot(product,startCost,user.getId(),description,file,categoryId);
-		List<Lot> lots=lotRepository.findBySeller(79L);
-		System.out.println(user.getId());
-		model.addAttribute("lots",lots);
-		return "lk";
-	}
-	*/
-	
 
 }

@@ -2,8 +2,6 @@ package com.RGR.Auction.controllers;
 
 import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
-import com.RGR.Auction.models.Lot;
-import com.RGR.Auction.repositories.LotRepositories;
 import com.RGR.Auction.repositories.Repositories;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -18,8 +16,6 @@ public class DataController {
     private Repositories Repositories;
     @Autowired
     DataService dataService;
-    @Autowired
-    private LotRepositories lotRepository;
 
     @GetMapping("/authorization")
     public String authorization(Model model) {
@@ -38,7 +34,7 @@ public class DataController {
         return "privateOffice";
     }
 
-
+/*
     @PostMapping("/authorization")
     public String add(@RequestParam String name, @RequestParam String surname, @RequestParam String mail, @RequestParam String password, Model model) {
         Data user = new Data(name, surname, mail, password);
@@ -47,6 +43,7 @@ public class DataController {
         model.addAttribute("data", data);
         return "authorization";
     }
+*/
 
     @GetMapping("/hello")
     public String activate(Model model) {
@@ -58,43 +55,7 @@ public class DataController {
         return "hello";
     }
 
-    @GetMapping("/antikiick")
-    public String antikiick(Model model) {
 
-
-        return "antikiick";
-    }
-
-    @GetMapping("/collec")
-    public String collec(Model model) {
-
-        return "collec";
-    }
-
-    @GetMapping("/dragiukr")
-    public String dragiukr(Model model) {
-
-        return "dragiukr";
-    }
-    @GetMapping("/sdelsruk")
-    public String sdelsruk(Model model) {
-
-        return "sdelsruk";
-    }
-    @GetMapping("/vintag")
-    public String vintag(Model model) {
-       /* Iterable<Lot> lots = lotRepository.findAll();
-        List<Lot> vintage = new ArrayList<>();
-        lots.forEach(vintage::add);
-        for(int i=0;i< vintage.size();i++)
-        {
-            if(vintage.get(i).getCategory()!=1)//у меня vintage под id=1
-                vintage.remove(i);
-        }
-        model.addAttribute("vintage",vintage);
-        System.out.println(vintage);*/
-        return "vintag";
-    }
     @RequestMapping("/login")
     public String login(Model model) {
 
@@ -109,12 +70,6 @@ public class DataController {
     public String zabpar(Model model) {
 
         return "zabpar";
-    }
-    @GetMapping("lot/{id}")
-    public String addFavourites(@PathVariable("id") int id,Model model) {
-        Lot lots = lotRepository.findById(id);
-        model.addAttribute("Lot", lots);
-        return "lot";
     }
 
 }

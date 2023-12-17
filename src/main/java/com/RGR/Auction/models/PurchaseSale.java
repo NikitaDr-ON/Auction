@@ -9,41 +9,56 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="purchase_sale")
+
 public class PurchaseSale {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID_sale")
-	private int id;
-	@ManyToOne 
-	@JoinColumn(name="Buyer")
-	private Data buyer;
-	@ManyToOne 
-	@JoinColumn(name="Seller")
-	private Data seller;
-	
+	private int id_sale;
+	private int buyer;
+	private int product_id;
+	private int purchase_price;
+	private int purchase_quant;
+
 	public int getId() {
-		return id;
+		return id_sale;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int id_sale) {
+		this.id_sale = id_sale;
 	}
-	public Data getBuyer() {
+	public int getBuyer() {
 		return buyer;
 	}
-	public void setBuyer(Data buyer) {
+	public void setBuyer(int buyer) {
 		this.buyer = buyer;
 	}
-	public Data getSeller() {
-		return seller;
-	}
-	public void setSeller(Data seller) {
-		this.seller = seller;
-	}
-	
-	
-	
-	
 
+	public int getPurchase_price() {
+		return purchase_price;
+	}
+
+	public void setPurchase_price(int purchase_price) {
+		this.purchase_price = purchase_price;
+	}
+
+	public int getPurchase_quant() {
+		return purchase_quant;
+	}
+
+	public void setPurchase_quant(int purchase_quant) {
+		this.purchase_quant = purchase_quant;
+	}
+
+	public int getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
+	}
+
+	public int getId_sale() {
+		return id_sale;
+	}
+
+	public void setId_sale(int id_sale) {
+		this.id_sale = id_sale;
+	}
 }
