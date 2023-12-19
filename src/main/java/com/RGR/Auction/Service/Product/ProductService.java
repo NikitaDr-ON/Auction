@@ -22,6 +22,5 @@ public interface ProductService {
 
     List<Product> searchProduct(String str);
 
-    @Transactional
-    List<Product> getProductsFromPurchaseSale(Data user);
+    List<Product> getProductsFromPurchaseSale();
 }

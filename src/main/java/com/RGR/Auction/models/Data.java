@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Entity

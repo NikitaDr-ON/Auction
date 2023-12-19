@@ -304,6 +304,7 @@ $("#out_fav").html(cardItem);
 function deletePurchaseSale(clicked_id){
 
     var idSale=document.getElementById(clicked_id).value
+    console.log("Удалить эл="+idSale)
 
 $.ajax({
                async : false,

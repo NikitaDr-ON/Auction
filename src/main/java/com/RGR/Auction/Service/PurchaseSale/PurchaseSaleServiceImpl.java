@@ -6,6 +6,8 @@ import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.Service.Product.ProductService;
 import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Product;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PurchaseSaleServiceImpl implements PurchaseSaleService{
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private static final Logger logger = LogManager.getLogger(PurchaseSaleServiceImpl.class);
+
 
     @Autowired
     ProductService products;
@@ -52,7 +56,7 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
     }
     @Override
     @Transactional
-    public List<PurchaseSale> getAllPurchaseSaleByBuyer(Data user) {
+    public List<PurchaseSale> getAllPurchaseSaleByBuyer() {
         int idBuyer=(int)new DataService().getCurrentUser().getId();
         //int idBuyer=(int)user.getId();
         String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant" +
@@ -105,6 +109,9 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
             query.setParameter("purchaseQuant", purchaseQuant);
             int result = query.executeUpdate();
             System.out.println("Rows affected: " + result);
+
+            logger.info("Product with id="+idProduct+" add to basket(purchase_sale) by user with id="+userId);
+
             tr.commit();
             }else{
                 String sqlQuery =  "UPDATE purchase_sale SET " +
@@ -120,6 +127,9 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
                 query.setParameter("idSale", idExistPurchaseSale);
                 int result = query.executeUpdate();
                 System.out.println("Rows update: " + result);
+
+                logger.info("Quant of product with id="+idProduct+" update in basket(purchase_sale) by user with id="+userId);
+
                 tr.commit();
                 }
         }
@@ -138,6 +148,7 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
 
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
+        logger.info("Entry from the table of basket(purchase_sale) with id="+idSale+" delete");
         tr.commit();
     }
     @Override
@@ -152,6 +163,8 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
 
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
+        logger.info("Entry from the table of basket(purchase_sale) with id="+idSale+" update to status OLD (order was send to user)");
+
         tr.commit();
     }
 

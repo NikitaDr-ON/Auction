@@ -1,8 +1,12 @@
 package com.RGR.Auction.Service.Favourites;
 
+import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Product;
+import com.RGR.Auction.models.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Service
 public class FavouritesServiceImpl implements FavouritesService{
+    private static final Logger logger = LogManager.getLogger(FavouritesServiceImpl.class);
+
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     @Override
     @Transactional
@@ -50,10 +56,12 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows affected: " + result);
         tr.commit();
+
     }
     @Override
     @Transactional
     public void addFavProductByObj(Favourites fav){
+
         String sqlQuery =  "INSERT INTO favourites VALUE(" +
                 ":userId," +
                 ":idProduct)";
@@ -66,6 +74,7 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows affected: " + result);
         tr.commit();
+        logger.info("User with id("+fav.getUser_id()+") add favorite product with id("+fav.getProduct_id()+")");
     }
 
     @Override
@@ -84,6 +93,7 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
        tr.commit();
+        logger.info("User with id("+userId+") delete favorite product with id("+idProduct+")");
     }
     @Override
     @Transactional
@@ -99,6 +109,8 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
         tr.commit();
+        logger.info("User with id("+fav.getUser_id()+") delete favorite product with id("+fav.getProduct_id()+")");
+
     }
 
 }

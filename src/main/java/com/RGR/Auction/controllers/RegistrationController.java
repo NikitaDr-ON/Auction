@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -28,27 +25,44 @@ public class RegistrationController {
 
         return "registr";
     }
+
+
     //test registrathion
     @GetMapping("/reg") public String showTest(Model model)
     {
 
         return "reg";
     }
+    /*
+    (@RequestParam("name") String name, @RequestParam("surname") String surname,
+    @RequestParam("fathername") String fathername, @RequestParam("birthdate") Date birthdate,
+    @RequestParam("mail") String mail, @RequestParam("phone") String phone,
+    @RequestParam("password") String password, @RequestParam("address") String address,
+    @RequestParam("cardInfo") String cardInfo,
+    @RequestParam("gender") int gender, Model model)
+     */
 
     @PostMapping("/registr")
-    public String add(@RequestParam String name, @RequestParam String surname, @RequestParam String mail, @RequestParam String password,
-                      @RequestParam String fathername, @RequestParam Date birthdate, @RequestParam int gender, @RequestParam String phone,
-                      @RequestParam String address, @RequestParam String cardInfo, Model model)
+    public String add(@RequestParam String name, @RequestParam String surname,
+                      @RequestParam String fathername, @RequestParam Date birthdate,
+                      @RequestParam String mail, @RequestParam String phone,
+                      @RequestParam String password, @RequestParam String address,
+                      @RequestParam String cardInfo,
+                      @RequestParam int gender, Model model)
     {
+
        if(dataService.saveUser(name,surname,fathername,birthdate,gender,phone,
                mail,address,cardInfo,password))
        {
            return "redirect:registr/verification";
        }
-       else {
-           model.addAttribute("message","user with this email already exists");
-           return  "registr";
+
+         else {
+           model.addAttribute("message", "user with this email already exists");
+
+           return "registr";
        }
+
     }
     @GetMapping("/registr/verification")
     public String verification()

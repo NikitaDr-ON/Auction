@@ -47,12 +47,12 @@ public class AjaxController {
         return favService.getFavProductsByIdUser(user);
     }
     @GetMapping("/get_goods_purchase_sale")
-    public List<Product> getGoodsPurchaseSale(@AuthenticationPrincipal Data user) {
-        return prod.getProductsFromPurchaseSale(user);
+    public List<Product> getGoodsPurchaseSale() {
+        return prod.getProductsFromPurchaseSale();
     }
     @GetMapping("/get_purchase")
-    public List<PurchaseSale> getPurchaseSale(@AuthenticationPrincipal Data user) {
-        return purchaseService.getAllPurchaseSaleByBuyer(user);
+    public List<PurchaseSale> getPurchaseSale() {
+        return purchaseService.getAllPurchaseSaleByBuyer();
     }
     @GetMapping("/get_services")
     public List<ServiceModel> getServices() {

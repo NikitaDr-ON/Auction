@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.RGR.Auction.Service.Favourites.FavouritesServiceImpl;
 import com.RGR.Auction.Service.MailSender;
 import com.RGR.Auction.Service.Product.ProductService;
 import com.RGR.Auction.Service.PurchaseSale.PurchaseSaleService;
 import com.RGR.Auction.Service.Seller.SellerService;
 import com.RGR.Auction.Service.TypeDelivery.TypeDeliveryService;
 import com.RGR.Auction.models.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -35,6 +38,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 	SellerService sellerObj;
 	@Autowired
 	TypeDeliveryService servicesServ;
+	private static final Logger logger = LogManager.getLogger(DeliveryServiceImpl.class);
+
 	@Override
 	@Transactional
 	public void addDelivery(int id_sale, int service) {
@@ -54,6 +59,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 		int result = query.executeUpdate();
 		tr.commit();
 		System.out.println("Rows affected: " + result);
+
+		logger.info("Add delivery with id_sale="+id_sale);
+
 
 	}
 	@Override
@@ -96,9 +104,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 				int idProduct = sales.get(i).getProduct_id();
 				products.changeProductQuant(idProduct, quant);
 				purchaseSale.checkOldPurchaseSale(sales.get(i).getId_sale());
+
+				logger.info("Delivery with id_sale="+sales.get(i).getId_sale()+" was pay by user with id="+user.getId());
 			}
-
-
 
 
 			//Оповещение продавца о том, что его товар был куплен
@@ -111,6 +119,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 			mailSender.send(mailSeller, "Massage from the store \"Rarity\"", messageToSeller);
 			 */
+
+
 		}
 	}
 
@@ -164,6 +174,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 		List<Delivery> deliveries=session.createNativeQuery(sqlQuery).setParameter("buyer", userId)
 				.setResultTransformer(Transformers.aliasToBean(Delivery.class)).list();
 		tr.commit();
+		logger.info("User with id="+user.getId()+" cancel the payment product from basket(purchase_sale)");
+
 		return deliveries;
 	}
 }

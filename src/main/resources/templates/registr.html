@@ -22,7 +22,7 @@
 <div id="index"></div>
 <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
   <div class="container">
-    <a href="index" class="navbar-brand">
+    <a href="/index" class="navbar-brand">
       <img src="logo.png" width="120px" height="120px" alt="logo">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -47,10 +47,10 @@
           </div>
         </li>
         <li class="nav-item active">
-          <a href="login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
+          <a href="/login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
         </li>
         <li class="nav-item active">
-          <a href="lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
+          <a href="/lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
         </li>
         <li class="nav-item active">
           <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
@@ -73,30 +73,31 @@
       <h1 th:text="#{label.registr}"></h1>
       <hr>
 
-      <form  method="post">
+      <form method="post">
         <hr>
         <label for="nam"><b>Введите имя</b></label>
         <input type="text" id="nam" name="name" class ="input" th:placeholder="#{label.Name}"/>
         <label for="sur"><b>Введите фамилию</b></label>
         <input type="text" id="sur" name="surname" class ="input"  th:placeholder="#{label.Surname}"/>
         <label for="fath"><b>Введите отчество</b></label>
-        <input type="text" id="fath" name="fathername" class ="input" th:placeholder="#{label.Fathername}"/>
+        <input type="text" id="fath" name="fathername" class ="input" />
         <label for="date" style="margin-bottom: 25px;">Дата рождения: </label>
-        <input type="date" id="date" name="birthdate" class ="input"  th:placeholder="#{label.Birthdate}"/>
+        <input type="date" id="date" name="birthdate" class ="input"  />
         <label for="emai"><b>E-mail</b></label>
-        <input type="text" id="emai" name="mail" class ="input"  th:placeholder="#{label.Mail}"/>
+        <input type="text" id="emai" name="mail" class ="input"  />
         <label for="pho"><b>Введите номер телефона</b></label>
-        <input type="text" id="pho" name="phone" class ="input" th:placeholder="#{label.Phone}"/>
+        <input type="text" id="pho" name="phone" class ="input" />
         <label for="addr"><b>Введите адрес</b></label>
-        <input type="text" id="addr" name="address" class ="input"  th:placeholder="#{label.Address}"/>
+        <input type="text" id="addr" name="address" class ="input"  />
         <label for="crd"><b>Введите реквизиты</b></label>
-        <input type="text" id="crd" name="cardInfo" class ="input" th:placeholder="#{label.cardInfo}"/>
-        <input type="text" id="gdr" name="gender" class ="input" th:placeholder="#{label.gender}"/>
+        <input type="text" id="crd" name="cardInfo" class ="input" />
+
+        <input type="number" id="gdr" name="gender" class ="input" />
 
         <label for="password"><b>Пароль</b></label>
         <input type="text" name="password" class ="input" id="password"  th:placeholder="#{label.EnterPassword}"/>
         <hr>
-        <button type="submit" id="registration" class="button"><p th:text="#{label.registr}"></p></button>
+        <button type="submit" id="registration" class="button">Регистрация</button>
       </form>
 
       <hr>

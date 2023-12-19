@@ -1,13 +1,15 @@
 package com.RGR.Auction.Service.Product;
 
-import com.RGR.Auction.models.Data;
+import com.RGR.Auction.Service.DataService;
+import com.RGR.Auction.Service.Favourites.FavouritesServiceImpl;
 import com.RGR.Auction.models.Product;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,8 @@ public class ProductServiceImpl implements ProductService{
 
 
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
+
 
     @Override
     @Transactional
@@ -96,6 +100,8 @@ public class ProductServiceImpl implements ProductService{
         int result = query.executeUpdate();
         System.out.println("Rows update: " + result);
         tr.commit();
+        logger.info("Change quant of product with id="+idProduct+" to "+changeQuantTo+" elements");
+
     }
     @Override
     @Transactional
@@ -114,18 +120,21 @@ public class ProductServiceImpl implements ProductService{
                .setResultTransformer(Transformers.aliasToBean(Product.class)).list();
 
         tr.commit();
+
+        logger.info("Search of product by str=("+str+")");
+
         return products;
     }
     @Override
     @Transactional
-    public List<Product> getProductsFromPurchaseSale(Data user) {
-        //int idBuyer=new DataService().getCurrentUser().getId();
-        int idBuyer=(int)user.getId();
+    public List<Product> getProductsFromPurchaseSale() {
+        int idBuyer=new DataService().getCurrentUser().getId();
+        //int idBuyer=(int)user.getId();
         String sqlQuery = "SELECT product.id, product.name,product.description,\n" +
                 "    product.photo, product.category, product.price,\n" +
                 "    product.quant, product.seller FROM product\n" +
                 "    JOIN purchase_sale ON product.id=purchase_sale.product_id\n" +
-                "    WHERE buyer=:idBuyer" ;
+                "    WHERE buyer=:idBuyer AND purchase_sale.old=0" ;
 
         Session session = sessionFactory.openSession();
         org.hibernate.Transaction tr = session.beginTransaction();

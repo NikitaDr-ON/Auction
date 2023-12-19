@@ -12,14 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PurchaseSaleService {
     PurchaseSale getPurchaseSaleById(int id);
     List<PurchaseSale> getAllPurchaseSale();
-    @Transactional
-    List<PurchaseSale> getAllPurchaseSaleByBuyer(Data user);
-
-    @Transactional
+    List<PurchaseSale> getAllPurchaseSaleByBuyer();
     void addPurchaseSale(Data user, Product product, int purchaseQuant);
-
     void deletePurchaseSale(int idSale);
-
-    @Transactional
     void checkOldPurchaseSale(int idSale);
 }
