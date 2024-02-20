@@ -2,10 +2,10 @@ package com.RGR.Auction.Service.PurchaseSale;
 
 import java.util.List;
 
-import com.RGR.Auction.Service.DataService;
 import com.RGR.Auction.Service.Product.ProductService;
-import com.RGR.Auction.models.Data;
+import com.RGR.Auction.Service.UserServices.UserService;
 import com.RGR.Auction.models.Product;
+import com.RGR.Auction.models.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -28,8 +28,36 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
 
     @Autowired
     ProductService products;
+    @Autowired
+    UserService userService;
 
+    @Override
+    @Transactional
+    public List<PurchaseSale> getAllPurchaseSaleWithOldByUser(User user) {
 
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale " +
+                "WHERE old=1 AND buyer=:buyer ORDER BY id_sale ASC";
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        List<PurchaseSale> purchaseSales=session.createNativeQuery(sqlQuery).setParameter("buyer",user.getId())
+                .setResultTransformer(Transformers.aliasToBean(PurchaseSale.class)).list();
+        tr.commit();
+        return purchaseSales;
+    }
+    @Override
+    @Transactional
+    public List<PurchaseSale> getAllPurchaseSale() {
+
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale WHERE old=0";
+        Session session = sessionFactory.openSession();
+        org.hibernate.Transaction tr = session.beginTransaction();
+
+        List<PurchaseSale> purchaseSales=session.createNativeQuery(sqlQuery)
+                .setResultTransformer(Transformers.aliasToBean(PurchaseSale.class)).list();
+        tr.commit();
+        return purchaseSales;
+    }
     @Override
     @Transactional
     public PurchaseSale getPurchaseSaleById(int id) {
@@ -44,8 +72,9 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
     }
     @Override
     @Transactional
-    public List<PurchaseSale> getAllPurchaseSale() {
-        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale WHERE old=0" ;
+    public List<PurchaseSale> getAllPurchaseSaleWithOld() {
+        String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant FROM purchase_sale WHERE old=1" +
+                " ORDER BY id_sale ASC" ;
         Session session = sessionFactory.openSession();
         org.hibernate.Transaction tr = session.beginTransaction();
 
@@ -56,9 +85,8 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
     }
     @Override
     @Transactional
-    public List<PurchaseSale> getAllPurchaseSaleByBuyer() {
-        int idBuyer=(int)new DataService().getCurrentUser().getId();
-        //int idBuyer=(int)user.getId();
+    public List<PurchaseSale> getAllPurchaseSaleByBuyer(User user) {
+        int idBuyer=(int)user.getId();
         String sqlQuery = "SELECT id_sale,buyer,product_id,purchase_price,purchase_quant" +
                 " FROM purchase_sale WHERE buyer=:idBuyer AND old=0" ;
         Session session = sessionFactory.openSession();
@@ -74,8 +102,8 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
 
     @Override
     @Transactional
-    public void addPurchaseSale(Data user, Product product, int purchaseQuant) {
-        //int userId=new DataService().getCurrentUser().getId();
+    public void addPurchaseSale(User user, Product product, int purchaseQuant) {
+
         int userId=(int)user.getId();
 
         int idProduct=product.getId();
@@ -135,6 +163,7 @@ public class PurchaseSaleServiceImpl implements PurchaseSaleService{
         }
         else System.out.println("Товаров недостаточно");
     }
+
 
     @Override
     @Transactional

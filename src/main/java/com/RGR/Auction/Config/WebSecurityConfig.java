@@ -1,7 +1,6 @@
 package com.RGR.Auction.Config;
 
-import com.RGR.Auction.Service.DataService;
-import net.bytebuddy.asm.Advice;
+import com.RGR.Auction.Service.UserServices.UserDetailsServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -19,19 +17,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataService userService;
+    private UserDetailsServiceImple userDetailsServiceImple;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http.csrf()
             .disable().authorizeRequests()
-                .antMatchers("/privateOffice","/lk").authenticated()
-                .antMatchers("/authorization","/hello","/registr/*","/registr","/index","/login","/reg").permitAll()
-                .and().formLogin().loginPage("/login")
-                .permitAll()
+                .antMatchers("/lk","/index/*","/search").authenticated()
+                .antMatchers("/admin","/admin/*").hasAuthority("ADMIN")
+                .antMatchers("/registr/*","/registr","/index","/login","/").permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout();
+                .logout()
+                .logoutSuccessUrl("/login");
 
     }
     @Bean
@@ -43,7 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.userDetailsService(userService).passwordEncoder(bcryptPasswordEncoder());
+        auth
+                .userDetailsService(userDetailsServiceImple)
+                .passwordEncoder(bcryptPasswordEncoder());
     }
+
 
 }

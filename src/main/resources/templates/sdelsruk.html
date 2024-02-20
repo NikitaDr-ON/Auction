@@ -9,14 +9,14 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="css/font-awesome.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
   <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <title>HAMMER</title>
+  <title>RARITY</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -62,11 +62,7 @@
           <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0"
-                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
-      </form>
+
     </div>
   </div>
 </nav>
@@ -77,14 +73,21 @@
       <h1 style="color: #fff; font-size: 50px;" th:text="#{label.handmade}"></h1>
     </div>
   </div>
-<div class="cards" id = "handmade"></div>
+<div class="cards">
+  <div class="card" th:each="el : ${products}"><div style="border:2px solid #ccc;width: 300px; color:#000000">
+    <p><img th:src="@{${el.getPhoto()}}" alt="" width="297" height="297"></p>
+    <label>Название: </label><p th:text="${el.getName()}"></p>
+    <label>Цена: </label><p th:text="${el.getPrice()}"></p>
+    <label>Количество: </label><p th:text="${el.getQuant()}"></p>
+    <p><a th:href="@{/index/id={p}(p=${el.getId()})}" class="btn btn-primary" >Посмотреть</a></p>
 
+  </div></div>
+</div>
 
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/script2.js"></script>
-<script src="js/jquery-3.4.1.min.js"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -95,8 +98,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script src="js/main.js"></script>
-<script type="text/javascript" src="js/mainAjax.js"></script>
+<script src="/js/main.js"></script>
+<script type="text/javascript" src="/js/mainAjax.js"></script>
 </body>
 
 </html>

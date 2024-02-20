@@ -3,12 +3,12 @@ import java.util.Date;
 import javax.persistence.Column;
 
 public class Seller {
-    private long id;
+    private int id;
     private String firstname;
     private String surname;
     private String fathername;
     private Date birthdate;
-    private String gender;
+    private int gender;
     private String phone;
     private String email;
     private String cardinfo;
@@ -27,5 +27,9 @@ public class Seller {
 
     public void setCardinfo(String cardinfo) {
         this.cardinfo = cardinfo;
+    }
+
+    public String getName() {
+        return fathername;
     }
 }

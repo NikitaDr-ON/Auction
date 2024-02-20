@@ -1,3 +1,75 @@
+
+* {
+	box-sizing: border-box;
+	margin: auto;
+}/* Add padding to containers */
+.contain {
+	padding: 10px;
+	color: white;
+}
+
+
+/* Overwrite default styles of hr */
+hr {
+	border: 1px solid #f1f1f1;
+	margin-bottom: 25px;
+}
+
+/* Set a style for the submit/vhod button */
+.vhodbtn {
+	background-color: black;
+	color: white;
+	padding: 16px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+	border-radius: 15px;
+	font-size: 20px;
+}
+
+.vhodbtn:hover {
+	opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+	text-align: center;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+	color: gray;
+	text-align: center;
+}
+
+
+/* Добавляем зел цвет текста и галочку если требования верны*/
+.valid {
+	/*псевдоклас, позволяет менять внешний вид полей если данные введены верно*/
+	color: green;
+}
+
+.valid:before {
+	position: relative;
+	left: -10px;
+	content: "V";
+}
+
+/* Добавляем красный цвет и x если требования не выполнены */
+.invalid {
+	color: red;
+}
+
+.invalid:before {
+	position: relative;
+	left: -10px;
+	content: "X";
+}
+/*card of products */
 .cards {
   display: grid;
   /* Автоматически заполняем на всю ширину grid-контейнера */
@@ -968,7 +1040,6 @@ color:red;
 }
 .input1 {
   display: block;
-  width: 15%;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
   font-family: inherit;
@@ -1197,7 +1268,8 @@ font-family: 'EB Garamond', serif;
 	text-align: left;
 	padding: 0;
 	width: 140px;
-	border: 1px solid #ddd;
+	height: 32px;
+	/*border: 1px solid #ddd;*/
 	display: inline-block;
 }
 .number-minus, .number-plus {
@@ -1297,6 +1369,9 @@ transform: translateY(0px);
 }
 /* Full-width input fields */
 input[type=text],
+input[type=tel],
+input[type=email],
+input[type=date],
 input[type=password] {
 	width: 100%;
 	padding: 15px;
@@ -1307,6 +1382,9 @@ input[type=password] {
 }
 
 input[type=text]:focus,
+input[type=tel]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
 input[type=password]:focus {
 	background-color: #ddd;
 	outline: none;
@@ -1321,4 +1399,40 @@ a {
 	color: rgb(255, 255, 255);
 	font-size: 20px;
 	text-align: center;
+}
+/*поля регистрации*/
+input:valid {
+border-color: green;
+color: green;
+box-shadow: none;
+}
+/* Не верный ввод */
+input:invalid {
+border-color: red;
+color: red;
+box-shadow: none;
+}
+/* Верный ввод при фокусе */
+input:focus:valid {
+border-color: green;
+color: green;
+box-shadow: none;
+}
+/* Не верный ввод при фокусе */
+input:focus:invalid {
+border-color: red;
+color: red;
+box-shadow: none;
+}
+/* Верный ввод при фокусе обязательного input */
+input:focus:required:valid {
+border-color: green;
+color: green;
+box-shadow: none;
+}
+/* Не верный ввод при фокусе обязательного input */
+input:focus:required:invalid {
+border-color: red;
+color: red;
+box-shadow: none;
 }

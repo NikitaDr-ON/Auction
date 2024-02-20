@@ -76,17 +76,4 @@ public class Product {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
-                ", category=" + category +
-                ", price=" + price +
-                ", quant=" + quant +
-                ", seller=" + seller +
-                '}';
-    }
 }

@@ -1,22 +1,22 @@
 package com.RGR.Auction.Service.Favourites;
 
-import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Product;
+import com.RGR.Auction.models.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
 public interface FavouritesService {
-    List<Product> getFavProductsByIdUser(Data user);
+   List<Product> getFavProductsByIdUser(User user);
 
-    void addFavProduct(Data user, int idProduct);
+    void addFavProduct(User user, int idProduct);
 
     void addFavProductByObj(Favourites fav);
 
     @Transactional
-    void deleteFavProduct(Data user, int idProduct);
+    void deleteFavProduct(User user, int idProduct);
 
     @Transactional
     void deleteFavProductByObj(Favourites fav);

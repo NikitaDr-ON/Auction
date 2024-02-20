@@ -15,8 +15,10 @@
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <title>HAMMER</title>
+  <title>RARITY</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
 
 </head>
 
@@ -57,12 +59,15 @@
         <li>
           <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
         </li>
+        <li class="nav-item active">
+          <a href="/logout" class="nav-link "><i class="fa fa-home"></i><p >Выйти</p></a>
+        </li>
+        <li  th:if="${role} == 1" class="nav-item active">
+          <a href="/admin" class="nav-link "><i class="fa fa-home"></i><p>Админка</p></a>
+        </li>
+
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0"
-                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
-      </form>
+
     </div>
   </div>
 </nav>
@@ -75,15 +80,7 @@
         <div class="col-lg-8 col-md-12">
           <h1 style="color: #fff; font-size: 50px;">Личный кабинет</h1>
         </div>
-        <div class="col-lg-2 col-md-12" style="padding-top: 15px;">
-          <button class="btn btn-outline-success my-2 my-sm-0">Пополнить</button>
-        </div>
-        <div class="col-lg-1 col-md-6">
-          <p style="color: white; margin-top: 20px;">Баланс: </p>
-        </div>
-        <div class="col-lg-1 col-md-6">
-          <p style="color: white; margin-top: 20px;">0</p>
-        </div>
+
       </div>
     </div>
   </div>
@@ -98,11 +95,11 @@
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
           <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample2" role="button"
-             aria-expanded="false" aria-controls="multiCollapseExample1">Избранное</a>
+             aria-expanded="false" aria-controls="multiCollapseExample2">Избранное</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
           <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample3" role="button"
-             aria-expanded="false" aria-controls="multiCollapseExample1">Доставки</a>
+             aria-expanded="false" aria-controls="multiCollapseExample3">Доставки</a>
         </div>
       </div>
     </div>
@@ -116,9 +113,31 @@
           <div class="cont-basket" style="box-shadow: 0 15px 30px 1px grey; background: #b3d7ff;border-radius: 10px;">
               </br>
             <h3>Товары</h3>
-              </br>
-              <div class="cards" id = "basket_purchase"></div>
-              </br>
+            </br>
+            <p style="color:#000000;font-size: 20px;" th:text="${resultBasket}"></p>
+            </br>
+
+            <div class="cards" id = "basket_purchase">
+              <div class="card" th:each="mapProduct : ${mapProducts}"  th:with="ps=${mapProduct.value}">
+
+                <div style="border:2px solid #ccc;width: 300px; color:#000000" >
+                  <p><img th:src="@{${mapProduct.key.getPhoto()}}" alt="" width="297" height="297"></p>
+                  <label>Название: </label><p th:text="${mapProduct.key.getName()}"></p>
+                  <label>Цена: </label><p th:text="${mapProduct.key.getPrice()}"></p>
+                  <label>Количество: </label><p th:text="${mapProduct.key.getQuant()}"></p>
+                  </hr>
+                  <div><label>Количество в корзине:  </label>
+                    <p th:text="${ps.getPurchase_quant()}"></p></div>
+                  <p><input class="checkPS" name="goods" th:id="'chps'+${ps.getId()}" th:value="${ps.getId()}" type="checkbox"
+                            th:if="${mapProduct.key.getQuant()} >= ${ps.getPurchase_quant()}"></p>
+                  <p th:if="${mapProduct.key.getQuant()} < ${ps.getPurchase_quant()}" style="color: #ff0000;">Товара недостаточно на складе</p>
+                  <p><a th:href="@{/index/id={p}(p=${mapProduct.key.getId()})}" class="btn btn-primary" >Изменить количество товара</a></p>
+                  <p><form action="#" target="_self"><button onclick="deletePurchaseSale(this.id);" class="delClass" th:id="'deleteId'+${ps.getId()}" th:value="${ps.getId()}" >Удалить из корзины</button></form></p>
+                </div>
+
+              </div>
+            </div>
+            </br>
           </div>
 </br>
           <div style="box-shadow: 0 15px 30px 1px grey; background: #b3d7ff;border-radius: 10px;">
@@ -127,7 +146,12 @@
             <h3>Способ доставки</h3>
             </br>
 
-            <div class="cont-service" id="cont-service"></div>
+            <div class="cont-service" id="cont-service">
+              <div th:each="serv : ${services}">
+                <input type="radio" name="service" id="service" th:value="${serv.getId()}">
+                <label th:text="${serv.getName()}"></label>
+              </div>
+            </div>
               </br>
 
           </div>
@@ -147,7 +171,20 @@
         <div class="collapse multi-collapse" id="multiCollapseExample2">
           <div class="card card-body" style="border: 1Fpx solid white;">
             <p style="margin-bottom: 35px;">Избранное</p>
-            <div class="cards" id = "out_fav"></div>
+            <br/>
+            <p style="color:#000000;font-size: 20px;" th:text="${resultFav}"></p>
+            </br>
+            <div class="cards">
+              <div class="card" th:each="el : ${favproducts}"><div style="border:2px solid #ccc;width: 300px; color:#000000">
+                <p><img th:src="@{${el.getPhoto()}}" alt="" width="297" height="297"></p>
+                <label>Название: </label><p th:text="${el.getName()}"></p>
+                <label>Цена: </label><p th:text="${el.getPrice()}"></p>
+                <label>Количество: </label><p th:text="${el.getQuant()}"></p>
+                <p><a th:href="@{/index/id={p}(p=${el.getId()})}" class="btn btn-primary" >Посмотреть</a></p>
+
+              </div></div>
+            </div>
+            </br>
 
           </div>
           </div>
@@ -155,46 +192,69 @@
       </div>
 	</div>
 </form>
-   
-         <div class="container-fluid" style="margin: 30px auto 50px auto;">
-        <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
-          <div class="collapse multi-collapse" id="multiCollapseExample3">
-            <div class="card card-body" style="border: 1px solid white;">
-              <p style="margin-bottom: 35px;">Доставки</p>
-              <div class="cards" id = "deliv">
-                   <div class="card" th:each="user : ${userList}">
-                      <div style="border:2px solid #ccc;width: 300px; color:#000000">
-                        <p th:text="${user.delivery_id}"></p>
-                        <p th:text="${user.isSent}"></p>
-                        <p th:text="${user.date_delivery}"></p>
+<div class="container-fluid" style="margin: 30px auto 50px auto;">
+  <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+    <div class="collapse multi-collapse" id="multiCollapseExample3">
+      <div class="card card-body" style="border: 1Fpx solid white;">
+        <p style="margin-bottom: 35px;">Доставки</p>
+        <br/>
+        <p style="color:#000000;font-size: 20px;" th:text="${resultOrder}"></p>
+        </br>
+        <table>
+          <thead>
+          <tr>
+            <th colspan="2">Список всех заказов</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td >Товар</td>
+            <td >Количество</td>
+            <td >Цена</td>
+            <td >Статус доставки</td>
+            <td >Сервис доставки</td>
+            <td >Дата оформления</td>
+          </tr>
+          <tr th:each="mapOrder : ${mapOrders}"  th:with="deliv=${mapOrder.value}">
+            <td>
+              <p><a th:href="@{/index/id={p}(p=${mapOrder.key.getProduct_id()})}" class="btn btn-primary" >Посмотреть товар</a></p>
+            </td>
+            <td th:text="${mapOrder.key.getPurchase_quant()}"></td>
+            <td th:text="${mapOrder.key.getPurchase_price()}"></td>
+            <td th:if="${deliv.getIsSent()}==1">Оплачен, передан в доставку</td>
+            <td th:unless="${deliv.getIsSent()}==1">Не оплачен</td>
+            <td th:switch="${deliv.getService()}">
+              <p th:case="1">Russian Post</p>
+              <p th:case="2">SDEK</p>
+              <p th:case="3">Boxberry</p>
+            </td>
+            <td th:text="${deliv.getDate_delivery()}"></td>
 
-                      </div>
-                    </div>
-              </div>
+          </tr>
+          </tbody>
+        </table>
+        </br>
 
-
-              </div>
-          </div>
-        </div>
       </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
 
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="js/script2.js"></script>
-      <script src="js/jquery-3.4.1.min.js"></script>
+      <script src="/js/jquery-3.4.1.min.js"></script>
       <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-      <script src="js/script.js"></script>
-      <script src="js/main.js"></script>
-      <script type="text/javascript" src="js/mainAjax.js"></script>
+      <script type="text/javascript" src="/js/mainAjax.js"></script>
 
 </body>
 

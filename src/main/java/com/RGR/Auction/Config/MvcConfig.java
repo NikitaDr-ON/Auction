@@ -19,10 +19,12 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Value("${upload.path}")
     String uploadPath;
-
+/*
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
     }
+
+ */
     @Bean
     public LocaleResolver localeResolver(){
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();

@@ -1,56 +1,53 @@
 package com.RGR.Auction.models;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Date;
 
-//@Entity
-//@Table(name="programming_language")
+@Entity
+@Table(name="users")
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User {
-    int ID;
-    String name;
-    String surname;
-    String fathername;
-    Date birthdate;
-    int gender;
-    String phone;
-    String mail;
-    String address;
-    String cardInfo;
-    public String getMail() {
-        return mail;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID")
+    private long id;
+    @Column(name="Name")
+    private String name;
+    @Column(name="Surname")
+    private String surname;
+    @Column(name="Fathername")
+    private String fathername;
+    @Column(name="Birthdate")
+    private Date birthdate;
+    @Column(name="Gender")
+    private int gender;
+    @Column(name="Phone")
+    private String phone;
+    @Column(name="Mail")
+    private String mail;
+    @Column(name="Address")
+    private String address;
+    @Column(name="cardinfo")
+    private String cardInfo;
+    @Column(name="Password")
+    private String password;
+    @Column(name="Activation_code")
+    private String activationCode;
+    @Column(name="Activation")
+    private String activation;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public User(String name, String surname, String fathername, Date startDate, int gender, String phone, String mail, String address, String cardInfo, String password) {
     }
 
-    public int getId() {
-        return ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(int ID) {
-        this.ID = ID;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCardInfo() {
-        return cardInfo;
-    }
 }
-

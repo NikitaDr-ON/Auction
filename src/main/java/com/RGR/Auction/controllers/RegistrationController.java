@@ -1,24 +1,22 @@
 package com.RGR.Auction.controllers;
 
-import com.RGR.Auction.Service.DataService;
-import com.RGR.Auction.models.Data;
-import com.RGR.Auction.repositories.Repositories;
-import org.apache.catalina.User;
+import com.RGR.Auction.Service.UserServices.UserService;
+import com.RGR.Auction.models.User;
+import com.RGR.Auction.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private DataService dataService;
+    private UserService dataService;
     @Autowired
-    private Repositories Repository;
+    private UserRepository Repository;
 
     @GetMapping("/registr") public String showRegistration(Model model)
     {
@@ -33,23 +31,18 @@ public class RegistrationController {
 
         return "reg";
     }
-    /*
-    (@RequestParam("name") String name, @RequestParam("surname") String surname,
-    @RequestParam("fathername") String fathername, @RequestParam("birthdate") Date birthdate,
-    @RequestParam("mail") String mail, @RequestParam("phone") String phone,
-    @RequestParam("password") String password, @RequestParam("address") String address,
-    @RequestParam("cardInfo") String cardInfo,
-    @RequestParam("gender") int gender, Model model)
-     */
 
     @PostMapping("/registr")
     public String add(@RequestParam String name, @RequestParam String surname,
-                      @RequestParam String fathername, @RequestParam Date birthdate,
+                      @RequestParam String fathername, @RequestParam String birthdate,
                       @RequestParam String mail, @RequestParam String phone,
-                      @RequestParam String password, @RequestParam String address,
-                      @RequestParam String cardInfo,
+                      @RequestParam String password, @RequestParam String city,
+                      @RequestParam String street,@RequestParam String house,
+                      @RequestParam String apartment,@RequestParam String cardInfo,
                       @RequestParam int gender, Model model)
     {
+
+        String address=city+","+street+","+house+","+apartment;
 
        if(dataService.saveUser(name,surname,fathername,birthdate,gender,phone,
                mail,address,cardInfo,password))
@@ -72,7 +65,7 @@ public class RegistrationController {
     @PostMapping("/registr/verification")
     public String verificationCode(@RequestParam String code)
     {
-        Data user = Repository.findByActivationCode(code);
+        User user = Repository.findByActivationCode(code);
         if(user != null)
         {
             System.out.println(code+user.getActivation());

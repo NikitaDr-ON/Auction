@@ -1,15 +1,7 @@
 $(document).ready(function (){
-    showAllProducts();
-    showFavProducts();
-    showPurchaseSale();
-    checkFavProducts();
-    //showMessage();
 
-    showVintage() ;
-    showAntic();
-    showHandmade();
-    showJewelry();
-    showCollectable();
+    checkFavProducts();
+
 
 	$('body').on('click', '.number-minus, .number-plus', function(){
 		var $row = $(this).closest('.number');
@@ -56,27 +48,29 @@ $(document).ready(function (){
 		console.log("количество="+document.querySelector('.number-text').value)
 
 	});
+
 });
+
 
 /*Обработка кнопки Купить(class=buy)*/
 	$('body').on('click', '#buy', function(){
     	    var array = []
-    	    var idService=null
+    	    var idServiceVal=0;
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
-            idService=document.querySelector('input[name="service"]:checked').value;
-
+            let idServiceEl=document.querySelector('input[name="service"]:checked');
             for (var i = 0; i < checkboxes.length; i++) {
-              array.push(checkboxes[i].value)
-            }
-            if(array.length==0 || idService==null){
-            alert("Товар/товары или сервис для доставки не выбраны!")}
-            else{
-            console.log(array);
+                          array.push(checkboxes[i].value)
+                        }
+
+
+            if(array.length>0 && idServiceEl){
+                    idServiceVal=idServiceEl.value;
+                    console.log("idService="+idServiceVal);
+                    console.log(array);
 
             var postData = {
                            arraySale: array,
-                           "service": idService
+                           "service": idServiceVal
                            }
 
                       /* Ключ: тип Ajax, url, dataType, атрибуты данных */
@@ -94,6 +88,8 @@ $(document).ready(function (){
 
                        });
             }
+             else{alert("Товар/товары или сервис для доставки не выбраны!");}
+
     	});
 
 /*отмена оплаты корзины*/
@@ -119,114 +115,9 @@ $.ajax({
                            dataType : "json",
                            data : {"pay" : pay}
 });
+alert("Товар оплачен! Письмо с информацией о доставке отправили на ваш email ");
 
 });
-/*
-function showMessage(){
-$.get('/ajax/show_message', function (data){
-		console.log(data);
-		document.getElementById("messageSum").value=data;
-    });
-}
-*/
-
-function showAllProducts(){
-$.get('/ajax/get_all_products', function (data){
-		console.log(data);
-
-let cardItem = " "
-
-let out = document.getElementById('out')
-for (i = 0; i<data.length; i++){
-    cardItem = cardItem + "<div class=\"card\">"
-    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-    +"<p>"+data[i].id+"</p>"
-    +"<p>"+data[i].name+"</p>"
-    +"<p>"+data[i].description+"</p>"
-    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-    +"<p>"+data[i].category+"</p>"
-    +"<p>"+data[i].price+"</p>"
-    +"<p>"+data[i].quant+"</p>"
-    +"<p>"+data[i].seller+"</p>"
-    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-    +"</div></div>";
-}
-$("#out").html(cardItem);
-
-});
-}
-function showPurchaseSale(){
-
-/*Список товаров из корзины*/
-
-$.get('/ajax/get_goods_purchase_sale', function (data){
-		console.log(data);
-
-let cardItem = " "
-
-let out = document.getElementById('basket_purchase')
-for (i = 0; i<data.length; i++){
-    cardItem = cardItem + "<div class=\"card\">"
-    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-    +"<p>"+data[i].id+"</p>"
-    +"<p>"+data[i].name+"</p>"
-    +"<p>"+data[i].description+"</p>"
-    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-    +"<p>"+data[i].category+"</p>"
-    +"<p>"+data[i].price+"</p>"
-    +"<p>"+data[i].quant+"</p>"
-    +"<p>"+data[i].seller+"</p>"
-    +"<div><label>Количество в корзине:  </label><output class=\"quantFromPS\" id=\"qps"+data[i].id+"\"></output></div>"
-    +"<p><input class=\"checkPS\" name=\"goods\" id=\"chps"+data[i].id+"\" value=\"0\" type=\"checkbox\"></p>"
-    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Изменить количество товара</a></p>"
-    +"<p><form action=\"#\" target=\"_self\"><button onclick=\"deletePurchaseSale(this.id);\" class=\"delClass\" id=\"deleteId"+data[i].id+"\" value=\"1\" >Удалить из корзины</button></form></p>"
-    +"</div></div>";
-}
-$("#basket_purchase").html(cardItem);
-
-});
-
-/*Список способов доставки*/
-
-$.get('/ajax/get_services', function (data){
-		console.log(data);
-
-let cardItem = " "
-
-let out = document.getElementById('cont-service')
-for (i = 0; i<data.length; i++){
-    cardItem = cardItem + "<div><input type=\"radio\" name=\"service\" id=\"service\" value=\""+data[i].id+"\">"
-                +"<label>"+data[i].name+"</label></div>";
-}
-$("#cont-service").html(cardItem);
-});
-
-/*Вывод количества товаров и idSale из корзины*/
-
-$.get('/ajax/get_purchase', function (data){
-		console.log(data);
-
-var quantFromPS = document.getElementsByClassName('quantFromPS');
-var idSale = document.getElementsByClassName('checkPS');
-var delSale=document.getElementsByClassName('delClass');
-for (var i=0; i< quantFromPS.length; i++ ) {
-  const qps =quantFromPS[i].id;
-  const cps=idSale[i].id;
-  const dps=delSale[i].id;
-
-  var quant=data[i].purchase_quant;
-  var sale=data[i].id_sale;
-
-
-  document.getElementById(dps).value=sale;
-  document.getElementById(qps).value=quant;
-  document.getElementById(cps).value=sale;
-}
-
-});
-}
-
-
 
 
 
@@ -275,32 +166,6 @@ out.textContent=blackHeart;
 }
 
 
-function showFavProducts(){
-$.get('/ajax/get_fav_products', function (data){
-		console.log(data);
-
-let cardItem = " "
-
-let out = document.getElementById('out_fav')
-for (i = 0; i<data.length; i++){
-    cardItem = cardItem + "<div class=\"card\">"
-    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-    +"<p>"+data[i].id+"</p>"
-    +"<p>"+data[i].name+"</p>"
-    +"<p>"+data[i].description+"</p>"
-    +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-    +"<p>"+data[i].category+"</p>"
-    +"<p>"+data[i].price+"</p>"
-    +"<p>"+data[i].quant+"</p>"
-    +"<p>"+data[i].seller+"</p>"
-    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-    +"</div></div>";
-}
-$("#out_fav").html(cardItem);
-
-});
-}
-
 function deletePurchaseSale(clicked_id){
 
     var idSale=document.getElementById(clicked_id).value
@@ -319,6 +184,7 @@ $.ajax({
                }
 
            });
+           showPurchaseSale();
 }
 function addPurchaseSale(clicked_id) {
 
@@ -330,7 +196,6 @@ function addPurchaseSale(clicked_id) {
                "purchase_quant": purchase_quant
                }
 
-          /* Ключ: тип Ajax, url, dataType, атрибуты данных */
        $.ajax({
                async : false,
                cache : false,
@@ -340,137 +205,14 @@ function addPurchaseSale(clicked_id) {
                data : postData,
 
                success : function(data) {
-                   alert(data);
+
                }
 
            });
-
-}
-
-function showVintage() {
-     $.get('/ajax/get_vintage', function (data){
-		console.log(data);
-
-        let cardItem = " "
-
-        let out = document.getElementById('vintag')
-        for (i = 0; i<data.length; i++){
-            cardItem = cardItem + "<div class=\"card\">"
-            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-            +"<p>"+data[i].id+"</p>"
-            +"<p>"+data[i].name+"</p>"
-            +"<p>"+data[i].description+"</p>"
-            +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-            +"<p>"+data[i].category+"</p>"
-            +"<p>"+data[i].price+"</p>"
-            +"<p>"+data[i].quant+"</p>"
-            +"<p>"+data[i].seller+"</p>"
-            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-            +"</div></div>";
-        }
-        $("#vintag").html(cardItem);
-
-        });
-    }
-
-function showAntic() {
-     $.get('/ajax/get_antic', function (data){
-		console.log(data);
-
-        let cardItem = " "
-
-        let out = document.getElementById('antic')
-        for (i = 0; i<data.length; i++){
-            cardItem = cardItem + "<div class=\"card\">"
-            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-            +"<p>"+data[i].id+"</p>"
-            +"<p>"+data[i].name+"</p>"
-            +"<p>"+data[i].description+"</p>"
-            +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-            +"<p>"+data[i].category+"</p>"
-            +"<p>"+data[i].price+"</p>"
-            +"<p>"+data[i].quant+"</p>"
-            +"<p>"+data[i].seller+"</p>"
-            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-            +"</div></div>";
-        }
-        $("#antic").html(cardItem);
-
-        });
-    }
-function showHandmade() {
-     $.get('/ajax/get_handmade', function (data){
-		console.log(data);
-
-                let cardItem = " "
-
-                for (i = 0; i<data.length; i++){
-                    cardItem = cardItem + "<div class=\"card\">"
-                    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-                    +"<p>"+data[i].id+"</p>"
-                    +"<p>"+data[i].name+"</p>"
-                    +"<p>"+data[i].description+"</p>"
-                   +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-                    +"<p>"+data[i].category+"</p>"
-                    +"<p>"+data[i].price+"</p>"
-                    +"<p>"+data[i].quant+"</p>"
-                    +"<p>"+data[i].seller+"</p>"
-                    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-                    +"</div></div>";
-                }
-                $("#handmade").html(cardItem);
-
-                });
-}
-function showJewelry() {
-     $.get('/ajax/get_drag', function (data){
-		console.log(data);
-
-                        let cardItem = " "
-
-                        for (i = 0; i<data.length; i++){
-                            cardItem = cardItem + "<div class=\"card\">"
-                            +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-                            +"<p>"+data[i].id+"</p>"
-                            +"<p>"+data[i].name+"</p>"
-                            +"<p>"+data[i].description+"</p>"
-                           +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-                            +"<p>"+data[i].category+"</p>"
-                            +"<p>"+data[i].price+"</p>"
-                            +"<p>"+data[i].quant+"</p>"
-                            +"<p>"+data[i].seller+"</p>"
-                            +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-                            +"</div></div>";
-                        }
-                        $("#drag").html(cardItem);
-
-                        });
-}
-function showCollectable() {
-     $.get('/ajax/get_collectable', function (data){
-		console.log(data);
-
-                                let cardItem = " "
-
-                                for (i = 0; i<data.length; i++){
-                                    cardItem = cardItem + "<div class=\"card\">"
-                                    +"<div style=\"border:2px solid #ccc;width: 300px; color:#000000\">"
-                                    +"<p>"+data[i].id+"</p>"
-                                    +"<p>"+data[i].name+"</p>"
-                                    +"<p>"+data[i].description+"</p>"
-                                   +"<img src=\""+data[i].photo+"\" width=\"297\" height=\"297\">"
-                                    +"<p>"+data[i].category+"</p>"
-                                    +"<p>"+data[i].price+"</p>"
-                                    +"<p>"+data[i].quant+"</p>"
-                                    +"<p>"+data[i].seller+"</p>"
-                                    +"<p><a href='/index/id="+data[i].id+"' class=\"btn btn-primary\" >Подробнее о товаре...</a></p>"
-                                    +"</div></div>";
-                                }
-                                $("#collec").html(cardItem);
-
-                                });
-
+           alert("Товар добавлен в корзину");
 
 
 }
+
+
 

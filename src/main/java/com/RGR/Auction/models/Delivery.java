@@ -49,14 +49,4 @@ public class Delivery {
         this.date_delivery = date_delivery;
     }
 
-    @Override
-    public String toString() {
-        return "Delivery{" +
-                "delivery_id=" + delivery_id +
-                ", id_sale=" + id_sale +
-                ", isSent=" + isSent +
-                ", service=" + service +
-                ", date_delivery=" + date_delivery +
-                '}';
-    }
 }

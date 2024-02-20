@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>RARITY</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<body style="background: url(bg-body.jpg);">
+<div id="index"></div>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
+    <div class="container">
+        <a href="index" class="navbar-brand">
+            <img src="logo.png" width="120px" height="120px" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto nav-icon">
+                <li class="nav-item active">
+                    <a href="index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                            class="fa fa-info"></i><p th:text="#{label.category}"></p></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/antikiick"><p th:text="#{label.antiquesAndArt}"></p></a>
+                        <a class="dropdown-item" href="/vintag"><p th:text="#{label.vintage}"></p></a>
+                        <a class="dropdown-item" href="/collec"><p th:text="#{label.collection}"></p></a>
+                        <a class="dropdown-item" href="/sdelsruk"><p th:text="#{label.handmade}"></p></a>
+                        <a class="dropdown-item" href="/dragiukr" ><p th:text="#{label.drag}"></p></a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a href="login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
+                </li>
+                <li class="nav-item active">
+                    <a href="lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
+                </li>
+                <li class="nav-item active">
+                    <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
+                </li>
+                <li>
+                    <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container-fluid"
+     style="background: url(bg-header2.gif) repeat-x; padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <h1 style="color: #fff; font-size: 50px;">Админка</h1>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="padding-bottom: 7px; padding-top: 30px; background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+                <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample1" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample1">Пользователи</a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+                <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample2" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample2">Товары</a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 text-center justify-content-center">
+                <a class="personalhref" data-toggle="collapse" href="#multiCollapseExample3" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample3">Заказы</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin: 30px auto 50px auto;">
+    <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body" style="border: 1Fpx solid white;">
+                <p style="margin-bottom: 35px;">Пользователи</p>
+                <br/>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Список всех пользователей</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td >ID</td>
+                        <td >Имя</td>
+                        <td >Фамилия</td>
+                        <td >Email</td>
+                        <td >Роль</td>
+                        <td >Статус активации</td>
+                        <td >...</td>
+                    </tr>
+                    <tr th:each="el : ${users}">
+                        <td th:text="${el.getId()}"></td>
+                        <td th:text="${el.getName()}"></td>
+                        <td th:text="${el.getSurname()}"></td>
+                        <td th:text="${el.getMail()}"></td>
+                        <td th:text="${el.getRole().name()}"></td>
+                        <td th:text="${el.getActivation()}"></td>
+                        <td><a  th:if="${el.getId()} != ${currentUser}"
+                                th:href='@{/admin/deleteUserId={p}(p=${el.getId()})}' class="btn" th:id="deleteUser+${el.getId()}">Удалить</a></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                </br>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container-fluid" style="margin: 30px auto 50px auto;">
+    <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample2">
+            <div class="card card-body" style="border: 1Fpx solid white;">
+                <p style="margin-bottom: 35px;">Товары</p>
+
+                </br>
+                <div class="cards">
+                    <div class="card" th:each="el : ${products}"><div style="border:2px solid #ccc;width: 300px; color:#000000">
+                        <p><img th:src="@{${el.getPhoto()}}" alt="" width="297" height="297"></p>
+                        <label>Название: </label><p th:text="${el.getName()}"></p>
+                        <label>Цена: </label><p th:text="${el.getPrice()}"></p>
+                        <label>Количество: </label><p th:text="${el.getQuant()}"></p>
+                        <p><a th:href="@{/index/id={p}(p=${el.getId()})}" class="btn btn-primary" >Посмотреть</a></p>
+                        <p><a th:href="@{/admin/deleteProductId={p}(p=${el.getId()})}" class="btn btn-primary" >Удалить товар</a></p>
+                    </div></div>
+                </div>
+                </br>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container-fluid" style="margin: 30px auto 50px auto;">
+    <div class="container text-center justify-content-center" style="border-radius: 15px; background-color: white;">
+        <div class="collapse multi-collapse" id="multiCollapseExample3">
+            <div class="card card-body" style="border: 1Fpx solid white;">
+                <p style="margin-bottom: 35px;">Заказы</p>
+                <br/>
+                <p style="color:#000000;font-size: 20px;" th:text="${resultOrder}"></p>
+                </br>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Список всех заказов</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td >Товар</td>
+                        <td >Количество</td>
+                        <td >Цена</td>
+                        <td >Статус доставки</td>
+                        <td >Сервис доставки</td>
+                        <td >Дата оформления</td>
+                        <td >Идентификатор покупателя</td>
+                    </tr>
+                    <tr th:each="mapOrder : ${mapOrders}"  th:with="deliv=${mapOrder.value}">
+                        <td>
+                            <p><a th:href="@{/index/id={p}(p=${mapOrder.key.getProduct_id()})}" class="btn btn-primary" >Посмотреть товар</a></p>
+                        </td>
+                        <td th:text="${mapOrder.key.getPurchase_quant()}"></td>
+                        <td th:text="${mapOrder.key.getPurchase_price()}"></td>
+                        <td th:if="${deliv.getIsSent()}==1">Оплачен, передан в доставку</td>
+                        <td th:unless="${deliv.getIsSent()}==1">Не оплачен</td>
+                        <td th:switch="${deliv.getService()}">
+                            <p th:case="1">Russian Post</p>
+                            <p th:case="2">SDEK</p>
+                            <p th:case="3">Boxberry</p>
+                        </td>
+                        <td th:text="${deliv.getDate_delivery()}"></td>
+                        <td>
+                            <p><a th:href="@{/admin/userId={p}(p=${mapOrder.key.getBuyer()})}" class="btn btn-primary" >Посмотреть пользователя</a></p>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                </br>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="js/mainAjax.js"></script>
+
+
+</body>
+
+</html>

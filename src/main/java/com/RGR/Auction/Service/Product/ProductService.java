@@ -1,8 +1,7 @@
 package com.RGR.Auction.Service.Product;
 
-import com.RGR.Auction.models.Data;
 import com.RGR.Auction.models.Product;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.RGR.Auction.models.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ public interface ProductService {
 
     void changeProductQuant(int idProduct, int changeQuantTo);
 
-    List<Product> searchProduct(String str);
+    List <Product> searchProduct(User user, String str);
 
     List<Product> getProductsFromPurchaseSale();
 }

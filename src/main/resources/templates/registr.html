@@ -6,16 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1">
 
   <!-- Bootstrap CSS -->
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="css/font-awesome.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
   <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <title>HAMMER</title>
+  <title>RARIRY</title>
 </head>
 
 <body style="background: url(bg-body.jpg);">
@@ -32,85 +33,92 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto nav-icon">
         <li class="nav-item active">
-          <a href="index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
+          <a href="/index" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.main}"></p></a>
         </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                  class="fa fa-info"></i><p th:text="#{label.category}"></p></a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/antikiick"><p th:text="#{label.antiquesAndArt}"></p></a>
-            <a class="dropdown-item" href="/vintag"><p th:text="#{label.vintage}"></p></a>
-            <a class="dropdown-item" href="/collec"><p th:text="#{label.collection}"></p></a>
-            <a class="dropdown-item" href="/sdelsruk"><p th:text="#{label.handmade}"></p></a>
-            <a class="dropdown-item" href="/dragiukr" ><p th:text="#{label.drag}"></p></a>
-          </div>
-        </li>
+
         <li class="nav-item active">
           <a href="/login" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.signin}"></p></a>
         </li>
-        <li class="nav-item active">
-          <a href="/lk" class="nav-link "><i class="fa fa-home"></i><p th:text="#{label.lk}"></p></a>
-        </li>
+
         <li class="nav-item active">
           <a th:href="@{?locale=ru}" class="nav-link "><i class="fa fa-home"></i>ru</a>
         </li>
         <li>
           <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
         </li>
+
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0"
-                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
-      </form>
+
     </div>
   </div>
 </nav>
 
-
-    <div class="contain" style="width: 25%">
-      <h1 th:text="#{label.registr}"></h1>
       <hr>
 
-      <form method="post">
-        <hr>
-        <label for="nam"><b>Введите имя</b></label>
-        <input type="text" id="nam" name="name" class ="input" th:placeholder="#{label.Name}"/>
-        <label for="sur"><b>Введите фамилию</b></label>
-        <input type="text" id="sur" name="surname" class ="input"  th:placeholder="#{label.Surname}"/>
-        <label for="fath"><b>Введите отчество</b></label>
-        <input type="text" id="fath" name="fathername" class ="input" />
-        <label for="date" style="margin-bottom: 25px;">Дата рождения: </label>
-        <input type="date" id="date" name="birthdate" class ="input"  />
-        <label for="emai"><b>E-mail</b></label>
-        <input type="text" id="emai" name="mail" class ="input"  />
-        <label for="pho"><b>Введите номер телефона</b></label>
-        <input type="text" id="pho" name="phone" class ="input" />
-        <label for="addr"><b>Введите адрес</b></label>
-        <input type="text" id="addr" name="address" class ="input"  />
-        <label for="crd"><b>Введите реквизиты</b></label>
-        <input type="text" id="crd" name="cardInfo" class ="input" />
+<form  method="post">
+  <div class="contain" style="width: 25%">
+    <h1>Регистрация</h1>
+    <hr>
 
-        <input type="number" id="gdr" name="gender" class ="input" />
+    <label style="margin-bottom: 25px;">Дата рождения: </label>
+    <input type="date" name="birthdate" min="1923-01-01" max="2023-12-01"  required>
 
-        <label for="password"><b>Пароль</b></label>
-        <input type="text" name="password" class ="input" id="password"  th:placeholder="#{label.EnterPassword}"/>
-        <hr>
-        <button type="submit" id="registration" class="button">Регистрация</button>
-      </form>
+    <label><b>Введите имя</b></label>
+    <input type="text" name="name"  placeholder="Введите имя" required title="Используйте буквы латиницы или кириллицы, длина-от 2 до 15 символов" pattern="[А-ЯЁа-яёA-Za-z]{2,15}">
+
+    <label ><b>Введите фамилию</b></label>
+    <input type="text" placeholder="Фамилия" name="surname" required title="Используйте буквы латиницы или кириллицы, длина-от 2 до 20 символов" pattern="[А-ЯЁа-яёA-Za-z]{2,20}">
+
+    <label ><b>Введите отчество</b></label>
+    <input type="text" placeholder="Отчество" name="fathername" required title="Используйте буквы латиницы или кириллицы, длина-от 2 до 20 символов" pattern="[А-ЯЁа-яёA-Za-z]{2,20}">
+
+    <label ><b>Введите номер телефона</b></label>
+    <input type="tel" name="phone"
+           pattern="\+7[0-9]{10}" size="12"
+           placeholder="+7__________"  required>
+
+    <label ><b>Введите адрес доставки</b></label>
+    <input type="text" placeholder="Город" name="city" required title="Используйте буквы кириллицы, длина от 2 до 22 символов" pattern="[А-ЯЁа-яё]{2,22}">
+    <input type="text" placeholder="Улица" name="street" required title="Используйте буквы кириллицы и цифры, длина от 2 до 20 символов" pattern="[А-ЯЁа-яё0-9]{2,20}">
+    <input type="text" placeholder="Дом" name="house" required title="Используйте цифры и знак /, длина от 1 до 6 символов" pattern="[0-9\/]{1,6}">
+    <input type="text" placeholder="Квартира" name="apartment" required title="Используйте цифры, длина от 1 до 6 символов " pattern="[0-9]{1,6}">
+
+    <label ><b>Введите реквизиты для оплаты(номер карты)</b></label>
+    <input type="text" name="cardInfo" required placeholder="XXXXXXXXXXXXXXXX" pattern="[0-9]{16}">
+
+    <label ><b>E-mail</b></label>
+    <input type="email" id="email" placeholder="Введите e-mail" name="mail"  required>
+    <p id="resultEmail"></p>
+
+    <label ><b>Пароль</b></label>
+    <input type="password" placeholder="Введите пароль" id="password" name="password" required>
+    <p id="resultPass"></p>
+
+
+    <label><b>Пол:</b></label>
+    <label>Мужской</label>
+    <input type="radio"  name="gender" value="0" checked>
+    <label>Женский</label>
+    <input type="radio" name="gender" value="1">
+
+    <hr>
+    <button type="submit" id="registration" class="vhodbtn">Зарегистрироваться</button>
+  </div>
+</form>
 
       <hr>
-    </div>
-<div >
-  <p th:text="${message}" class="message"></p>
+
+<div>
+  <h1 th:text="${message}" class="message"></h1>
 </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="js/script2.js"></script>
-  <script src="JS.js"></script>
-  <script src="js/jquery-3.4.1.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Подключение вашего скрипта -->
+<script src="/js/JS.js"></script>
+  <script src="/js/jquery-3.4.1.min.js"></script>
   <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -121,7 +129,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
+  <script src="/js/main.js"></script>
 
 </body>
 

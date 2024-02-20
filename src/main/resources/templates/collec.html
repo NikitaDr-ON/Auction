@@ -16,7 +16,7 @@
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <title>HAMMER</title>
+  <title>RARITY</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -62,11 +62,7 @@
           <a th:href="@{?locale=eng}" class="nav-link "><i class="fa fa-home"></i>eng</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input style="margin-bottom:auto " type="text" class="form-control mr-sm 2" th:placeholder="#{label.find}" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0"
-                style="margin: 0 0 0 10px; /*padding-left: 30px; padding-right: 30px*/" th:text="#{label.find}"></button>
-      </form>
+
     </div>
   </div>
 </nav>
@@ -78,9 +74,16 @@
     </div>
   </div>
 
-<div class = "cards" id="collec"></div>
+<div class="cards">
+  <div class="card" th:each="el : ${products}"><div style="border:2px solid #ccc;width: 300px; color:#000000">
+    <p><img th:src="@{${el.getPhoto()}}" alt="" width="297" height="297"></p>
+    <label>Название: </label><p th:text="${el.getName()}"></p>
+    <label>Цена: </label><p th:text="${el.getPrice()}"></p>
+    <label>Количество: </label><p th:text="${el.getQuant()}"></p>
+    <p><a th:href="@{/index/id={p}(p=${el.getId()})}" class="btn btn-primary" >Посмотреть</a></p>
 
-
+  </div></div>
+</div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="js/script2.js"></script>

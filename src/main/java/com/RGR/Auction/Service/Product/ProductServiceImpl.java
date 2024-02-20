@@ -1,8 +1,8 @@
 package com.RGR.Auction.Service.Product;
 
-import com.RGR.Auction.Service.DataService;
-import com.RGR.Auction.Service.Favourites.FavouritesServiceImpl;
+import com.RGR.Auction.Service.UserServices.UserService;
 import com.RGR.Auction.models.Product;
+import com.RGR.Auction.models.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -10,15 +10,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-
-
+    @Autowired
+    UserService userService;
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
@@ -74,17 +78,19 @@ public class ProductServiceImpl implements ProductService{
     }
     @Override
     @Transactional
-    public void deleteProduct(int id) {
+    public void deleteProduct(int idProduct) {
         Session session = sessionFactory.openSession();
         org.hibernate.Transaction tr = session.beginTransaction();
 
-        String sqlQuery =  "DELETE FROM product WHERE id='?'";
+        String sqlQuery =  "UPDATE product SET quant='0' WHERE id=:idProduct";
         Query query = session.createNativeQuery(sqlQuery);
-        query.setParameter(1, id);
+        query.setParameter("idProduct", idProduct);
 
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
         tr.commit();
+        logger.info("Товар с id="+idProduct+" был удален из БД администратором");
+
     }
     @Override
     @Transactional
@@ -100,35 +106,43 @@ public class ProductServiceImpl implements ProductService{
         int result = query.executeUpdate();
         System.out.println("Rows update: " + result);
         tr.commit();
-        logger.info("Change quant of product with id="+idProduct+" to "+changeQuantTo+" elements");
+        logger.info("Изменено количество товара с id="+idProduct+" на "+changeQuantTo+" элементов");
 
     }
     @Override
     @Transactional
-    public List <Product> searchProduct(String str) {
-        String sqlQuery = "SELECT * FROM product\n" +
-                "WHERE NAME LIKE \"%"+str+"%\" OR description LIKE \"%"+str+"%\"\n" +
-                "UNION\n" +
-                "SELECT product.id,product.name,description,photo,category,price,quant,seller\n" +
-                "FROM product\n" +
-                "JOIN seller ON product.seller=seller.id\n" +
-                "WHERE seller.firstname LIKE \"%"+str+"%\" OR seller.surname LIKE \"%"+str+"%\"";
-        Session session = sessionFactory.openSession();
-        org.hibernate.Transaction tr = session.beginTransaction();
+    public List <Product> searchProduct(User user, String str) {
+        List<Product> products=new ArrayList<>();
+        String regex = "[^А-ЯЁа-яё]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(str);
+        if (m.find()) {
+            System.out.println("найден спец символ в строке= "+str);
+        }
+        else{
 
-        List<Product> products=session.createNativeQuery(sqlQuery)
-               .setResultTransformer(Transformers.aliasToBean(Product.class)).list();
+            String sqlQuery = "SELECT * FROM product\n" +
+                    "WHERE NAME LIKE CONCAT('%', :name ,'%') OR description LIKE CONCAT('%', :desc ,'%')";
 
-        tr.commit();
+            Session session = sessionFactory.openSession();
+            org.hibernate.Transaction tr = session.beginTransaction();
 
-        logger.info("Search of product by str=("+str+")");
+             products = session.createNativeQuery(sqlQuery).setParameter("name", str)
+                    .setParameter("desc", str).setResultTransformer(Transformers.aliasToBean(Product.class)).list();
+
+            tr.commit();
+
+            logger.info("Поиск продукта по строке str=(" + str + ")");
+
+        }
 
         return products;
     }
     @Override
     @Transactional
     public List<Product> getProductsFromPurchaseSale() {
-        int idBuyer=new DataService().getCurrentUser().getId();
+
+        long idBuyer=userService.getCurrentUser().getId();
         //int idBuyer=(int)user.getId();
         String sqlQuery = "SELECT product.id, product.name,product.description,\n" +
                 "    product.photo, product.category, product.price,\n" +
@@ -140,11 +154,11 @@ public class ProductServiceImpl implements ProductService{
         org.hibernate.Transaction tr = session.beginTransaction();
         List <Product> products=session.createNativeQuery(sqlQuery).setParameter("idBuyer", idBuyer)
                 .setResultTransformer(Transformers.aliasToBean(Product.class)).list();
-        //if(!products.isEmpty()){}
         tr.commit();
 
         return products;
     }
+
 
 
     }

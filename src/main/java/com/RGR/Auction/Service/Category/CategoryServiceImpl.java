@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService{
 
 		List<Category> categories=session.createNativeQuery(sqlQuery).setParameter("id", id)
 				.setResultTransformer(Transformers.aliasToBean(Category.class)).list();
-		//if(!products.isEmpty()){}
+
 		tr.commit();
 		return categories.get(0);
 	}
@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService{
 
 		List<Category> categories=session.createNativeQuery(sqlQuery)
 				.setResultTransformer(Transformers.aliasToBean(Category.class)).list();
-		//if(!products.isEmpty()){}
+
 		tr.commit();
 		return categories;
 	}

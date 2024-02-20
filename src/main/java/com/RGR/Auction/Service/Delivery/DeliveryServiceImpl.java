@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.RGR.Auction.Service.Favourites.FavouritesServiceImpl;
 import com.RGR.Auction.Service.MailSender;
 import com.RGR.Auction.Service.Product.ProductService;
 import com.RGR.Auction.Service.PurchaseSale.PurchaseSaleService;
@@ -31,7 +30,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Autowired
 	MailSender mailSender;
 	@Autowired
-	ProductService products;
+	ProductService productService;
 	@Autowired
 	PurchaseSaleService purchaseSale;
 	@Autowired
@@ -60,31 +59,34 @@ public class DeliveryServiceImpl implements DeliveryService {
 		tr.commit();
 		System.out.println("Rows affected: " + result);
 
-		logger.info("Add delivery with id_sale="+id_sale);
+		logger.info("Добавили доставку с идентификатором корзины="+id_sale);
 
 
 	}
 	@Override
 	@Transactional
-	public void payDelivery(Data user) {
+	public void payDelivery(User user) {
 		List<Delivery>deliveriesForPay =getActiveDeliveriesByUser(user);
 		List<PurchaseSale> sales=new ArrayList<>();
 		ServiceModel service=servicesServ.getServiceById(deliveriesForPay.get(0).getService());
+		List <Product> products= productService.getAllProducts();
+		List<Product> buyProducts=new ArrayList<>();
+
 
 		for (Delivery deliv: deliveriesForPay){
 			sales.add(purchaseSale.getPurchaseSaleById(deliv.getId_sale()));
 		}
 
 		int isSent=0;
-		//User user=new DataService().getCurrentUser();
 		UUID uuid = UUID.randomUUID();
 
-		String message="Товары были отправлены на адрес "+user.getAddress()+" сервисом " +service.getName()+
-				"\n Воспользуйтесь трек-номером для отслеживания посылки: "+uuid.toString();
+		String message= "Здравствуйте, "+user.getName()+", товары были отправлены на адрес "+user.getAddress()+" сервисом " +service.getName()+
+				"\n Воспользуйтесь трек-номером для отслеживания посылки: "+uuid.toString()+
+				"\n";
 
 		if(!StringUtils.isEmpty(user.getMail())) {
-			mailSender.send(user.getMail(), "Интернет-магазин \"Rarity\"", message);
 			isSent = 1;
+			mailSender.send(user.getMail(), "Интернет-магазин \"Rarity\"", message);
 
 			for(int i=0;i<sales.size();i++) {
 				String sqlQuery = "UPDATE delivery " +
@@ -102,37 +104,42 @@ public class DeliveryServiceImpl implements DeliveryService {
 				//Изменение количества товаров в таблице БД Product после покупки одного пользователя
 				int quant = sales.get(i).getPurchase_quant();
 				int idProduct = sales.get(i).getProduct_id();
-				products.changeProductQuant(idProduct, quant);
+				productService.changeProductQuant(idProduct, quant);
 				purchaseSale.checkOldPurchaseSale(sales.get(i).getId_sale());
+				if (idProduct==products.get(i).getId()){
+					buyProducts.add(products.get(i));
+				}
 
 				logger.info("Delivery with id_sale="+sales.get(i).getId_sale()+" was pay by user with id="+user.getId());
 			}
+			for(int k=0;k<buyProducts.size();k++) {
 
+				int idSeller=buyProducts.get(k).getSeller();
+				Seller seller=sellerObj.getSellerById(idSeller);
+				String nameSeller=seller.getName();
+				String mailSeller=seller.getEmail();
+				String cardSeller=seller.getCardinfo();
+				String messageToSeller="Здравствуйте, "+nameSeller+", товар был продан. Оплата поступит на счет: "+cardSeller+
+						" сегодня или в течении 7 дней. \n Описание товара: "+buyProducts.get(k).getName()+
+						" \n Описание: "+buyProducts.get(k).getDescription()+
+						" \n Цена: "+ sales.get(k).getPurchase_price() + " \n Количество: "+ sales.get(k).getPurchase_quant()+"\n ";
 
-			//Оповещение продавца о том, что его товар был куплен
-			/*
-			int idSeller=products.getProductById(idProduct).getSeller();
-			String mailSeller=sellerObj.getSellerById(idSeller).getEmail();
-			String cardSeller=sellerObj.getSellerById(idSeller).getCardinfo();
-			String messageToSeller="Your product has been sold. Payment will be credited to the account: " +
-					cardSeller +" within 7 days";
+				mailSender.send(mailSeller, "Интернет-магазин \"Rarity\"", messageToSeller);
 
-			mailSender.send(mailSeller, "Massage from the store \"Rarity\"", messageToSeller);
-			 */
-
+			}
 
 		}
 	}
 
 	@Override
 	@Transactional
-	public List<Delivery> getDeliveriesByUser(Data user) {
+	public List<Delivery> getDeliveriesByUser(User user) {
 		//int userId=new DataService().getCurrentUser().getId();
 		int userId=(int)user.getId();
 
-		String sqlQuery = "SELECT  delivery_id,delivery.id_sale,isSent,service,date_delivery FROM delivery " +
+		String sqlQuery = "SELECT delivery_id,delivery.id_sale,isSent,service,date_delivery FROM delivery " +
 				"JOIN purchase_sale ON delivery.id_sale=purchase_sale.id_sale " +
-				"WHERE buyer=:buyer" ;
+				"WHERE buyer=:buyer ORDER BY delivery.id_sale ASC" ;
 		Session session = sessionFactory.openSession();
 		org.hibernate.Transaction tr = session.beginTransaction();
 
@@ -143,7 +150,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 	@Override
 	@Transactional
-	public List<Delivery> getActiveDeliveriesByUser(Data user) {
+	public List<Delivery> getActiveDeliveriesByUser(User user) {
 		//int userId=new DataService().getCurrentUser().getId();
 		int userId=(int)user.getId();
 
@@ -160,7 +167,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 	@Override
 	@Transactional
-	public List<Delivery> deleteActiveDeliveriesByUser(Data user) {
+	public List<Delivery> deleteActiveDeliveriesByUser(User user) {
 
 		//int userId=new DataService().getCurrentUser().getId();
 		int userId=(int)user.getId();
@@ -174,8 +181,23 @@ public class DeliveryServiceImpl implements DeliveryService {
 		List<Delivery> deliveries=session.createNativeQuery(sqlQuery).setParameter("buyer", userId)
 				.setResultTransformer(Transformers.aliasToBean(Delivery.class)).list();
 		tr.commit();
-		logger.info("User with id="+user.getId()+" cancel the payment product from basket(purchase_sale)");
+		logger.info("Пользователь с id="+user.getId()+" отменил оплату заказа из корзины(purchase_sale)");
 
 		return deliveries;
 	}
+	@Override
+	@Transactional
+	public List<Delivery> getAllDeliveries() {
+
+		String sqlQuery = "SELECT  delivery_id,delivery.id_sale,isSent,service,date_delivery FROM delivery" +
+				" ORDER BY id_sale ASC";
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction tr = session.beginTransaction();
+
+		List<Delivery> deliveries=session.createNativeQuery(sqlQuery)
+				.setResultTransformer(Transformers.aliasToBean(Delivery.class)).list();
+		tr.commit();
+		return deliveries;
+	}
+
 }

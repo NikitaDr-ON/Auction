@@ -1,7 +1,6 @@
 package com.RGR.Auction.Service.Favourites;
 
-import com.RGR.Auction.Service.DataService;
-import com.RGR.Auction.models.Data;
+import com.RGR.Auction.Service.UserServices.UserService;
 import com.RGR.Auction.models.Favourites;
 import com.RGR.Auction.models.Product;
 import com.RGR.Auction.models.User;
@@ -12,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +19,14 @@ import java.util.List;
 @Service
 public class FavouritesServiceImpl implements FavouritesService{
     private static final Logger logger = LogManager.getLogger(FavouritesServiceImpl.class);
+    @Autowired
+    UserService userService;
 
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     @Override
     @Transactional
-    public List<Product> getFavProductsByIdUser(Data user) {
-       //int userid=(int)new DataService().getCurrentUser().getId();
+    public List<Product> getFavProductsByIdUser(User user) {
+
         int userid=(int)user.getId();
         String sqlQuery = "SELECT id,name,description,photo,category,price,quant,seller FROM favourites " +
                 "JOIN product ON favourites.product_id=product.id " +
@@ -41,9 +43,8 @@ public class FavouritesServiceImpl implements FavouritesService{
 
     @Override
     @Transactional
-    public void addFavProduct(Data user,int idProduct){
-        //int userId=new DataService().getCurrentUser().getId();
-        int userId=(int)user.getId();
+    public void addFavProduct(User user,int idProduct){
+        long userId=user.getId();
         String sqlQuery =  "INSERT INTO favourites VALUE(" +
                 ":userId," +
                 ":idProduct)";
@@ -58,6 +59,7 @@ public class FavouritesServiceImpl implements FavouritesService{
         tr.commit();
 
     }
+
     @Override
     @Transactional
     public void addFavProductByObj(Favourites fav){
@@ -74,12 +76,12 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows affected: " + result);
         tr.commit();
-        logger.info("User with id("+fav.getUser_id()+") add favorite product with id("+fav.getProduct_id()+")");
+        logger.info("Пользователь с id("+fav.getUser_id()+") добавил товар с id("+fav.getProduct_id()+")");
     }
 
     @Override
     @Transactional
-    public void deleteFavProduct( Data user, int idProduct) {
+    public void deleteFavProduct( User user, int idProduct) {
         //int userId=new DataService().getCurrentUser().getId();
         int userId=(int)user.getId();
         Session session = sessionFactory.openSession();
@@ -109,7 +111,7 @@ public class FavouritesServiceImpl implements FavouritesService{
         int result = query.executeUpdate();
         System.out.println("Rows delete: " + result);
         tr.commit();
-        logger.info("User with id("+fav.getUser_id()+") delete favorite product with id("+fav.getProduct_id()+")");
+        logger.info("Пользователь с id("+fav.getUser_id()+") удалил из избранного товар с id("+fav.getProduct_id()+")");
 
     }
 

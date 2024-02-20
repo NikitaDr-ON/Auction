@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" href="/logo.png">
+    <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>RARITY</title>
@@ -21,12 +21,12 @@
 
 </head>
 
-<body style="background: url(/bg-body.jpg);">
+<body style="background: url(bg-body.jpg);">
 <div id="index"></div>
 <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #E1E1E1;">
     <div class="container">
         <a href="/index" class="navbar-brand">
-            <img src="/logo.png" width="120px" height="120px" alt="logo">
+            <img src="logo.png" width="120px" height="120px" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expended="false" aria-label="Toggle navigation">
@@ -66,62 +66,39 @@
         </div>
     </div>
 </nav>
+<table>
+    <thead>
+    <tr>
+        <th colspan="2">Список всех покупателей</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td >ID</td>
+        <td >Имя</td>
+        <td >Отчество</td>
+        <td >Фамилия</td>
+        <td >Email</td>
+        <td >Телефон</td>
+        <td >Адрес</td>
 
-<br/>
+    </tr>
+    <tr th:each="el : ${userDelivery}">
+        <td th:text="${el.getId()}"></td>
+        <td th:text="${el.getName()}"></td>
+        <td th:text="${el.getFathername()}"></td>
+        <td th:text="${el.getSurname()}"></td>
+        <td th:text="${el.getMail()}"></td>
+        <td th:text="${el.getPhone()}"></td>
+        <td th:text="${el.getAddress()}"></td>
 
-<div id="container" th:each="el : ${products}">
-
-    <div class="product-details">
-        <div class="information">
-
-            <h1 th:utext="${el.getName()}"></h1>
-            <p>Цена: </p><p th:utext="${el.getPrice()}"></p>
-            <p>Количество: </p><p class="quant" th:id="quant+${el.getId}" th:utext="${el.getQuant()}"></p>
-            </div>
-
-    </div>
-
-    <div class="product-image">
-        <img th:src="@{${el.getPhoto()}}" alt="">
-
-        <div class="info">
-            <ul>
-                <li><strong>Описание : </strong> <ul
-                        style="display: flex; overflow-wrap: anywhere; width: 270px;"
-                        th:utext="${el.getDescription()}"></ul>
-                </li>
-                </ul>
-        </div>
-    </div>
-    <div class="control" id="favoriteout">
-        <button class="btn" onclick="addPurchaseSale(this.id);" th:id="${el.getId()}"
-                th:if="${el.getQuant()} > '0'" >
-            <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-            <span class="buy">Добавить в корзину</span>
-        </button>
-        <div class="number" data-step="1" data-min="1" data-max="100" th:if="${el.getQuant()} > '0'">
-            <input class="number-text" type="text" name="count" id="number-text" value="1">
-            <a href="#" class="number-minus">−</a>
-            <a href="#" class="number-plus">+</a>
-        </div>
-        <button class="fav" th:id="${el.getId()}">♡</button>
-        <h3 th:if="${el.getQuant()} == '0'"  style="color:#ffffff;">Товар закончился</h3>
-
-
-    </div>
-
-</div>
-
-<input type="hidden" id="id_product" name="id_product" th:value="${id_product}"/>
-<input type="hidden" id="stat_fav_prod" name="stat_fav_prod" th:value="${stat_fav_product}"/>
-
-
-
+    </tr>
+    </tbody>
+</table>
 
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/js/jquery-3.4.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f54fd41071.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -132,8 +109,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script src="/js/main.js"></script>
-<script type="text/javascript" src="/js/mainAjax.js"></script>
+
+<script type="text/javascript" src="js/mainAjax.js"></script>
 
 
 </body>
